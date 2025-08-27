@@ -1,13 +1,76 @@
-# 🌱 HomeBud - Intelligentes Grow Management
+# 🌱 HomeBud - Cannabis Growing App
 
-Eine moderne, skalierbare Web-App für professionelles Cannabis-Grow-Management mit KI-Unterstützung, Echtzeit-Monitoring und Community-Features.
+Eine umfassende, wissenschaftlich fundierte Cannabis-Anbau-App mit KI-gestützten Funktionen und moderner Benutzeroberfläche.
 
-## 🚀 Quick Start
+## 🚀 Features
 
+### 📊 Dashboard-Kernansicht
+- **Projektübersicht**: Strain-Name, Wachstumsphase, Fortschrittsbalken
+- **Echtzeit-Monitoring**: Temperatur, Luftfeuchtigkeit, PPFD, VPD, pH-Wert, CO₂
+- **To-Do & Erinnerungen**: Aufgabenverwaltung mit Prioritäten
+- **Modul-Quicklinks**: Schnellzugriff auf wichtige Funktionen
+- **KI-Empfehlungen**: Dynamische Handlungsvorschläge
+- **Performance & Trends**: Ertragsprognose, Wachstumskurven
+- **Foto-Tagebuch**: Bilddokumentation mit Notizen
+
+### 🧬 Strain-Datenbank
+- **Umfassende Strain-Profile**: Genetik, Cannabinoide, Anbaubedingungen
+- **KI-gestützte Empfehlungen**: Personalisierte Strain-Auswahl
+- **Filter & Suche**: Nach allen wichtigen Merkmalen
+- **Vergleichsfunktion**: Side-by-Side Strain-Vergleiche
+
+### 🔍 KI-Diagnose
+- **Bild-Analyse**: Automatische Problemerkennung
+- **Behandlungsvorschläge**: Konkrete Handlungsanweisungen
+- **Google Gemini Integration**: Moderne KI-Technologie
+
+### 📅 Planner & Kalender
+- **Grow-Kalender**: Phasen-Timeline und Aufgabenplanung
+- **Phasen-Planung**: Detaillierte Wachstumsphasen
+- **Erinnerungen**: Automatische Benachrichtigungen
+
+### 🍄 Biologische Innovationen
+- **Mykorrhiza-Integration**: Optimierte Wurzelentwicklung
+- **Trichoderma-Anwendung**: Natürlicher Pflanzenschutz
+- **Tissue Culture**: In-vitro-Klonierung
+
+### 💧 Bewässerungs-Rechner
+- **Wissenschaftlich fundiert**: Basierend auf Cannabis-spezifischen Daten
+- **Automatische Berechnung**: Substrat, Pflanzengröße, Umgebung
+- **Personalisiert**: Anpassung an individuelle Bedingungen
+
+### 📈 Analytics & Monitoring
+- **Echtzeit-Daten**: Kontinuierliche Überwachung
+- **Trend-Analyse**: Wachstumsentwicklung
+- **Performance-Metriken**: Ertragsoptimierung
+
+## 🛠️ Technologie-Stack
+
+- **Frontend**: Next.js 14, React 18, TypeScript
+- **Styling**: Tailwind CSS, Framer Motion
+- **State Management**: Redux Toolkit
+- **KI-Integration**: Google Gemini API
+- **UI-Komponenten**: Custom Design System
+- **PWA**: Progressive Web App Features
+
+## 📱 Mobile Optimierung
+
+- **Responsive Design**: Optimiert für alle Bildschirmgrößen
+- **Touch-freundlich**: Große Touch-Targets (44px+)
+- **Offline-Funktionalität**: PWA mit Service Worker
+- **Performance**: Optimierte Ladezeiten
+
+## 🚀 Installation & Setup
+
+### Voraussetzungen
+- Node.js 18+ 
+- npm oder yarn
+
+### Installation
 ```bash
 # Repository klonen
-git clone https://github.com/your-username/homebud.git
-cd homebud
+git clone https://github.com/NiPacustoms/HomeBud.git
+cd HomeBud
 
 # Dependencies installieren
 npm install
@@ -16,66 +79,111 @@ npm install
 npm run dev
 ```
 
-Die App ist dann unter `http://localhost:3000` verfügbar.
+### Umgebungsvariablen
+Erstellen Sie eine `.env.local` Datei:
+```env
+# Google Gemini API
+GEMINI_API_KEY=your_gemini_api_key_here
+
+# Weitere Konfigurationen
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+## 📁 Projektstruktur
+
+```
+HomeBud/
+├── src/
+│   ├── app/                    # Next.js App Router
+│   ├── components/             # React Komponenten
+│   │   ├── dashboard/          # Dashboard-Komponenten
+│   │   ├── strains/            # Strain-Datenbank
+│   │   ├── diagnosis/          # KI-Diagnose
+│   │   ├── planner/            # Kalender & Planung
+│   │   ├── biological/         # Biologische Module
+│   │   └── ui/                 # UI-Komponenten
+│   ├── services/               # API-Services
+│   ├── store/                  # Redux Store
+│   ├── types/                  # TypeScript Typen
+│   └── hooks/                  # Custom Hooks
+├── public/                     # Statische Assets
+├── docs/                       # Dokumentation
+└── scripts/                    # Build-Scripts
+```
+
+## 🎨 Design System
+
+### Farbpalette
+- **Primary**: Grün (#10B981) - Cannabis/Wachstum
+- **Secondary**: Blau (#3B82F6) - Wasser/Technologie
+- **Accent**: Lila (#8B5CF6) - Innovation
+- **Neutral**: Grau (#6B7280) - UI-Elemente
+
+### Typografie
+- **Headings**: Inter (Bold)
+- **Body**: Inter (Regular)
+- **Code**: JetBrains Mono
+
+### Komponenten
+- **Buttons**: Verschiedene Varianten (Primary, Secondary, Ghost)
+- **Cards**: Glassmorphism-Effekt
+- **Forms**: Validierte Eingabefelder
+- **Charts**: Interaktive Visualisierungen
+
+## 🔧 Entwicklung
+
+### Scripts
+```bash
+# Entwicklung
+npm run dev          # Entwicklungsserver
+npm run build        # Production Build
+npm run start        # Production Server
+npm run lint         # ESLint
+npm run type-check   # TypeScript Check
+```
+
+### Code-Standards
+- **TypeScript**: Strikte Typisierung
+- **ESLint**: Code-Qualität
+- **Prettier**: Code-Formatierung
+- **Husky**: Pre-commit Hooks
 
 ## 📚 Dokumentation
 
-Alle detaillierte Dokumentation finden Sie im **[docs/](./docs/)** Ordner:
+Umfassende Dokumentation finden Sie im `docs/` Verzeichnis:
 
-- **[📖 Vollständige Dokumentation](./docs/README.md)** - Übersicht aller Dokumente
-- **[🏗️ Architektur & Design](./docs/MODULAR_ARCHITECTURE.md)** - App-Struktur
-- **[🎨 Design System](./docs/DESIGN_SYSTEM.md)** - UI-Komponenten
-- **[🧬 Kern-Module](./docs/CANNABIS_WATERING_DATABASE.md)** - Bewässerung & Strain-DB
-- **[🔬 Biologische Innovationen](./docs/MYKORRHIZA_INTEGRATION.md)** - Mykorrhiza & Trichoderma
-- **[🤖 KI & Diagnose](./docs/KI_DIAGNOSE_IMPLEMENTIERUNG.md)** - KI-gestützte Diagnose
-- **[📊 Monitoring](./docs/DASHBOARD_KERNANSICHT.md)** - Dashboard & Analytics
+- [Dashboard-Kernansicht](docs/DASHBOARD_KERNANSICHT.md)
+- [Strain-Datenbank Integration](docs/STRAIN_DATENBANK_INTEGRATION.md)
+- [KI-Diagnose Implementierung](docs/KI_DIAGNOSE_IMPLEMENTIERUNG.md)
+- [Design System](docs/DESIGN_SYSTEM.md)
+- [Modulare Architektur](docs/MODULAR_ARCHITECTURE.md)
 
-## 🛠 Tech Stack
-
-- **Frontend**: Next.js 14, TypeScript, Tailwind CSS, Redux Toolkit
-- **Backend**: Firebase (Auth, Firestore, Storage, Functions)
-- **AI**: Google Gemini AI für Bildanalyse und Diagnose
-- **PWA**: Offline-Funktionalität, Installierbar, Push-Benachrichtigungen
-
-## 🌟 Features
-
-### 🔵 Core (Kostenlos)
-- Dashboard & Pflanzen-Management
-- Grow-Planer & Setup-Assistent
-- KI-Diagnose & Monitoring
-- Mykorrhiza & Trichoderma
-- Wissenschaftlicher Düngeplan
-
-### 🟡 Premium (Kostenpflichtig)
-- Tissue Culture & Wurzel-Optimierung
-- IoT & Automatisierung
-- Grow-Simulator (3D)
-- Voice Assistant
-- Blockchain-Export
-
-## 📱 Live Demo
-
-- **App**: [homebud.app](https://homebud.app)
-- **Dokumentation**: [docs.homebud.app](https://docs.homebud.app)
-
-## 🤝 Contributing
+## 🤝 Beitragen
 
 1. Fork das Repository
-2. Erstelle einen Feature Branch (`git checkout -b feature/amazing-feature`)
-3. Committe deine Änderungen (`git commit -m 'Add amazing feature'`)
-4. Push zum Branch (`git push origin feature/amazing-feature`)
-5. Öffne einen Pull Request
+2. Erstellen Sie einen Feature-Branch (`git checkout -b feature/AmazingFeature`)
+3. Committen Sie Ihre Änderungen (`git commit -m 'Add some AmazingFeature'`)
+4. Pushen Sie zum Branch (`git push origin feature/AmazingFeature`)
+5. Öffnen Sie einen Pull Request
 
 ## 📄 Lizenz
 
-Dieses Projekt ist unter der MIT Lizenz lizenziert.
+Dieses Projekt ist unter der MIT-Lizenz lizenziert - siehe [LICENSE](LICENSE) Datei für Details.
 
-## 🆘 Support
+## 🙏 Danksagungen
 
-- **Issues**: [GitHub Issues](https://github.com/your-username/homebud/issues)
-- **Email**: support@homebud.app
-- **Dokumentation**: [docs/README.md](./docs/README.md)
+- **Google Gemini**: KI-Integration
+- **Next.js Team**: Framework
+- **Tailwind CSS**: Styling
+- **Framer Motion**: Animationen
+- **Cannabis Community**: Wissenschaftliche Erkenntnisse
+
+## 📞 Support
+
+Bei Fragen oder Problemen:
+- **Issues**: [GitHub Issues](https://github.com/NiPacustoms/HomeBud/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/NiPacustoms/HomeBud/discussions)
 
 ---
 
-**HomeBud** - Intelligentes Grow Management für die Zukunft 🌱
+**HomeBud** - Wissenschaftlich fundierter Cannabis-Anbau mit modernster Technologie 🌱✨
