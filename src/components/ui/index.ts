@@ -1,7 +1,12 @@
 // Core UI Components
 export * from './button'
 export * from './badge'
-export * from './card'
+export * from './Card'
+export * from './input'
+export * from './label'
+export * from './textarea'
+export * from './checkbox'
+export * from './tabs'
 
 // Input & Form Components
 export * from './GuidedInput'

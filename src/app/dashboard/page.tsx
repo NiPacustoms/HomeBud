@@ -6,7 +6,6 @@ import Sidebar from '@/components/navigation/Sidebar'
 import AnimatedBackground, { FloatingIcons } from '@/components/landing/AnimatedBackground'
 import { AVAILABLE_MODULES, ModuleCategory } from '@/types/modules'
 import { AnimatePresence } from 'framer-motion'
-import Analytics from '@/components/dashboard/Analytics'
 import DashboardTiles from '@/components/dashboard/DashboardTiles'
 import DashboardCustomization from '@/components/dashboard/DashboardCustomization'
 import DashboardCore from '@/components/dashboard/DashboardCore'
@@ -25,7 +24,6 @@ interface DashboardTile {
 export default function DashboardPage() {
   const [selectedCategory, setSelectedCategory] = useState<ModuleCategory>('core')
   const [activeTab, setActiveTab] = useState<'overview' | 'modules' | 'core'>('core')
-  const [showAnalytics, setShowAnalytics] = useState(false)
   const [showDashboardCustomization, setShowDashboardCustomization] = useState(false)
   
   // Mock-Daten für Dashboard-Kacheln mit aktuellen Werten
@@ -136,23 +134,23 @@ export default function DashboardPage() {
     : featuredModules
 
   const handleTileToggle = (tileId: string) => {
-    setDashboardTiles(prev => prev.map(tile => 
+    setDashboardTiles((prev: DashboardTile[]) => prev.map((tile: DashboardTile) => 
       tile.id === tileId ? { ...tile, enabled: !tile.enabled } : tile
     ));
   };
 
   const handleModuleToggle = (moduleId: string) => {
-    const moduleTiles = dashboardTiles.filter(tile => tile.moduleId === moduleId);
-    const allEnabled = moduleTiles.every(tile => tile.enabled);
+    const moduleTiles = dashboardTiles.filter((tile: DashboardTile) => tile.moduleId === moduleId);
+    const allEnabled = moduleTiles.every((tile: DashboardTile) => tile.enabled);
     
-    setDashboardTiles(prev => prev.map(tile => 
+    setDashboardTiles((prev: DashboardTile[]) => prev.map((tile: DashboardTile) => 
       tile.moduleId === moduleId ? { ...tile, enabled: !allEnabled } : tile
     ));
   };
 
-  const handleDashboardCustomizationSave = (tiles: any[]) => {
-    setDashboardTiles(prev => prev.map(tile => {
-      const updatedTile = tiles.find(t => t.id === tile.id);
+  const handleDashboardCustomizationSave = (tiles: DashboardTile[]) => {
+    setDashboardTiles((prev: DashboardTile[]) => prev.map((tile: DashboardTile) => {
+      const updatedTile = tiles.find((t: DashboardTile) => t.id === tile.id);
       return updatedTile ? { ...tile, enabled: updatedTile.enabled } : tile;
     }));
   };
@@ -183,37 +181,11 @@ export default function DashboardPage() {
               </p>
             </div>
             
-            {/* Analytics Toggle Button */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setShowAnalytics(!showAnalytics)}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
-                showAnalytics
-                  ? 'bg-gradient-to-r from-blue-500 to-cyan-600 text-white shadow-lg'
-                  : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white'
-              }`}
-            >
-              <span className="text-lg">📈</span>
-              <span>Analytics</span>
-            </motion.button>
+
           </div>
         </motion.div>
 
-        {/* Analytics Panel */}
-        <AnimatePresence>
-          {showAnalytics && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className="mb-8"
-            >
-              <Analytics variant="dashboard" />
-            </motion.div>
-          )}
-        </AnimatePresence>
+
 
         {/* Tab Navigation */}
         <motion.div

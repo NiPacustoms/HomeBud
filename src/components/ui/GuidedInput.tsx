@@ -1,9 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FieldHelp } from './HelpSystem';
-import ValueVisualization from './ValueVisualization';
+import { motion } from 'framer-motion';
 
 interface InputStep {
   id: string;
@@ -113,22 +111,17 @@ export default function GuidedInput({
               value={value}
               onChange={(e) => handleInputChange(step.id, e.target.value)}
               placeholder={step.placeholder}
-              min={step.validation?.min}
-              max={step.validation?.max}
+              min={step.range?.min}
+              max={step.range?.max}
               step={step.range?.step}
               className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
                 error ? 'border-red-500' : 'border-gray-300'
               }`}
               aria-label={step.label}
             />
-            {step.unit && (
-              <div className="text-sm text-gray-500">
-                Einheit: {step.unit}
-              </div>
-            )}
             {step.exampleValue && (
               <div className="text-sm text-gray-500">
-                Beispiel: {step.exampleValue}{step.unit}
+                Beispiel: {step.exampleValue}
               </div>
             )}
             {error && (
@@ -163,35 +156,22 @@ export default function GuidedInput({
 
       case 'range':
         return (
-          <div className="space-y-4">
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-600 min-w-[3rem]">
-                {step.range?.min}{step.unit}
-              </span>
-              <input
-                type="range"
-                value={value}
-                onChange={(e) => handleInputChange(step.id, Number(e.target.value))}
-                min={step.range?.min}
-                max={step.range?.max}
-                step={step.range?.step}
-                className="flex-1"
-                aria-label={step.label}
-              />
-              <span className="text-sm text-gray-600 min-w-[3rem]">
-                {step.range?.max}{step.unit}
-              </span>
+          <div className="space-y-2">
+            <input
+              type="range"
+              value={value}
+              onChange={(e) => handleInputChange(step.id, e.target.value)}
+              min={step.range?.min}
+              max={step.range?.max}
+              step={step.range?.step}
+              className="w-full"
+              aria-label={step.label}
+            />
+            <div className="flex justify-between text-sm text-gray-600">
+              <span>{step.range?.min}{step.unit}</span>
+              <span>{value}{step.unit}</span>
+              <span>{step.range?.max}{step.unit}</span>
             </div>
-            <div className="text-center">
-              <span className="text-lg font-bold">
-                {value || step.range?.min}{step.unit}
-              </span>
-            </div>
-            {step.optimalRange && (
-              <div className="text-sm text-gray-500 text-center">
-                Optimal: {step.optimalRange.min}-{step.optimalRange.max}{step.unit}
-              </div>
-            )}
             {error && (
               <div className="text-sm text-red-600">{error}</div>
             )}
@@ -285,13 +265,11 @@ export default function GuidedInput({
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 max-w-2xl mx-auto">
-      {/* Header */}
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">{title}</h2>
         <p className="text-gray-600">{description}</p>
       </div>
 
-      {/* Progress Bar */}
       {showProgress && (
         <div className="mb-6">
           <div className="flex justify-between text-sm text-gray-600 mb-2">
@@ -308,40 +286,16 @@ export default function GuidedInput({
         </div>
       )}
 
-      {/* Current Step */}
       <div className="mb-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-gray-900">
             {currentStepData.label}
           </h3>
-          {showHelp && (
-            <FieldHelp content={currentStepData.helpText} title="Hilfe">
-              <span className="text-gray-400 hover:text-gray-600 cursor-help">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
-                </svg>
-              </span>
-            </FieldHelp>
-          }
         </div>
 
         {renderInput(currentStepData)}
-
-        {/* Value Visualization for numeric inputs with optimal range */}
-        {currentStepData.type === 'number' && currentStepData.optimalRange && values[currentStepData.id] && (
-          <div className="mt-4">
-            <ValueVisualization
-              value={Number(values[currentStepData.id])}
-              range={currentStepData.optimalRange}
-              unit={currentStepData.unit}
-              label={currentStepData.label}
-              size="small"
-            />
-          </div>
-        )}
       </div>
 
-      {/* Navigation */}
       <div className="flex justify-between">
         <button
           onClick={handleBack}

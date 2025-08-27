@@ -235,9 +235,9 @@ export default function Sidebar() {
             }`}
           >
             {isSidebarCollapsed ? (
-              <LogoOnly size="lg" />
+              <LogoOnly size="2xl" />
             ) : (
-              <LogoText size="xl" />
+              <LogoText size="3xl" />
             )}
           </motion.div>
 

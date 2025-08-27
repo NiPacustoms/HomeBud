@@ -1,17 +1,17 @@
 'use client'
 
 import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
+
 import { motion, AnimatePresence } from 'framer-motion'
-import { useDispatch, useSelector } from 'react-redux'
+
 import Sidebar from '@/components/navigation/Sidebar'
 import BackButton from '@/components/ui/BackButton'
 import AnimatedBackground, { FloatingIcons } from '@/components/landing/AnimatedBackground'
 import CannabisDiagnosisAnalyzer from '@/components/diagnosis/CannabisDiagnosisAnalyzer'
-import DiagnosisResults from '@/components/diagnosis/DiagnosisResults'
-import TreatmentPlanManager from '@/components/diagnosis/TreatmentPlanManager'
-import { DiagnosisResult, TreatmentPlan } from '@/store/slices/diagnosisSlice'
-import { RootState } from '@/store/store'
+
+
+
+
 import { cannabisWateringDatabase } from '@/data/cannabisWateringDatabase'
 
 interface Plant {
@@ -79,40 +79,21 @@ const mockPlants: Plant[] = [
 ]
 
 export default function DiagnosePage() {
-  const router = useRouter()
-  const dispatch = useDispatch()
-  const { currentDiagnosis, treatmentPlans } = useSelector((state: RootState) => state.diagnosis)
+
+
   
   const [selectedPlant, setSelectedPlant] = useState<string>('')
-  const [isAnalyzing, setIsAnalyzing] = useState(false)
-  const [analysisResult, setAnalysisResult] = useState<DiagnosisResult | null>(null)
-  const [uploadedImage, setUploadedImage] = useState<string | null>(null)
+
+
+
   const [activeTab, setActiveTab] = useState<'ai' | 'manual' | 'watering' | 'history' | 'treatment'>('ai')
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([])
 
-  const getSeverityColor = (severity: string) => {
-    switch (severity) {
-      case 'low': return 'from-green-500 to-emerald-600'
-      case 'medium': return 'from-yellow-500 to-orange-600'
-      case 'high': return 'from-red-500 to-pink-600'
-      case 'critical': return 'from-red-600 to-red-800'
-      default: return 'from-gray-500 to-gray-600'
-    }
-  }
 
-  const getSeverityText = (severity: string) => {
-    switch (severity) {
-      case 'low': return 'Gering'
-      case 'medium': return 'Mittel'
-      case 'high': return 'Hoch'
-      case 'critical': return 'Kritisch'
-      default: return severity
-    }
-  }
 
-  const handlePlantClick = (plantId: string) => {
-    router.push(`/plants/${plantId}`)
-  }
+
+
+
 
   const getPlantHealthColor = (health: number) => {
     if (health >= 90) return 'text-green-500'
@@ -401,16 +382,7 @@ export default function DiagnosePage() {
             )}
           </AnimatePresence>
 
-          {/* Results */}
-          {analysisResult && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mt-8"
-            >
-              <DiagnosisResults result={analysisResult} />
-            </motion.div>
-          )}
+
         </div>
       </div>
     </div>

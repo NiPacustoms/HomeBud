@@ -1,5 +1,3 @@
-import { Card } from './Card'
-
 interface ChartData {
   time: string
   value: number
@@ -70,14 +68,14 @@ export function ChartCard({ title, subtitle, chartType, data, className = '' }: 
   }
 
   return (
-    <Card className={className}>
+    <div className={`bg-white/5 backdrop-blur-md border border-white/10 rounded-xl ${className}`}>
       <div className="p-6">
         <div className="mb-4">
-          <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+          <h3 className="text-lg font-semibold text-white">
             {title}
           </h3>
           {subtitle && (
-            <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">
+            <p className="text-sm text-white/70 mt-1">
               {subtitle}
             </p>
           )}
@@ -89,15 +87,15 @@ export function ChartCard({ title, subtitle, chartType, data, className = '' }: 
         <div className="mt-4 flex items-center justify-between text-sm">
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 bg-primary-500 rounded"></div>
-              <span className="text-neutral-600 dark:text-neutral-400">Aktuell</span>
+              <div className="w-3 h-3 bg-green-500 rounded"></div>
+              <span className="text-white/70">Aktuell</span>
             </div>
           </div>
-          <div className="text-neutral-500 dark:text-neutral-400">
+          <div className="text-white/50">
             {data.length} Datenpunkte
           </div>
         </div>
       </div>
-    </Card>
+    </div>
   )
 }
