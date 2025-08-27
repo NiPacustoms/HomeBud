@@ -1,0 +1,322 @@
+{
+  "trichoderma_strains": [
+    {
+      "id": "strain_001",
+      "name": "T. harzianum T22",
+      "mechanisms": [
+        "Antagonismus gegen Pathogene",
+        "Wachstumsförderung"
+      ],
+      "application_methods": [
+        "Substratinokulation",
+        "Samenbehandlung"
+      ],
+      "optimal_soil_pH": [
+        5.5,
+        7.5
+      ],
+      "optimal_temperature_celsius": [
+        15,
+        28
+      ],
+      "recommended_dosage_g_per_liter": 0.5
+    },
+    {
+      "id": "strain_002",
+      "name": "T. viride G-41",
+      "mechanisms": [
+        "Enzymproduktion",
+        "ISR-Induktion"
+      ],
+      "application_methods": [
+        "Bodenaufbringung",
+        "Saatgutbeschichtung"
+      ],
+      "optimal_soil_pH": [
+        6.0,
+        8.0
+      ],
+      "optimal_temperature_celsius": [
+        18,
+        30
+      ],
+      "recommended_dosage_g_per_liter": 0.4
+    },
+    {
+      "id": "strain_003",
+      "name": "T. atroviride P1",
+      "mechanisms": [
+        "Starke ISR",
+        "Pathogenhemmung"
+      ],
+      "application_methods": [
+        "Blattapplikation",
+        "Substratinokulation"
+      ],
+      "optimal_soil_pH": [
+        5.0,
+        7.0
+      ],
+      "optimal_temperature_celsius": [
+        15,
+        26
+      ],
+      "recommended_dosage_g_per_liter": 0.6
+    },
+    {
+      "id": "strain_004",
+      "name": "T. asperellum T34",
+      "mechanisms": [
+        "Stressresistenz",
+        "Nährstoffmobilisierung"
+      ],
+      "application_methods": [
+        "Substratinokulation",
+        "Gießlösung"
+      ],
+      "optimal_soil_pH": [
+        5.5,
+        7.0
+      ],
+      "optimal_temperature_celsius": [
+        16,
+        29
+      ],
+      "recommended_dosage_g_per_liter": 0.5
+    },
+    {
+      "id": "strain_005",
+      "name": "T. virens G-2",
+      "mechanisms": [
+        "Enzymproduktion",
+        "Mykotoxinabbau"
+      ],
+      "application_methods": [
+        "Bodenmischung",
+        "Gießlösung"
+      ],
+      "optimal_soil_pH": [
+        6.0,
+        7.5
+      ],
+      "optimal_temperature_celsius": [
+        18,
+        27
+      ],
+      "recommended_dosage_g_per_liter": 0.4
+    },
+    {
+      "id": "strain_006",
+      "name": "T. longibrachiatum",
+      "mechanisms": [
+        "Wachstumsförderung",
+        "ISR"
+      ],
+      "application_methods": [
+        "Substratinokulation"
+      ],
+      "optimal_soil_pH": [
+        5.5,
+        7.2
+      ],
+      "optimal_temperature_celsius": [
+        17,
+        28
+      ],
+      "recommended_dosage_g_per_liter": 0.5
+    },
+    {
+      "id": "strain_007",
+      "name": "T. koningii",
+      "mechanisms": [
+        "Pathogenhemmung",
+        "Wurzelwachstum"
+      ],
+      "application_methods": [
+        "Gießlösung",
+        "Substratinokulation"
+      ],
+      "optimal_soil_pH": [
+        5.8,
+        7.8
+      ],
+      "optimal_temperature_celsius": [
+        16,
+        27
+      ],
+      "recommended_dosage_g_per_liter": 0.45
+    },
+    {
+      "id": "strain_008",
+      "name": "T. gamsii",
+      "mechanisms": [
+        "ISR-Induktion",
+        "Enzymproduktion"
+      ],
+      "application_methods": [
+        "Saatgutbehandlung",
+        "Bodenaufbringung"
+      ],
+      "optimal_soil_pH": [
+        5.5,
+        7.0
+      ],
+      "optimal_temperature_celsius": [
+        15,
+        25
+      ],
+      "recommended_dosage_g_per_liter": 0.5
+    },
+    {
+      "id": "strain_009",
+      "name": "T. viridescens",
+      "mechanisms": [
+        "Nährstoffmobilisierung",
+        "Pathogenabwehr"
+      ],
+      "application_methods": [
+        "Substratinokulation",
+        "Gießlösung"
+      ],
+      "optimal_soil_pH": [
+        6.0,
+        7.5
+      ],
+      "optimal_temperature_celsius": [
+        18,
+        29
+      ],
+      "recommended_dosage_g_per_liter": 0.4
+    },
+    {
+      "id": "strain_010",
+      "name": "T. polysporum",
+      "mechanisms": [
+        "Pathogenkontrolle",
+        "ISR"
+      ],
+      "application_methods": [
+        "Bodenmischung",
+        "Gießlösung"
+      ],
+      "optimal_soil_pH": [
+        5.0,
+        7.0
+      ],
+      "optimal_temperature_celsius": [
+        15,
+        27
+      ],
+      "recommended_dosage_g_per_liter": 0.55
+    }
+  ],
+  "combo_packages": [
+    {
+      "id": "combo_001",
+      "name": "Rhizophagus irregularis + T. harzianum T22",
+      "description": "Optimale Kombination für Wurzelgesundheit und Nährstoffaufnahme",
+      "mycorrhiza_strain": "Rhizophagus irregularis",
+      "trichoderma_strain": "T. harzianum T22",
+      "mixing_ratio": {
+        "mycorrhiza_percent": 70,
+        "trichoderma_percent": 30
+      },
+      "application_timing": "Gleichzeitige Substratinokulation",
+      "benefits": [
+        "Verbesserte Nährstoffaufnahme",
+        "Gesteigerte Wurzelbildung",
+        "Erhöhter Schutz gegen Wurzelkrankheiten",
+        "Synergistische Wirkung"
+      ],
+      "dosage_per_liter": {
+        "mycorrhiza_g": 1.0,
+        "trichoderma_g": 0.5
+      }
+    },
+    {
+      "id": "combo_002",
+      "name": "Glomus intraradices + T. viride G-41",
+      "description": "Kombination für Enzymproduktion und ISR-Induktion",
+      "mycorrhiza_strain": "Glomus intraradices",
+      "trichoderma_strain": "T. viride G-41",
+      "mixing_ratio": {
+        "mycorrhiza_percent": 60,
+        "trichoderma_percent": 40
+      },
+      "application_timing": "Gestaffelte Applikation",
+      "benefits": [
+        "Enzymproduktion für Nährstoffmobilisierung",
+        "ISR-Induktion für Krankheitsresistenz",
+        "Verbesserte Bodenstruktur",
+        "Reduzierte Pathogenbelastung"
+      ],
+      "dosage_per_liter": {
+        "mycorrhiza_g": 0.8,
+        "trichoderma_g": 0.4
+      }
+    },
+    {
+      "id": "combo_003",
+      "name": "Funneliformis mosseae + T. atroviride P1",
+      "description": "Premium-Kombination für maximale Stressresistenz",
+      "mycorrhiza_strain": "Funneliformis mosseae",
+      "trichoderma_strain": "T. atroviride P1",
+      "mixing_ratio": {
+        "mycorrhiza_percent": 65,
+        "trichoderma_percent": 35
+      },
+      "application_timing": "Gleichzeitige Substratinokulation",
+      "benefits": [
+        "Starke ISR-Induktion",
+        "Maximale Pathogenhemmung",
+        "Verbesserte Trockenheitsresistenz",
+        "Optimale Phosphoraufnahme"
+      ],
+      "dosage_per_liter": {
+        "mycorrhiza_g": 1.2,
+        "trichoderma_g": 0.6
+      }
+    }
+  ],
+  "application_guidelines": {
+    "substrate_types": {
+      "coco_coir": {
+        "dosage_multiplier": 1.2,
+        "application_method": "Gießlösung",
+        "notes": "Höhere Dosierung aufgrund geringerer Nährstoffbindung"
+      },
+      "soil_mix": {
+        "dosage_multiplier": 1.0,
+        "application_method": "Substratinokulation",
+        "notes": "Standard-Dosierung für optimale Wirkung"
+      },
+      "hydroponic": {
+        "dosage_multiplier": 0.8,
+        "application_method": "Nährlösung",
+        "notes": "Reduzierte Dosierung für hydroponische Systeme"
+      }
+    },
+    "growth_phases": {
+      "germination": {
+        "dosage_multiplier": 1.5,
+        "frequency": "Einmalig",
+        "method": "Samenbehandlung oder Keimlösung"
+      },
+      "vegetative": {
+        "dosage_multiplier": 1.0,
+        "frequency": "Alle 2-3 Wochen",
+        "method": "Gießlösung oder Substratinokulation"
+      },
+      "flowering": {
+        "dosage_multiplier": 0.8,
+        "frequency": "Wöchentlich",
+        "method": "Gießlösung mit reduzierter Dosierung"
+      },
+      "maintenance": {
+        "dosage_multiplier": 0.5,
+        "frequency": "Alle 4-6 Wochen",
+        "method": "Top-Dressing oder Gießlösung"
+      }
+    }
+  }
+}

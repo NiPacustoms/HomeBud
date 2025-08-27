@@ -1,0 +1,631 @@
+{
+  "strains": [
+    {
+      "id": "northern-lights",
+      "name": "Northern Lights",
+      "breeder": "Sensi Seeds",
+      "genetics": {
+        "type": "indica",
+        "indicaPercentage": 90,
+        "sativaPercentage": 10,
+        "parentStrains": ["Afghani", "Thai"]
+      },
+      "cannabinoids": {
+        "thc": {
+          "min": 16,
+          "max": 21,
+          "average": 18.5
+        },
+        "cbd": {
+          "min": 0.1,
+          "max": 0.5,
+          "average": 0.3
+        }
+      },
+      "growing": {
+        "floweringTime": {
+          "min": 45,
+          "max": 55,
+          "average": 50
+        },
+        "yield": {
+          "indoor": {
+            "min": 400,
+            "max": 550,
+            "average": 475
+          },
+          "outdoor": {
+            "min": 500,
+            "max": 700,
+            "average": 600
+          }
+        },
+        "height": {
+          "indoor": {
+            "min": 80,
+            "max": 120,
+            "average": 100
+          },
+          "outdoor": {
+            "min": 150,
+            "max": 200,
+            "average": 175
+          }
+        },
+        "growthPattern": "bushy",
+        "difficulty": "beginner"
+      },
+      "environment": {
+        "climate": "temperate",
+        "humidity": {
+          "vegetative": {
+            "min": 60,
+            "max": 70
+          },
+          "flowering": {
+            "min": 40,
+            "max": 50
+          }
+        },
+        "temperature": {
+          "vegetative": {
+            "min": 20,
+            "max": 28
+          },
+          "flowering": {
+            "min": 18,
+            "max": 26
+          }
+        },
+        "lightRequirements": "medium",
+        "soilType": "soil",
+        "nutrients": "medium"
+      },
+      "characteristics": {
+        "aroma": ["Erdbeere", "Pine", "Süß"],
+        "flavor": ["Erdbeere", "Pine", "Süß", "Erdig"],
+        "effects": {
+          "primary": ["Entspannung", "Schlaf"],
+          "secondary": ["Euphorie", "Appetit"],
+          "negative": ["Trockener Mund"]
+        },
+        "medicalBenefits": ["Schlafstörungen", "Schmerzen", "Stress"],
+        "recreationalEffects": ["Entspannung", "Meditation"]
+      },
+      "care": {
+        "watering": {
+          "frequency": "medium",
+          "tips": [
+            "Gleichmäßige Bewässerung, nicht zu nass halten",
+            "In der Blütephase weniger gießen"
+          ]
+        },
+        "training": {
+          "recommended": ["LST", "Topping"],
+          "tips": [
+            "Reagiert gut auf Low Stress Training",
+            "Kann früh getoppt werden"
+          ]
+        },
+        "pestResistance": "high",
+        "diseaseResistance": "high",
+        "moldResistance": "medium"
+      },
+      "metadata": {
+        "tags": ["klassisch", "indica", "entspannend", "schlaffördernd"],
+        "awards": ["Cannabis Cup Winner"],
+        "popularity": 9,
+        "availability": "common",
+        "priceRange": "mid",
+        "description": "Eine der bekanntesten Indica-Sorten mit ausgezeichnetem THC-Gehalt und entspannenden Eigenschaften.",
+        "createdAt": "2024-01-01T00:00:00.000Z",
+        "updatedAt": "2024-01-01T00:00:00.000Z"
+      }
+    },
+    {
+      "id": "jack-herer",
+      "name": "Jack Herer",
+      "breeder": "Sensi Seeds",
+      "genetics": {
+        "type": "sativa",
+        "indicaPercentage": 15,
+        "sativaPercentage": 85,
+        "parentStrains": ["Haze", "Northern Lights #5", "Skunk #1"]
+      },
+      "cannabinoids": {
+        "thc": {
+          "min": 18,
+          "max": 23,
+          "average": 20.5
+        },
+        "cbd": {
+          "min": 0.1,
+          "max": 0.8,
+          "average": 0.4
+        }
+      },
+      "growing": {
+        "floweringTime": {
+          "min": 60,
+          "max": 70,
+          "average": 65
+        },
+        "yield": {
+          "indoor": {
+            "min": 350,
+            "max": 500,
+            "average": 425
+          },
+          "outdoor": {
+            "min": 600,
+            "max": 800,
+            "average": 700
+          }
+        },
+        "height": {
+          "indoor": {
+            "min": 120,
+            "max": 180,
+            "average": 150
+          },
+          "outdoor": {
+            "min": 200,
+            "max": 300,
+            "average": 250
+          }
+        },
+        "growthPattern": "tall",
+        "difficulty": "intermediate"
+      },
+      "environment": {
+        "climate": "temperate",
+        "humidity": {
+          "vegetative": {
+            "min": 55,
+            "max": 65
+          },
+          "flowering": {
+            "min": 35,
+            "max": 45
+          }
+        },
+        "temperature": {
+          "vegetative": {
+            "min": 22,
+            "max": 30
+          },
+          "flowering": {
+            "min": 20,
+            "max": 28
+          }
+        },
+        "lightRequirements": "high",
+        "soilType": "soil",
+        "nutrients": "high"
+      },
+      "characteristics": {
+        "aroma": ["Zitrus", "Pine", "Würzig"],
+        "flavor": ["Zitrus", "Pine", "Würzig", "Erdig"],
+        "effects": {
+          "primary": ["Energie", "Kreativität"],
+          "secondary": ["Fokus", "Euphorie"],
+          "negative": ["Angst"]
+        },
+        "medicalBenefits": ["Depression", "ADHS", "Müdigkeit"],
+        "recreationalEffects": ["Kreativität", "Sozialisierung"]
+      },
+      "care": {
+        "watering": {
+          "frequency": "medium",
+          "tips": [
+            "Regelmäßige Bewässerung wichtig",
+            "In der Blütephase mehr Wasser benötigt"
+          ]
+        },
+        "training": {
+          "recommended": ["LST", "SCROG"],
+          "tips": [
+            "Benötigt viel Training für Indoor-Anbau",
+            "SCROG-Methode empfohlen"
+          ]
+        },
+        "pestResistance": "medium",
+        "diseaseResistance": "medium",
+        "moldResistance": "low"
+      },
+      "metadata": {
+        "tags": ["sativa", "energetisch", "kreativ", "fokussiert"],
+        "awards": ["Cannabis Cup Winner"],
+        "popularity": 8,
+        "availability": "common",
+        "priceRange": "mid",
+        "description": "Eine energiereiche Sativa-Sorte, benannt nach dem Cannabis-Aktivisten Jack Herer.",
+        "createdAt": "2024-01-01T00:00:00.000Z",
+        "updatedAt": "2024-01-01T00:00:00.000Z"
+      }
+    },
+    {
+      "id": "blue-dream",
+      "name": "Blue Dream",
+      "breeder": "Humboldt Seeds",
+      "genetics": {
+        "type": "hybrid",
+        "indicaPercentage": 40,
+        "sativaPercentage": 60,
+        "parentStrains": ["Blueberry", "Haze"]
+      },
+      "cannabinoids": {
+        "thc": {
+          "min": 17,
+          "max": 24,
+          "average": 20.5
+        },
+        "cbd": {
+          "min": 0.1,
+          "max": 0.6,
+          "average": 0.3
+        }
+      },
+      "growing": {
+        "floweringTime": {
+          "min": 55,
+          "max": 65,
+          "average": 60
+        },
+        "yield": {
+          "indoor": {
+            "min": 450,
+            "max": 600,
+            "average": 525
+          },
+          "outdoor": {
+            "min": 700,
+            "max": 900,
+            "average": 800
+          }
+        },
+        "height": {
+          "indoor": {
+            "min": 100,
+            "max": 150,
+            "average": 125
+          },
+          "outdoor": {
+            "min": 180,
+            "max": 250,
+            "average": 215
+          }
+        },
+        "growthPattern": "spreading",
+        "difficulty": "beginner"
+      },
+      "environment": {
+        "climate": "temperate",
+        "humidity": {
+          "vegetative": {
+            "min": 60,
+            "max": 70
+          },
+          "flowering": {
+            "min": 40,
+            "max": 50
+          }
+        },
+        "temperature": {
+          "vegetative": {
+            "min": 20,
+            "max": 28
+          },
+          "flowering": {
+            "min": 18,
+            "max": 26
+          }
+        },
+        "lightRequirements": "medium",
+        "soilType": "soil",
+        "nutrients": "medium"
+      },
+      "characteristics": {
+        "aroma": ["Beere", "Vanille", "Süß"],
+        "flavor": ["Beere", "Vanille", "Süß", "Erdig"],
+        "effects": {
+          "primary": ["Entspannung", "Kreativität"],
+          "secondary": ["Euphorie", "Fokus"],
+          "negative": ["Trockener Mund"]
+        },
+        "medicalBenefits": ["Stress", "Depression", "Schmerzen"],
+        "recreationalEffects": ["Entspannung", "Kreativität"]
+      },
+      "care": {
+        "watering": {
+          "frequency": "medium",
+          "tips": [
+            "Gleichmäßige Bewässerung",
+            "Nicht zu nass halten"
+          ]
+        },
+        "training": {
+          "recommended": ["LST", "Topping"],
+          "tips": [
+            "Reagiert gut auf Training",
+            "Kann einfach angebaut werden"
+          ]
+        },
+        "pestResistance": "high",
+        "diseaseResistance": "high",
+        "moldResistance": "medium"
+      },
+      "metadata": {
+        "tags": ["hybrid", "ausgewogen", "beere", "vanille"],
+        "awards": ["Patient's Choice Award"],
+        "popularity": 9,
+        "availability": "common",
+        "priceRange": "mid",
+        "description": "Ein beliebter Hybrid mit ausgewogenen Effekten und süßem Beerenaroma.",
+        "createdAt": "2024-01-01T00:00:00.000Z",
+        "updatedAt": "2024-01-01T00:00:00.000Z"
+      }
+    },
+    {
+      "id": "white-widow",
+      "name": "White Widow",
+      "breeder": "Green House Seeds",
+      "genetics": {
+        "type": "hybrid",
+        "indicaPercentage": 60,
+        "sativaPercentage": 40,
+        "parentStrains": ["Brazilian Sativa", "South Indian Indica"]
+      },
+      "cannabinoids": {
+        "thc": {
+          "min": 19,
+          "max": 25,
+          "average": 22
+        },
+        "cbd": {
+          "min": 0.1,
+          "max": 0.4,
+          "average": 0.2
+        }
+      },
+      "growing": {
+        "floweringTime": {
+          "min": 50,
+          "max": 60,
+          "average": 55
+        },
+        "yield": {
+          "indoor": {
+            "min": 400,
+            "max": 550,
+            "average": 475
+          },
+          "outdoor": {
+            "min": 500,
+            "max": 700,
+            "average": 600
+          }
+        },
+        "height": {
+          "indoor": {
+            "min": 90,
+            "max": 140,
+            "average": 115
+          },
+          "outdoor": {
+            "min": 160,
+            "max": 220,
+            "average": 190
+          }
+        },
+        "growthPattern": "bushy",
+        "difficulty": "intermediate"
+      },
+      "environment": {
+        "climate": "temperate",
+        "humidity": {
+          "vegetative": {
+            "min": 55,
+            "max": 65
+          },
+          "flowering": {
+            "min": 35,
+            "max": 45
+          }
+        },
+        "temperature": {
+          "vegetative": {
+            "min": 20,
+            "max": 28
+          },
+          "flowering": {
+            "min": 18,
+            "max": 26
+          }
+        },
+        "lightRequirements": "high",
+        "soilType": "soil",
+        "nutrients": "high"
+      },
+      "characteristics": {
+        "aroma": ["Erdbeere", "Pine", "Würzig"],
+        "flavor": ["Erdbeere", "Pine", "Würzig", "Erdig"],
+        "effects": {
+          "primary": ["Euphorie", "Energie"],
+          "secondary": ["Kreativität", "Fokus"],
+          "negative": ["Paranoia"]
+        },
+        "medicalBenefits": ["Depression", "Stress", "Schmerzen"],
+        "recreationalEffects": ["Euphorie", "Kreativität"]
+      },
+      "care": {
+        "watering": {
+          "frequency": "medium",
+          "tips": [
+            "Regelmäßige Bewässerung",
+            "In der Blütephase weniger gießen"
+          ]
+        },
+        "training": {
+          "recommended": ["LST", "Topping"],
+          "tips": [
+            "Benötigt Training für optimalen Ertrag",
+            "Reagiert gut auf Topping"
+          ]
+        },
+        "pestResistance": "medium",
+        "diseaseResistance": "medium",
+        "moldResistance": "low"
+      },
+      "metadata": {
+        "tags": ["klassisch", "hybrid", "euphorisch", "kreativ"],
+        "awards": ["Cannabis Cup Winner"],
+        "popularity": 8,
+        "availability": "common",
+        "priceRange": "mid",
+        "description": "Eine klassische Hybrid-Sorte mit hohem THC-Gehalt und euphorischen Effekten.",
+        "createdAt": "2024-01-01T00:00:00.000Z",
+        "updatedAt": "2024-01-01T00:00:00.000Z"
+      }
+    },
+    {
+      "id": "ak-47",
+      "name": "AK-47",
+      "breeder": "Serious Seeds",
+      "genetics": {
+        "type": "hybrid",
+        "indicaPercentage": 35,
+        "sativaPercentage": 65,
+        "parentStrains": ["Colombian", "Mexican", "Thai", "Afghan"]
+      },
+      "cannabinoids": {
+        "thc": {
+          "min": 15,
+          "max": 20,
+          "average": 17.5
+        },
+        "cbd": {
+          "min": 0.1,
+          "max": 0.5,
+          "average": 0.3
+        }
+      },
+      "growing": {
+        "floweringTime": {
+          "min": 53,
+          "max": 63,
+          "average": 58
+        },
+        "yield": {
+          "indoor": {
+            "min": 350,
+            "max": 500,
+            "average": 425
+          },
+          "outdoor": {
+            "min": 500,
+            "max": 700,
+            "average": 600
+          }
+        },
+        "height": {
+          "indoor": {
+            "min": 80,
+            "max": 120,
+            "average": 100
+          },
+          "outdoor": {
+            "min": 150,
+            "max": 200,
+            "average": 175
+          }
+        },
+        "growthPattern": "compact",
+        "difficulty": "beginner"
+      },
+      "environment": {
+        "climate": "any",
+        "humidity": {
+          "vegetative": {
+            "min": 60,
+            "max": 70
+          },
+          "flowering": {
+            "min": 40,
+            "max": 50
+          }
+        },
+        "temperature": {
+          "vegetative": {
+            "min": 20,
+            "max": 28
+          },
+          "flowering": {
+            "min": 18,
+            "max": 26
+          }
+        },
+        "lightRequirements": "medium",
+        "soilType": "soil",
+        "nutrients": "medium"
+      },
+      "characteristics": {
+        "aroma": ["Skunk", "Zitrus", "Erdig"],
+        "flavor": ["Skunk", "Zitrus", "Erdig", "Süß"],
+        "effects": {
+          "primary": ["Euphorie", "Entspannung"],
+          "secondary": ["Kreativität", "Appetit"],
+          "negative": ["Trockener Mund"]
+        },
+        "medicalBenefits": ["Stress", "Appetitlosigkeit", "Schmerzen"],
+        "recreationalEffects": ["Euphorie", "Entspannung"]
+      },
+      "care": {
+        "watering": {
+          "frequency": "low",
+          "tips": [
+            "Dürretolerant",
+            "Nicht zu viel gießen"
+          ]
+        },
+        "training": {
+          "recommended": ["LST"],
+          "tips": [
+            "Einfach zu trainieren",
+            "Robuste Pflanze"
+          ]
+        },
+        "pestResistance": "high",
+        "diseaseResistance": "high",
+        "moldResistance": "high"
+      },
+      "metadata": {
+        "tags": ["robust", "hybrid", "euphorisch", "entspannend"],
+        "awards": ["Cannabis Cup Winner"],
+        "popularity": 7,
+        "availability": "common",
+        "priceRange": "budget",
+        "description": "Eine robuste und zuverlässige Hybrid-Sorte, ideal für Anfänger.",
+        "createdAt": "2024-01-01T00:00:00.000Z",
+        "updatedAt": "2024-01-01T00:00:00.000Z"
+      }
+    }
+  ],
+  "categories": {
+    "genetics": ["indica", "sativa", "hybrid"],
+    "effects": [
+      "Entspannung", "Energie", "Kreativität", "Fokus", "Schlaf",
+      "Schmerzlinderung", "Appetit", "Euphorie", "Meditation", "Sozialisierung",
+      "Angst", "Paranoia", "Schläfrigkeit", "Trockener Mund", "Kopfschmerzen"
+    ],
+    "aromas": [
+      "Erdbeere", "Pine", "Süß", "Zitrus", "Würzig", "Beere", "Vanille",
+      "Skunk", "Erdig", "Tropisch", "Minze", "Lavendel", "Kiefer"
+    ],
+    "climates": ["temperate", "tropical", "arid", "cold", "any"],
+    "difficulties": ["beginner", "intermediate", "advanced"]
+  },
+  "totalCount": 5,
+  "lastUpdated": "2024-01-01T00:00:00.000Z",
+  "version": "1.0.0"
+}
