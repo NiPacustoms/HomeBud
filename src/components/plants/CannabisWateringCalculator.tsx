@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CannabisWateringService, WateringCalculation, EnvironmentalFactors } from '@/services/cannabisWateringService'
 import { PlantStage, PotSize, Season, TemperatureLevel, HumidityLevel } from '@/types/plant'
-import Card from '@/components/ui/Card'
+import { Card } from '@/components/ui/Card'
 import ValidatedResearchInfo from './ValidatedResearchInfo'
 
 interface CannabisWateringCalculatorProps {

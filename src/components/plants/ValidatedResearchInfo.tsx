@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cannabisWateringDatabase } from '@/data/cannabisWateringDatabase'
-import Card from '@/components/ui/Card'
+import { Card } from '@/components/ui/Card'
 
 interface ValidatedResearchInfoProps {
   stage: string

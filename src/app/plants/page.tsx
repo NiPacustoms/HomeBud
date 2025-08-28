@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Sidebar from '@/components/navigation/Sidebar'
 import BackButton from '@/components/ui/BackButton'
 import AnimatedBackground, { FloatingIcons } from '@/components/landing/AnimatedBackground'

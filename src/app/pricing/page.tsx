@@ -26,7 +26,7 @@ const Icons = {
 export default function PricingPage() {
   const router = useRouter()
   const [isNavVisible, setIsNavVisible] = useState(true)
-  const [selectedPlan, setSelectedPlan] = useState('pro')
+  const [, setSelectedPlan] = useState('pro')
   const heroRef = useRef<HTMLDivElement>(null)
   const pricingRef = useRef<HTMLDivElement>(null)
   const [isLoaded, setIsLoaded] = useState(false)

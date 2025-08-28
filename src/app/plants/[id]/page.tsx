@@ -1,12 +1,10 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'next/navigation'
 import { Plant } from '@/types/plant'
 import { Card } from '@/components/ui/Card'
 import { StatusCard } from '@/components/ui/StatusCard'
 import BackButton from '@/components/ui/BackButton'
-import { motion, AnimatePresence } from 'framer-motion'
 import AnimatedBackground, { FloatingIcons } from '@/components/landing/AnimatedBackground'
 
 interface PlantDetailProps {

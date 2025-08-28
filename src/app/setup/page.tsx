@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useRouter } from 'next/navigation'
+// import { useRouter } from 'next/navigation' // TODO: Implement navigation
 import { ChevronLeft, ChevronRight, Check } from 'lucide-react'
 import ParameterCalculator from '@/components/setup/ParameterCalculator'
 import AutomationWizard from '@/components/setup/AutomationWizard'
@@ -158,7 +158,7 @@ const strainOptions = [
 
 
 export default function SetupAssistant() {
-  const router = useRouter()
+  // const router = useRouter() // TODO: Implement navigation
   const [currentStep, setCurrentStep] = useState(0)
   const [setupData, setSetupData] = useState<SetupData>({
     experience: 'beginner',
@@ -185,7 +185,7 @@ export default function SetupAssistant() {
     }
   })
 
-  const [isLoading, setIsLoading] = useState(false)
+  // const [isLoading, setIsLoading] = useState(false) // TODO: Implement loading state
 
   const handleNext = () => {
     if (currentStep < setupSteps.length - 1) {
@@ -213,7 +213,7 @@ export default function SetupAssistant() {
   }
 
   const calculateEquipment = () => {
-    const { experience, growType, space, budget, goals, strain } = setupData
+    const { growType, space, budget, goals } = setupData
     const area = space.width * space.depth / 10000 // m²
     
     // Equipment basierend auf Grow-Type
@@ -259,6 +259,8 @@ export default function SetupAssistant() {
 
   const renderStep = () => {
     const step = setupSteps[currentStep]
+    
+    if (!step) return null
     
     switch (step.id) {
       case 'experience':

@@ -1,7 +1,10 @@
-// Mock Firebase Services für Build-Kompatibilität
-// Entfernt alle Firebase-Imports für SSR-Kompatibilität
+import { initializeApp } from "firebase/app";
+import { getAuth, connectAuthEmulator } from "firebase/auth";
+import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
+import { getAnalytics, isSupported } from "firebase/analytics";
+import { getStorage, connectStorageEmulator } from "firebase/storage";
 
-// Mock Firebase-Konfiguration
+// Firebase-Konfiguration aus Umgebungsvariablen
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -12,66 +15,69 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-// Mock Firebase Services
-const mockApp = {
-  name: 'mock-app',
-  options: firebaseConfig
-};
+// Firebase-App nur im Browser initialisieren
+let app: any = null;
+let auth: any = null;
+let db: any = null;
+let storage: any = null;
+let analytics: any = null;
 
-const mockAuth = {
-  currentUser: null,
-  signInWithEmailAndPassword: async () => ({ user: { uid: 'mock' } }),
-  createUserWithEmailAndPassword: async () => ({ user: { uid: 'mock' } }),
-  signOut: async () => {},
-  onAuthStateChanged: () => () => {}
-};
+// Lazy initialization für SSR-Kompatibilität
+const initializeFirebase = () => {
+  if (typeof window === 'undefined') {
+    return { app: null, auth: null, db: null, storage: null, analytics: null };
+  }
 
-const mockDB = {
-  app: mockApp,
-  collection: () => ({
-    doc: () => ({
-      get: async () => ({ exists: false, data: () => null }),
-      set: async () => {},
-      update: async () => {},
-      delete: async () => {}
-    })
-  })
-};
+  if (!app) {
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+    storage = getStorage(app);
 
-const mockStorage = {
-  app: mockApp,
-  ref: () => ({
-    put: async () => ({ ref: { getDownloadURL: async () => 'mock-url' } })
-  })
-};
+    // Analytics nur im Browser und wenn unterstützt initialisieren
+    analytics = isSupported().then(yes => yes ? getAnalytics(app) : null);
 
-const mockAnalytics = null;
+    // Development-Emulatoren (nur in Entwicklung)
+    if (process.env.NODE_ENV === 'development') {
+      connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true });
+      connectFirestoreEmulator(db, 'localhost', 8080);
+      connectStorageEmulator(storage, 'localhost', 9199);
+    }
+  }
+
+  return { app, auth, db, storage, analytics };
+};
 
 // Export-Funktionen für sicheren Zugriff
 export const getFirebaseApp = () => {
-  return mockApp;
+  const { app } = initializeFirebase();
+  return app;
 };
 
 export const getFirebaseAuth = () => {
-  return mockAuth;
+  const { auth } = initializeFirebase();
+  return auth;
 };
 
 export const getFirebaseDB = () => {
-  return mockDB;
+  const { db } = initializeFirebase();
+  return db;
 };
 
 export const getFirebaseStorage = () => {
-  return mockStorage;
+  const { storage } = initializeFirebase();
+  return storage;
 };
 
 export const getFirebaseAnalytics = () => {
-  return mockAnalytics;
+  const { analytics } = initializeFirebase();
+  return analytics;
 };
 
-// Legacy-Exports für Kompatibilität
-export const auth = mockAuth;
-export const db = mockDB;
-export const storage = mockStorage;
-export const analytics = mockAnalytics;
+// Legacy-Exports für Kompatibilität (nur im Browser)
+export const auth = typeof window !== 'undefined' ? getFirebaseAuth() : null;
+export const db = typeof window !== 'undefined' ? getFirebaseDB() : null;
+export const storage = typeof window !== 'undefined' ? getFirebaseStorage() : null;
+export const analytics = typeof window !== 'undefined' ? getFirebaseAnalytics() : null;
 
-export default mockApp;
+export default typeof window !== 'undefined' ? getFirebaseApp() : null;

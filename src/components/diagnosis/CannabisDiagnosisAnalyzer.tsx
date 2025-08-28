@@ -13,7 +13,7 @@ import {
 import { RootState } from '@/store/store'
 import { cannabisWateringDatabase } from '@/data/cannabisWateringDatabase'
 import { CannabisWateringService } from '@/services/cannabisWateringService'
-import Card from '@/components/ui/Card'
+import { Card } from '@/components/ui/Card'
 
 interface CannabisDiagnosisAnalyzerProps {
   plantId: string

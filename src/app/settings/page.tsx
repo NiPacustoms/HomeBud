@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import React, { useState } from 'react'
+// import { useRouter } from 'next/navigation' // TODO: Implement navigation
 import { motion, AnimatePresence } from 'framer-motion'
 import Sidebar from '@/components/navigation/Sidebar'
 import BackButton from '@/components/ui/BackButton'
@@ -121,7 +121,7 @@ const mockNotificationSettings: NotificationSetting[] = [
 ]
 
 export default function SettingsPage() {
-  const router = useRouter()
+  // const router = useRouter() // TODO: Implement navigation
   const [activeTab, setActiveTab] = useState<'general' | 'modules' | 'notifications' | 'privacy' | 'account'>('general')
   const [modules, setModules] = useState<Module[]>(mockModules)
   const [notifications, setNotifications] = useState<NotificationSetting[]>(mockNotificationSettings)

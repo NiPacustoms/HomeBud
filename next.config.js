@@ -10,7 +10,7 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
   experimental: {
-    serverComponentsExternalPackages: ['@prisma/client', 'undici', '@firebase/auth'],
+    serverComponentsExternalPackages: ['@prisma/client', 'undici'],
   },
   optimizeFonts: false,
   poweredByHeader: false,
@@ -59,41 +59,32 @@ const nextConfig = {
     ];
   },
   webpack: (config, { isServer }) => {
-    // Firebase App Hosting kompatible Webpack-Konfiguration
+    // Undici-Fallback für Client-Side
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
+        undici: false,
         fs: false,
         net: false,
         tls: false,
-        undici: false,
-      };
-    } else {
-      config.resolve.alias = {
-        ...(config.resolve.alias || {}),
-        'firebase/auth': false,
-        '@firebase/auth': false,
-        undici: false,
-      };
+      }
     }
-   
-    // Externe Pakete für Server Components
-    config.externals = config.externals || [];
-    if (isServer) {
-      config.externals.push({
-        'undici': 'commonjs undici',
-        '@firebase/auth': 'commonjs @firebase/auth',
-        'firebase/auth': 'commonjs firebase/auth'
-      });
-    }
-   
+    
+    // Private Fields Support für Undici
+    config.module.rules.push({
+      test: /\.m?js$/,
+      resolve: {
+        fullySpecified: false,
+      },
+    })
+    
     // Ignoriere undici-Module komplett
     config.module.rules.push({
       test: /node_modules\/undici/,
       use: 'ignore-loader'
     });
-   
-    return config;
+    
+    return config
   },
 };
 
