@@ -235,7 +235,7 @@ export default function PlannerPage() {
                     <motion.div
                       key={cycle.id}
                       whileHover={{ y: -4, scale: 1.02 }}
-                      onClick={() => handleCycleClick(cycle.id)}
+
                       className="bg-white/5 border border-white/10 rounded-xl p-6 cursor-pointer hover:bg-white/10 transition-all duration-300"
                       initial={{ y: 20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
@@ -447,7 +447,7 @@ export default function PlannerPage() {
                     key={cycle.id}
                     whileHover={{ y: -8, scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => handleCycleClick(cycle.id)}
+                    
                     className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 cursor-pointer hover:bg-white/10 transition-all duration-300"
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}

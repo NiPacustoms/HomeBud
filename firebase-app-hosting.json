@@ -1,0 +1,14 @@
+{
+  "appHosting": {
+    "buildCommand": "npm run build:firebase",
+    "outputDirectory": "out",
+    "framework": "nextjs",
+    "webpackConfig": "webpack.config.js",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "**/*.log"
+    ]
+  }
+}
