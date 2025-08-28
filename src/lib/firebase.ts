@@ -16,11 +16,11 @@ const firebaseConfig = {
 };
 
 // Firebase-App nur im Browser initialisieren
-let app: any = null;
-let auth: any = null;
-let db: any = null;
-let storage: any = null;
-let analytics: any = null;
+let firebaseApp: any = null;
+let firebaseAuth: any = null;
+let firebaseDB: any = null;
+let firebaseStorage: any = null;
+let firebaseAnalytics: any = null;
 
 // Lazy initialization für SSR-Kompatibilität
 const initializeFirebase = () => {
@@ -28,24 +28,30 @@ const initializeFirebase = () => {
     return { app: null, auth: null, db: null, storage: null, analytics: null };
   }
 
-  if (!app) {
-    app = initializeApp(firebaseConfig);
-    auth = getAuth(app);
-    db = getFirestore(app);
-    storage = getStorage(app);
+  if (!firebaseApp) {
+    firebaseApp = initializeApp(firebaseConfig);
+    firebaseAuth = getAuth(firebaseApp);
+    firebaseDB = getFirestore(firebaseApp);
+    firebaseStorage = getStorage(firebaseApp);
     
     // Analytics nur im Browser und wenn unterstützt initialisieren
-    analytics = isSupported().then(yes => yes ? getAnalytics(app) : null);
+    firebaseAnalytics = isSupported().then(yes => yes ? getAnalytics(firebaseApp) : null);
 
     // Development-Emulatoren (nur in Entwicklung)
     if (process.env.NODE_ENV === 'development') {
-      connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true });
-      connectFirestoreEmulator(db, 'localhost', 8080);
-      connectStorageEmulator(storage, 'localhost', 9199);
+      connectAuthEmulator(firebaseAuth, 'http://localhost:9099', { disableWarnings: true });
+      connectFirestoreEmulator(firebaseDB, 'localhost', 8080);
+      connectStorageEmulator(firebaseStorage, 'localhost', 9199);
     }
   }
 
-  return { app, auth, db, storage, analytics };
+  return { 
+    app: firebaseApp, 
+    auth: firebaseAuth, 
+    db: firebaseDB, 
+    storage: firebaseStorage, 
+    analytics: firebaseAnalytics 
+  };
 };
 
 // Export-Funktionen für sicheren Zugriff

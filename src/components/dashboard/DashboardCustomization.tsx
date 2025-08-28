@@ -6,11 +6,12 @@ import { Settings, Palette, Grid, List, Eye, EyeOff, Move, Save, RotateCcw, X } 
 import { DashboardTile } from '@/types/dashboard';
 import useDashboard from '@/hooks/useDashboard';
 import useToast from '@/hooks/useToast';
-import { ToastContainer } from '@/components/ui/Toast';
+import dynamic from 'next/dynamic';
+const ToastContainer = dynamic(() => import('@/components/ui/Toast').then(m => m.ToastContainer), { ssr: false });
 
 export default function DashboardCustomization({ isOpen, onClose, onSave, currentTiles }: { isOpen: boolean; onClose: () => void; onSave: (tiles: DashboardTile[]) => void; currentTiles: DashboardTile[]; }) {
   const { preferences, updatePreferences, updateTileOrder, exportData, importData, undo, redo, canUndo, canRedo } = useDashboard();
-  const { toasts, showToast, removeToast } = useToast();
+  const { showToast } = useToast();
   const [tiles, setTiles] = useState<DashboardTile[]>(currentTiles);
   const [expandedModules, setExpandedModules] = useState<Set<string>>(new Set());
   const [activeTab, setActiveTab] = useState<'tiles' | 'layout' | 'appearance' | 'advanced'>('tiles');
@@ -415,7 +416,7 @@ export default function DashboardCustomization({ isOpen, onClose, onSave, curren
         )}
       </AnimatePresence>
 
-      <ToastContainer toasts={toasts} onRemove={removeToast} />
+      <ToastContainer />
 
       <AnimatePresence>
         {showTileSettings && selectedTile && (

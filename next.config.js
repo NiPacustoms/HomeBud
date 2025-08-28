@@ -78,6 +78,23 @@ const nextConfig = {
         undici: false,
       };
     }
+   
+    // Externe Pakete für Server Components
+    config.externals = config.externals || [];
+    if (isServer) {
+      config.externals.push({
+        'undici': 'commonjs undici',
+        '@firebase/auth': 'commonjs @firebase/auth',
+        'firebase/auth': 'commonjs firebase/auth'
+      });
+    }
+   
+    // Ignoriere undici-Module komplett
+    config.module.rules.push({
+      test: /node_modules\/undici/,
+      use: 'ignore-loader'
+    });
+   
     return config;
   },
 };

@@ -19,6 +19,8 @@ interface DashboardTile {
   unit?: string;
   status?: 'good' | 'warning' | 'error' | 'neutral';
   icon?: string;
+  size: 'small' | 'medium' | 'large' | 'full-width';
+  position: number;
 }
 
 export default function DashboardPage() {
@@ -31,62 +33,62 @@ export default function DashboardPage() {
   // Mock-Daten für Dashboard-Kacheln mit aktuellen Werten
   const [dashboardTiles, setDashboardTiles] = useState<DashboardTile[]>([
     // Monitoring Module
-    { id: 'temperature', label: 'Temperatur', moduleId: 'monitoring', enabled: true, value: 24, unit: '°C', status: 'good', icon: '🌡️' },
-    { id: 'humidity', label: 'Luftfeuchtigkeit', moduleId: 'monitoring', enabled: true, value: 65, unit: '%', status: 'good', icon: '💧' },
-    { id: 'ph', label: 'pH-Wert', moduleId: 'monitoring', enabled: true, value: 6.2, unit: '', status: 'good', icon: '🧪' },
-    { id: 'ec', label: 'EC-Wert', moduleId: 'monitoring', enabled: true, value: 1.2, unit: 'mS/cm', status: 'good', icon: '⚡' },
-    { id: 'co2', label: 'CO2-Gehalt', moduleId: 'monitoring', enabled: false, value: 800, unit: 'ppm', status: 'neutral', icon: '🌬️' },
-    { id: 'light', label: 'Lichtintensität', moduleId: 'monitoring', enabled: false, value: 450, unit: 'μmol/m²/s', status: 'warning', icon: '💡' },
+    { id: 'temperature', label: 'Temperatur', moduleId: 'monitoring', enabled: true, value: 24, unit: '°C', status: 'good', icon: '🌡️', size: 'medium', position: 1 },
+    { id: 'humidity', label: 'Luftfeuchtigkeit', moduleId: 'monitoring', enabled: true, value: 65, unit: '%', status: 'good', icon: '💧', size: 'medium', position: 2 },
+    { id: 'ph', label: 'pH-Wert', moduleId: 'monitoring', enabled: true, value: 6.2, unit: '', status: 'good', icon: '🧪', size: 'medium', position: 3 },
+    { id: 'ec', label: 'EC-Wert', moduleId: 'monitoring', enabled: true, value: 1.2, unit: 'mS/cm', status: 'good', icon: '⚡', size: 'medium', position: 4 },
+    { id: 'co2', label: 'CO2-Gehalt', moduleId: 'monitoring', enabled: false, value: 800, unit: 'ppm', status: 'neutral', icon: '🌬️', size: 'medium', position: 5 },
+    { id: 'light', label: 'Lichtintensität', moduleId: 'monitoring', enabled: false, value: 450, unit: 'μmol/m²/s', status: 'warning', icon: '💡', size: 'medium', position: 6 },
     
     // Mykorrhiza Module
-    { id: 'mycorrhiza-status', label: 'Mykorrhiza-Status', moduleId: 'mycorrhiza', enabled: true, value: 'Aktiv', status: 'good', icon: '🍄' },
-    { id: 'mycorrhiza-application', label: 'Anwendungsplan', moduleId: 'mycorrhiza', enabled: true, value: 'In 3 Tagen', status: 'warning', icon: '📅' },
-    { id: 'mycorrhiza-effects', label: 'Wirkungsanalyse', moduleId: 'mycorrhiza', enabled: false, value: '85%', status: 'good', icon: '📊' },
+    { id: 'mycorrhiza-status', label: 'Mykorrhiza-Status', moduleId: 'mycorrhiza', enabled: true, value: 'Aktiv', status: 'good', icon: '🍄', size: 'medium', position: 7 },
+    { id: 'mycorrhiza-application', label: 'Anwendungsplan', moduleId: 'mycorrhiza', enabled: true, value: 'In 3 Tagen', status: 'warning', icon: '📅', size: 'medium', position: 8 },
+    { id: 'mycorrhiza-effects', label: 'Wirkungsanalyse', moduleId: 'mycorrhiza', enabled: false, value: '85%', status: 'good', icon: '📊', size: 'medium', position: 9 },
     
     // Trichoderma Module
-    { id: 'trichoderma-status', label: 'Trichoderma-Status', moduleId: 'trichoderma', enabled: true, value: 'Aktiv', status: 'good', icon: '🦠' },
-    { id: 'trichoderma-application', label: 'Anwendungsplan', moduleId: 'trichoderma', enabled: true, value: 'Heute', status: 'good', icon: '📅' },
-    { id: 'trichoderma-effects', label: 'Wirkungsanalyse', moduleId: 'trichoderma', enabled: false, value: '92%', status: 'good', icon: '📊' },
+    { id: 'trichoderma-status', label: 'Trichoderma-Status', moduleId: 'trichoderma', enabled: true, value: 'Aktiv', status: 'good', icon: '🦠', size: 'medium', position: 10 },
+    { id: 'trichoderma-application', label: 'Anwendungsplan', moduleId: 'trichoderma', enabled: true, value: 'Heute', status: 'good', icon: '📅', size: 'medium', position: 11 },
+    { id: 'trichoderma-effects', label: 'Wirkungsanalyse', moduleId: 'trichoderma', enabled: false, value: '92%', status: 'good', icon: '📊', size: 'medium', position: 12 },
     
     // Planning Module
-    { id: 'grow-calendar', label: 'Anbau-Kalender', moduleId: 'planning', enabled: true, value: 'Tag 45', status: 'good', icon: '📅' },
-    { id: 'phase-planning', label: 'Phasen-Planung', moduleId: 'planning', enabled: true, value: 'Blüte', status: 'good', icon: '🌱' },
-    { id: 'task-scheduler', label: 'Aufgaben-Planer', moduleId: 'planning', enabled: false, value: '2 offen', status: 'warning', icon: '✅' },
+    { id: 'grow-calendar', label: 'Anbau-Kalender', moduleId: 'planning', enabled: true, value: 'Tag 45', status: 'good', icon: '📅', size: 'medium', position: 13 },
+    { id: 'phase-planning', label: 'Phasen-Planung', moduleId: 'planning', enabled: true, value: 'Blüte', status: 'good', icon: '🌱', size: 'medium', position: 14 },
+    { id: 'task-scheduler', label: 'Aufgaben-Planer', moduleId: 'planning', enabled: false, value: '2 offen', status: 'warning', icon: '✅', size: 'medium', position: 15 },
     
     // Training Module
-    { id: 'training-methods', label: 'Trainings-Methoden', moduleId: 'training', enabled: true, value: 'LST', status: 'good', icon: '🌿' },
-    { id: 'training-schedule', label: 'Trainings-Plan', moduleId: 'training', enabled: false, value: 'Nächste Woche', status: 'neutral', icon: '📋' },
-    { id: 'training-progress', label: 'Trainings-Fortschritt', moduleId: 'training', enabled: false, value: '75%', status: 'good', icon: '📈' },
+    { id: 'training-methods', label: 'Trainings-Methoden', moduleId: 'training', enabled: true, value: 'LST', status: 'good', icon: '🌿', size: 'medium', position: 16 },
+    { id: 'training-schedule', label: 'Trainings-Plan', moduleId: 'training', enabled: false, value: 'Nächste Woche', status: 'neutral', icon: '📋', size: 'medium', position: 17 },
+    { id: 'training-progress', label: 'Trainings-Fortschritt', moduleId: 'training', enabled: false, value: '75%', status: 'good', icon: '📈', size: 'medium', position: 18 },
     
     // Diagnosis Module
-    { id: 'ai-diagnosis', label: 'KI-Diagnose', moduleId: 'diagnosis', enabled: true, value: 'Gesund', status: 'good', icon: '🤖' },
-    { id: 'symptom-checker', label: 'Symptom-Checker', moduleId: 'diagnosis', enabled: false, value: 'Keine', status: 'good', icon: '🔍' },
-    { id: 'treatment-plans', label: 'Behandlungspläne', moduleId: 'diagnosis', enabled: false, value: '0 aktiv', status: 'neutral', icon: '💊' },
+    { id: 'ai-diagnosis', label: 'KI-Diagnose', moduleId: 'diagnosis', enabled: true, value: 'Gesund', status: 'good', icon: '🤖', size: 'medium', position: 19 },
+    { id: 'symptom-checker', label: 'Symptom-Checker', moduleId: 'diagnosis', enabled: false, value: 'Keine', status: 'good', icon: '🔍', size: 'medium', position: 20 },
+    { id: 'treatment-plans', label: 'Behandlungspläne', moduleId: 'diagnosis', enabled: false, value: '0 aktiv', status: 'neutral', icon: '💊', size: 'medium', position: 21 },
     
     // VPD Module
-    { id: 'vpd-chart', label: 'VPD-Chart', moduleId: 'vpd', enabled: true, value: 1.2, unit: 'kPa', status: 'good', icon: '📊' },
-    { id: 'vpd-calculator', label: 'VPD-Rechner', moduleId: 'vpd', enabled: false, value: 'Bereit', status: 'neutral', icon: '🧮' },
-    { id: 'vpd-optimization', label: 'VPD-Optimierung', moduleId: 'vpd', enabled: false, value: 'Optimal', status: 'good', icon: '⚙️' },
+    { id: 'vpd-chart', label: 'VPD-Chart', moduleId: 'vpd', enabled: true, value: 1.2, unit: 'kPa', status: 'good', icon: '📊', size: 'medium', position: 22 },
+    { id: 'vpd-calculator', label: 'VPD-Rechner', moduleId: 'vpd', enabled: false, value: 'Bereit', status: 'neutral', icon: '🧮', size: 'medium', position: 23 },
+    { id: 'vpd-optimization', label: 'VPD-Optimierung', moduleId: 'vpd', enabled: false, value: 'Optimal', status: 'good', icon: '⚙️', size: 'medium', position: 24 },
     
     // Watering Module
-    { id: 'watering-calculator', label: 'Bewässerungs-Rechner', moduleId: 'watering', enabled: true, value: '2.5L', status: 'good', icon: '💧' },
-    { id: 'watering-schedule', label: 'Bewässerungs-Plan', moduleId: 'watering', enabled: false, value: 'Morgen', status: 'warning', icon: '📅' },
-    { id: 'watering-history', label: 'Bewässerungs-Historie', moduleId: 'watering', enabled: false, value: '7 Tage', status: 'neutral', icon: '📊' },
+    { id: 'watering-calculator', label: 'Bewässerungs-Rechner', moduleId: 'watering', enabled: true, value: '2.5L', status: 'good', icon: '💧', size: 'medium', position: 25 },
+    { id: 'watering-schedule', label: 'Bewässerungs-Plan', moduleId: 'watering', enabled: false, value: 'Morgen', status: 'warning', icon: '📅', size: 'medium', position: 26 },
+    { id: 'watering-history', label: 'Bewässerungs-Historie', moduleId: 'watering', enabled: false, value: '7 Tage', status: 'neutral', icon: '📊', size: 'medium', position: 27 },
     
     // Seeds Module
-    { id: 'seed-database', label: 'Samen-Datenbank', moduleId: 'seeds', enabled: true, value: '156', status: 'good', icon: '🌱' },
-    { id: 'strain-database', label: 'Strain-Datenbank', moduleId: 'seeds', enabled: true, value: '89', status: 'good', icon: '🌿' },
-    { id: 'germination-tracker', label: 'Keimungs-Tracker', moduleId: 'seeds', enabled: false, value: '0 aktiv', status: 'neutral', icon: '🌱' },
+    { id: 'seed-database', label: 'Samen-Datenbank', moduleId: 'seeds', enabled: true, value: '156', status: 'good', icon: '🌱', size: 'medium', position: 28 },
+    { id: 'strain-database', label: 'Strain-Datenbank', moduleId: 'seeds', enabled: true, value: '89', status: 'good', icon: '🌿', size: 'medium', position: 29 },
+    { id: 'germination-tracker', label: 'Keimungs-Tracker', moduleId: 'seeds', enabled: false, value: '0 aktiv', status: 'neutral', icon: '🌱', size: 'medium', position: 30 },
     
     // Plants Module
-    { id: 'plant-list', label: 'Pflanzen-Liste', moduleId: 'plants', enabled: true, value: '12', status: 'good', icon: '🌺' },
-    { id: 'plant-details', label: 'Pflanzen-Details', moduleId: 'plants', enabled: true, value: '3 aktiv', status: 'good', icon: '📋' },
-    { id: 'plant-health', label: 'Pflanzen-Gesundheit', moduleId: 'plants', enabled: false, value: '95%', status: 'good', icon: '❤️' },
+    { id: 'plant-list', label: 'Pflanzen-Liste', moduleId: 'plants', enabled: true, value: '12', status: 'good', icon: '🌺', size: 'medium', position: 31 },
+    { id: 'plant-details', label: 'Pflanzen-Details', moduleId: 'plants', enabled: true, value: '3 aktiv', status: 'good', icon: '📋', size: 'medium', position: 32 },
+    { id: 'plant-health', label: 'Pflanzen-Gesundheit', moduleId: 'plants', enabled: false, value: '95%', status: 'good', icon: '❤️', size: 'medium', position: 33 },
     
     // Setup Module
-    { id: 'grow-setup', label: 'Anbau-Setup', moduleId: 'setup', enabled: true, value: 'Konfiguriert', status: 'good', icon: '⚙️' },
-    { id: 'automation-setup', label: 'Automatisierung', moduleId: 'setup', enabled: false, value: 'Inaktiv', status: 'neutral', icon: '🤖' },
-    { id: 'parameter-calculator', label: 'Parameter-Rechner', moduleId: 'setup', enabled: false, value: 'Bereit', status: 'neutral', icon: '🧮' }
+    { id: 'grow-setup', label: 'Anbau-Setup', moduleId: 'setup', enabled: true, value: 'Konfiguriert', status: 'good', icon: '⚙️', size: 'medium', position: 34 },
+    { id: 'automation-setup', label: 'Automatisierung', moduleId: 'setup', enabled: false, value: 'Inaktiv', status: 'neutral', icon: '🤖', size: 'medium', position: 35 },
+    { id: 'parameter-calculator', label: 'Parameter-Rechner', moduleId: 'setup', enabled: false, value: 'Bereit', status: 'neutral', icon: '🧮', size: 'medium', position: 36 }
   ]);
 
   const categoryColors: Record<ModuleCategory, string> = {

@@ -3,11 +3,8 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useGrowType } from '@/hooks/useGrowType'
-import AppLayout from '@/components/layout/AppLayout'
-import { Input } from '@/components/ui/input'
-import { Select } from '@/components/ui/Select'
-import { Modal } from '@/components/ui/Modal'
-import { useToast } from '@/components/ui/Toast'
+
+
 import { 
   GrowthPhase, 
   GrowType, 

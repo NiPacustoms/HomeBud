@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
+
 import { motion, AnimatePresence } from 'framer-motion'
 import Sidebar from '@/components/navigation/Sidebar'
 import BackButton from '@/components/ui/BackButton'
@@ -12,9 +12,9 @@ import { mockGrowCycles, mockCalendarNotes, mockGrowthPhases, CalendarNote, Grow
 
 
 export default function PlannerPage() {
-  const router = useRouter()
-  const [selectedCycle, setSelectedCycle] = useState<string | null>(null)
-  const [isCreating, setIsCreating] = useState(false)
+
+
+
   const [activeTab, setActiveTab] = useState<'overview' | 'cycles' | 'tasks' | 'calendar'>('overview')
   const [calendarNotes, setCalendarNotes] = useState<CalendarNote[]>(mockCalendarNotes)
   const [growthPhases, setGrowthPhases] = useState<GrowthPhase[]>(mockGrowthPhases)
@@ -75,12 +75,10 @@ export default function PlannerPage() {
     }
   }
 
-  const handleCycleClick = (cycleId: string) => {
-    setSelectedCycle(cycleId)
-  }
+
 
   const handleCreateCycle = () => {
-    setIsCreating(true)
+    
   }
 
   const handleNoteSave = (noteData: Omit<CalendarNote, 'id' | 'createdAt' | 'updatedAt'>) => {
