@@ -57,6 +57,16 @@ const sidebarItems: SidebarItem[] = [
     description: 'Grow-Zyklen planen'
   },
   {
+    name: 'Messungen',
+    href: '/measurements',
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+      </svg>
+    ),
+    description: 'Sensordaten erfassen & analysieren'
+  },
+  {
     name: 'Einstellungen',
     href: '/settings',
     icon: (
@@ -134,6 +144,8 @@ export default function Sidebar() {
               <button
                 onClick={() => setIsCollapsed(false)}
                 className="p-2 text-white/60 hover:text-white transition-colors"
+                aria-label="Navigation schließen"
+                title="Navigation schließen"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -225,21 +237,6 @@ export default function Sidebar() {
         }`}
       >
         <div className={`p-6 transition-all duration-300 ${isSidebarCollapsed ? 'px-3' : ''}`}>
-          {/* Logo */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => router.push('/')}
-            className={`flex items-center justify-center cursor-pointer mb-8 p-4 rounded-xl hover:bg-white/10 transition-all duration-300 ${
-              isSidebarCollapsed ? 'p-2' : ''
-            }`}
-          >
-            {isSidebarCollapsed ? (
-              <LogoOnly size="2xl" />
-            ) : (
-              <LogoText size="3xl" />
-            )}
-          </motion.div>
 
           {/* Toggle Button */}
           <motion.button
@@ -248,9 +245,10 @@ export default function Sidebar() {
             onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
             className="absolute top-6 right-4 p-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white hover:bg-white/20 transition-all duration-300"
             title={isSidebarCollapsed ? "Sidebar erweitern" : "Sidebar einklappen"}
+            aria-label={isSidebarCollapsed ? "Sidebar erweitern" : "Sidebar einklappen"}
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isSidebarCollapsed ? "M13 5l7 7-7 7M5 5l7 7-7 7" : "M11 19l-7-7 7-7m8 14l-7-7 7-7"} />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isSidebarCollapsed ? "M13 5l7 7-7 7M5 5l7 7-7 7" : "M11 19l-7-7 7-7m8 14l-7-7"} />
             </svg>
           </motion.button>
 

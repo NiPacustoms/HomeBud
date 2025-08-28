@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import Logo, { LogoOnly, LogoNoBackground } from '@/components/ui/Logo'
+import { LogoNoBackground } from '@/components/ui/Logo'
 
 
 interface Feature {
@@ -95,7 +95,6 @@ const testimonials = [
 
 export default function LandingPage() {
   const router = useRouter()
-  const [isLoaded, setIsLoaded] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [activeTestimonial, setActiveTestimonial] = useState(0)
 
@@ -103,19 +102,7 @@ export default function LandingPage() {
     setMounted(true)
   }, [])
 
-  useEffect(() => {
-    // Ensure we're on the client side and mounted
-    if (mounted && typeof window !== 'undefined') {
-      setIsLoaded(true)
-      
-      // Auto-rotate testimonials
-      const interval = setInterval(() => {
-        setActiveTestimonial((prev: number) => (prev + 1) % testimonials.length)
-      }, 5000)
-      
-      return () => clearInterval(interval)
-    }
-  }, [mounted])
+
 
   const handleGetStarted = () => {
     if (router) {
@@ -129,11 +116,7 @@ export default function LandingPage() {
     }
   }
 
-  const handleLearnMore = () => {
-    if (typeof window !== 'undefined') {
-      document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
+
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -636,18 +619,18 @@ export default function LandingPage() {
                 transition={{ duration: 0.5 }}
                 className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 text-center"
               >
-                <div className="text-4xl mb-4">{testimonials[activeTestimonial].avatar}</div>
+                <div className="text-4xl mb-4">{testimonials[activeTestimonial]?.avatar}</div>
                 <div className="flex justify-center mb-4">
-                  {[...Array(testimonials[activeTestimonial].rating)].map((_, i) => (
+                  {[...Array(testimonials[activeTestimonial]?.rating || 0)].map((_, i) => (
                     <span key={i} className="text-yellow-400 text-xl">⭐</span>
                   ))}
                 </div>
                 <blockquote className="text-xl text-white/80 mb-6 italic">
-                  "{testimonials[activeTestimonial].content}"
+                  "{testimonials[activeTestimonial]?.content}"
                 </blockquote>
                 <div>
-                  <div className="font-semibold text-white">{testimonials[activeTestimonial].name}</div>
-                  <div className="text-white/60">{testimonials[activeTestimonial].role}</div>
+                  <div className="font-semibold text-white">{testimonials[activeTestimonial]?.name}</div>
+                  <div className="text-white/60">{testimonials[activeTestimonial]?.role}</div>
                 </div>
                  </motion.div>
             </AnimatePresence>
@@ -661,6 +644,8 @@ export default function LandingPage() {
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
                     index === activeTestimonial ? 'bg-green-500' : 'bg-white/20'
                   }`}
+                  aria-label={`Testimonial ${index + 1} anzeigen`}
+                  title={`Testimonial ${index + 1} anzeigen`}
                 />
              ))}
            </div>
@@ -695,7 +680,7 @@ export default function LandingPage() {
             <motion.button
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
-                onClick={() => router && router.push('/contact')}
+                onClick={handleSignIn}
                 className="border-2 border-white/20 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/10 transition-all duration-300 backdrop-blur-sm"
             >
                 Anmelden

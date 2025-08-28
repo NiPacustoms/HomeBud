@@ -217,7 +217,7 @@ export default function DiagnosePage() {
                   <CannabisDiagnosisAnalyzer
                     plantId={selectedPlant}
                     plantName={mockPlants.find(p => p.id === selectedPlant)?.name || ''}
-                    onDiagnosisComplete={(result) => setAnalysisResult(result)}
+                    onDiagnosisComplete={(result) => console.log('Diagnosis result:', result)}
                   />
                 )}
               </motion.div>

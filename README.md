@@ -1,189 +1,222 @@
-# 🌱 HomeBud - Cannabis Growing App
+# HomeBud - Cannabis Growing Assistant
 
-Eine umfassende, wissenschaftlich fundierte Cannabis-Anbau-App mit KI-gestützten Funktionen und moderner Benutzeroberfläche.
+Eine umfassende Next.js-Anwendung für Cannabis-Anbauer mit Firebase-Integration.
 
 ## 🚀 Features
 
-### 📊 Dashboard-Kernansicht
-- **Projektübersicht**: Strain-Name, Wachstumsphase, Fortschrittsbalken
-- **Echtzeit-Monitoring**: Temperatur, Luftfeuchtigkeit, PPFD, VPD, pH-Wert, CO₂
-- **To-Do & Erinnerungen**: Aufgabenverwaltung mit Prioritäten
-- **Modul-Quicklinks**: Schnellzugriff auf wichtige Funktionen
-- **KI-Empfehlungen**: Dynamische Handlungsvorschläge
-- **Performance & Trends**: Ertragsprognose, Wachstumskurven
-- **Foto-Tagebuch**: Bilddokumentation mit Notizen
+- **Dashboard**: Übersicht über alle Pflanzen und Messungen
+- **Pflanzenverwaltung**: Detaillierte Aufzeichnung von Pflanzenwachstum
+- **Messungen**: Temperatur, Luftfeuchtigkeit, pH-Wert, EC-Wert
+- **Notizen**: Dokumentation von Beobachtungen und Maßnahmen
+- **Strain-Datenbank**: Vergleich verschiedener Cannabis-Sorten
+- **KI-Diagnose**: Automatische Problemerkennung
+- **Firebase-Integration**: Authentifizierung und Datenpersistierung
 
-### 🧬 Strain-Datenbank
-- **Umfassende Strain-Profile**: Genetik, Cannabinoide, Anbaubedingungen
-- **KI-gestützte Empfehlungen**: Personalisierte Strain-Auswahl
-- **Filter & Suche**: Nach allen wichtigen Merkmalen
-- **Vergleichsfunktion**: Side-by-Side Strain-Vergleiche
+## 🔧 Firebase Setup
 
-### 🔍 KI-Diagnose
-- **Bild-Analyse**: Automatische Problemerkennung
-- **Behandlungsvorschläge**: Konkrete Handlungsanweisungen
-- **Google Gemini Integration**: Moderne KI-Technologie
+### 1. Firebase-Projekt erstellen
 
-### 📅 Planner & Kalender
-- **Grow-Kalender**: Phasen-Timeline und Aufgabenplanung
-- **Phasen-Planung**: Detaillierte Wachstumsphasen
-- **Erinnerungen**: Automatische Benachrichtigungen
+1. Gehe zu [Firebase Console](https://console.firebase.google.com/)
+2. Erstelle ein neues Projekt oder verwende ein bestehendes
+3. Aktiviere Authentication (Email/Password, Google)
+4. Erstelle eine Firestore-Datenbank
+5. Aktiviere Storage (optional)
 
-### 🍄 Biologische Innovationen
-- **Mykorrhiza-Integration**: Optimierte Wurzelentwicklung
-- **Trichoderma-Anwendung**: Natürlicher Pflanzenschutz
-- **Tissue Culture**: In-vitro-Klonierung
+### 2. Umgebungsvariablen konfigurieren
 
-### 💧 Bewässerungs-Rechner
-- **Wissenschaftlich fundiert**: Basierend auf Cannabis-spezifischen Daten
-- **Automatische Berechnung**: Substrat, Pflanzengröße, Umgebung
-- **Personalisiert**: Anpassung an individuelle Bedingungen
+Kopiere `env.example` zu `.env.local` und fülle die Firebase-Konfiguration aus:
 
-### 📈 Analytics & Monitoring
-- **Echtzeit-Daten**: Kontinuierliche Überwachung
-- **Trend-Analyse**: Wachstumsentwicklung
-- **Performance-Metriken**: Ertragsoptimierung
-
-## 🛠️ Technologie-Stack
-
-- **Frontend**: Next.js 14, React 18, TypeScript
-- **Styling**: Tailwind CSS, Framer Motion
-- **State Management**: Redux Toolkit
-- **KI-Integration**: Google Gemini API
-- **UI-Komponenten**: Custom Design System
-- **PWA**: Progressive Web App Features
-
-## 📱 Mobile Optimierung
-
-- **Responsive Design**: Optimiert für alle Bildschirmgrößen
-- **Touch-freundlich**: Große Touch-Targets (44px+)
-- **Offline-Funktionalität**: PWA mit Service Worker
-- **Performance**: Optimierte Ladezeiten
-
-## 🚀 Installation & Setup
-
-### Voraussetzungen
-- Node.js 18+ 
-- npm oder yarn
-
-### Installation
 ```bash
-# Repository klonen
-git clone https://github.com/NiPacustoms/HomeBud.git
-cd HomeBud
+cp env.example .env.local
+```
 
+```env
+NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key_here
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=your_measurement_id
+```
+
+### 3. Firestore Security Rules
+
+```javascript
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Benutzer können nur ihre eigenen Daten lesen/schreiben
+    match /{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.userId;
+    }
+  }
+}
+```
+
+## 📦 Installation
+
+```bash
 # Dependencies installieren
 npm install
 
 # Entwicklungsserver starten
 npm run dev
+
+# Build für Produktion
+npm run build
+
+# Produktionsserver starten
+npm start
 ```
 
-### Umgebungsvariablen
-Erstellen Sie eine `.env.local` Datei:
-```env
-# Google Gemini API
-GEMINI_API_KEY=your_gemini_api_key_here
-
-# Weitere Konfigurationen
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-```
-
-## 📁 Projektstruktur
+## 🏗️ Projektstruktur
 
 ```
-HomeBud/
-├── src/
-│   ├── app/                    # Next.js App Router
-│   ├── components/             # React Komponenten
-│   │   ├── dashboard/          # Dashboard-Komponenten
-│   │   ├── strains/            # Strain-Datenbank
-│   │   ├── diagnosis/          # KI-Diagnose
-│   │   ├── planner/            # Kalender & Planung
-│   │   ├── biological/         # Biologische Module
-│   │   └── ui/                 # UI-Komponenten
-│   ├── services/               # API-Services
-│   ├── store/                  # Redux Store
-│   ├── types/                  # TypeScript Typen
-│   └── hooks/                  # Custom Hooks
-├── public/                     # Statische Assets
-├── docs/                       # Dokumentation
-└── scripts/                    # Build-Scripts
+src/
+├── app/                 # Next.js App Router
+├── components/          # React-Komponenten
+│   ├── ui/             # UI-Komponenten
+│   ├── dashboard/      # Dashboard-Komponenten
+│   └── ...
+├── services/           # Service-Layer
+│   ├── firebase/       # Firebase-Services
+│   └── ...
+├── hooks/              # Custom Hooks
+├── store/              # Redux Store
+├── types/              # TypeScript-Typen
+└── lib/                # Utilities
+    └── firebase.ts     # Firebase-Konfiguration
 ```
 
-## 🎨 Design System
+## 🔐 Authentifizierung
 
-### Farbpalette
-- **Primary**: Grün (#10B981) - Cannabis/Wachstum
-- **Secondary**: Blau (#3B82F6) - Wasser/Technologie
-- **Accent**: Lila (#8B5CF6) - Innovation
-- **Neutral**: Grau (#6B7280) - UI-Elemente
+Die Anwendung verwendet Firebase Authentication mit:
 
-### Typografie
-- **Headings**: Inter (Bold)
-- **Body**: Inter (Regular)
-- **Code**: JetBrains Mono
+- **Email/Password**: Standard-Registrierung und Login
+- **Google OAuth**: Ein-Klick-Login mit Google
+- **Passwort-Reset**: Automatische E-Mail-Versendung
 
-### Komponenten
-- **Buttons**: Verschiedene Varianten (Primary, Secondary, Ghost)
-- **Cards**: Glassmorphism-Effekt
-- **Forms**: Validierte Eingabefelder
-- **Charts**: Interaktive Visualisierungen
+### Verwendung in Komponenten
 
-## 🔧 Entwicklung
+```typescript
+import { useFirebase } from '@/hooks/useFirebase';
 
-### Scripts
+const MyComponent = () => {
+  const { user, login, logout, loading } = useFirebase();
+
+  if (loading) return <div>Laden...</div>;
+  
+  if (!user) {
+    return <button onClick={() => login('email', 'password')}>Login</button>;
+  }
+
+  return (
+    <div>
+      <p>Willkommen, {user.displayName}!</p>
+      <button onClick={logout}>Logout</button>
+    </div>
+  );
+};
+```
+
+## 📊 Datenpersistierung
+
+Firestore wird für folgende Daten verwendet:
+
+- **Pflanzen**: Alle Pflanzeninformationen
+- **Messungen**: Sensor- und Messdaten
+- **Notizen**: Benutzer-Notizen
+- **Dashboard**: Dashboard-Konfiguration
+
+### Verwendung
+
+```typescript
+import { useFirebase } from '@/hooks/useFirebase';
+
+const DataComponent = () => {
+  const { createDocument, getUserDocuments } = useFirebase();
+
+  // Dokument erstellen
+  const createPlant = async () => {
+    const plantId = await createDocument('plants', {
+      name: 'Cannabis Plant',
+      strain: 'OG Kush',
+      // ... weitere Daten
+    });
+  };
+
+  // Dokumente abrufen
+  const loadPlants = async () => {
+    const plants = await getUserDocuments('plants');
+    console.log(plants);
+  };
+};
+```
+
+## 🛠️ Entwicklung
+
+### Firebase Emulator (Entwicklung)
+
 ```bash
-# Entwicklung
-npm run dev          # Entwicklungsserver
-npm run build        # Production Build
-npm run start        # Production Server
-npm run lint         # ESLint
-npm run type-check   # TypeScript Check
+# Firebase CLI installieren
+npm install -g firebase-tools
+
+# Emulator starten
+firebase emulators:start
 ```
 
-### Code-Standards
-- **TypeScript**: Strikte Typisierung
-- **ESLint**: Code-Qualität
-- **Prettier**: Code-Formatierung
-- **Husky**: Pre-commit Hooks
+### TypeScript
 
-## 📚 Dokumentation
+Die Anwendung ist vollständig in TypeScript geschrieben mit:
 
-Umfassende Dokumentation finden Sie im `docs/` Verzeichnis:
+- Strikte Typisierung
+- Interface-Definitionen für alle Datenstrukturen
+- Type-Safe Firebase-Integration
 
-- [Dashboard-Kernansicht](docs/DASHBOARD_KERNANSICHT.md)
-- [Strain-Datenbank Integration](docs/STRAIN_DATENBANK_INTEGRATION.md)
-- [KI-Diagnose Implementierung](docs/KI_DIAGNOSE_IMPLEMENTIERUNG.md)
-- [Design System](docs/DESIGN_SYSTEM.md)
-- [Modulare Architektur](docs/MODULAR_ARCHITECTURE.md)
+### Linting
+
+```bash
+# ESLint ausführen
+npm run lint
+
+# TypeScript-Prüfung
+npm run type-check
+```
+
+## 🚀 Deployment
+
+### Vercel (Empfohlen)
+
+1. Verbinde dein GitHub-Repository mit Vercel
+2. Konfiguriere die Umgebungsvariablen in Vercel
+3. Deploy automatisch bei jedem Push
+
+### Andere Plattformen
+
+Die Anwendung kann auf jeder Node.js-Plattform deployed werden:
+
+- Netlify
+- Railway
+- Heroku
+- AWS Amplify
+
+## 📝 Lizenz
+
+Dieses Projekt ist für Bildungszwecke bestimmt. Bitte beachte die lokalen Gesetze bezüglich Cannabis-Anbau.
 
 ## 🤝 Beitragen
 
 1. Fork das Repository
-2. Erstellen Sie einen Feature-Branch (`git checkout -b feature/AmazingFeature`)
-3. Committen Sie Ihre Änderungen (`git commit -m 'Add some AmazingFeature'`)
-4. Pushen Sie zum Branch (`git push origin feature/AmazingFeature`)
-5. Öffnen Sie einen Pull Request
-
-## 📄 Lizenz
-
-Dieses Projekt ist unter der MIT-Lizenz lizenziert - siehe [LICENSE](LICENSE) Datei für Details.
-
-## 🙏 Danksagungen
-
-- **Google Gemini**: KI-Integration
-- **Next.js Team**: Framework
-- **Tailwind CSS**: Styling
-- **Framer Motion**: Animationen
-- **Cannabis Community**: Wissenschaftliche Erkenntnisse
+2. Erstelle einen Feature-Branch
+3. Committe deine Änderungen
+4. Push zum Branch
+5. Erstelle einen Pull Request
 
 ## 📞 Support
 
 Bei Fragen oder Problemen:
-- **Issues**: [GitHub Issues](https://github.com/NiPacustoms/HomeBud/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/NiPacustoms/HomeBud/discussions)
 
----
-
-**HomeBud** - Wissenschaftlich fundierter Cannabis-Anbau mit modernster Technologie 🌱✨
+- Erstelle ein Issue im GitHub-Repository
+- Kontaktiere das Entwicklungsteam
+- Konsultiere die Firebase-Dokumentation

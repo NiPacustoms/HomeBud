@@ -1,13 +1,12 @@
 'use client'
 
-import React from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 
 interface BackButtonProps {
   href?: string
   className?: string
-  children?: React.ReactNode
+  children?: any
 }
 
 export default function BackButton({ href, className = '', children }: BackButtonProps) {

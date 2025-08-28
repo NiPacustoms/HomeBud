@@ -162,15 +162,20 @@ export const analyzeAllMeasurements = (
   const targetRanges = getTargetRanges(growthPhase, growType)
   const vpd = calculateVPD(measurements.temperature, measurements.humidity)
 
-  return {
+  const result: any = {
     temperature: analyzeMeasurement(measurements.temperature, targetRanges.temperature, 'Temperatur'),
     humidity: analyzeMeasurement(measurements.humidity, targetRanges.humidity, 'Luftfeuchtigkeit'),
     lightLevel: analyzeMeasurement(measurements.lightLevel, targetRanges.lightLevel, 'Lichtstärke'),
     ph: analyzeMeasurement(measurements.ph, targetRanges.ph, 'pH-Wert'),
     ec: analyzeMeasurement(measurements.ec, targetRanges.ec, 'EC-Wert'),
-    co2: measurements.co2 ? analyzeMeasurement(measurements.co2, targetRanges.co2, 'CO₂') : undefined,
     vpd: analyzeMeasurement(vpd, targetRanges.vpd, 'VPD')
   }
+
+  if (typeof measurements.co2 === 'number') {
+    result.co2 = analyzeMeasurement(measurements.co2, targetRanges.co2, 'CO₂')
+  }
+
+  return result
 }
 
 // Hilfetexte für Messungen

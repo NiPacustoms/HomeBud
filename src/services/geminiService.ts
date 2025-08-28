@@ -73,6 +73,14 @@ export interface GeminiTreatmentPlan {
   cost: 'low' | 'medium' | 'high';
 }
 
+export interface GeminiTrichomeAnalysis {
+  clear: number;
+  milky: number;
+  amber: number;
+  recommendation: string;
+  confidence: number;
+}
+
 export class GeminiDiagnosisService {
   
   // Bild zu Base64 konvertieren
@@ -88,6 +96,80 @@ export class GeminiDiagnosisService {
       reader.onerror = reject;
       reader.readAsDataURL(file);
     });
+  }
+
+  // Spezialisierte Trichom-Analyse (Klar/Milchig/Bernstein)
+  static async analyzeTrichomes(
+    imageBase64: string,
+    harvestGoal: 'head_high' | 'balanced' | 'sedative' = 'balanced',
+    options: { timeoutMs?: number; signal?: AbortSignal } = {}
+  ): Promise<GeminiTrichomeAnalysis> {
+    if (!GEMINI_API_KEY) {
+      throw new Error('Gemini API Key nicht konfiguriert');
+    }
+
+    const model = genAI.getGenerativeModel({ model: 'gemini-pro-vision' });
+
+    const prompt = `
+    Analysiere ausschließlich die Trichome dieser Cannabis-Blüte im Makrobild.
+
+    Ziele:
+    - Schätze die prozentuale Verteilung von Klar/Milchig/Bernstein.
+    - Gib eine Ernteempfehlung basierend auf dem Ziel: ${harvestGoal}.
+
+    Hinweise:
+    - Klar: durchsichtig, glasig
+    - Milchig: opak/weiß
+    - Bernstein: gelblich/braun
+
+    Antworte NUR in diesem JSON-Format:
+    {
+      "clear": 25,
+      "milky": 55,
+      "amber": 20,
+      "recommendation": "Jetzt/Noch warten/...",
+      "confidence": 82
+    }
+    `;
+
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), options.timeoutMs ?? 20000);
+      const signal = options.signal ?? controller.signal;
+      const result = await model.generateContent([
+        prompt,
+        {
+          inlineData: {
+            mimeType: 'image/jpeg',
+            data: imageBase64,
+          },
+        },
+      ], { signal } as any);
+
+      const response = await result.response;
+      const parsed = this.parseGeminiResponse(response.text());
+
+      // Validate and clamp
+      const toNumber = (v: any) => (typeof v === 'number' ? v : Number(v || 0));
+      const clear = Math.max(0, Math.min(100, toNumber(parsed.clear)));
+      const milky = Math.max(0, Math.min(100, toNumber(parsed.milky)));
+      const amber = Math.max(0, Math.min(100, toNumber(parsed.amber)));
+      const sum = clear + milky + amber || 1;
+      const norm = (n: number) => Math.round((n / sum) * 100);
+
+      const normalized: GeminiTrichomeAnalysis = {
+        clear: norm(clear),
+        milky: norm(milky),
+        amber: norm(amber),
+        recommendation: parsed.recommendation || 'Überwachen und erneut prüfen',
+        confidence: Math.max(0, Math.min(100, toNumber(parsed.confidence) || 70)),
+      };
+
+      return normalized;
+    } catch (error) {
+      console.error('Gemini Trichom-Analyse Fehler:', error);
+      throw new Error('Trichom-Analyse fehlgeschlagen. Bitte versuchen Sie es erneut.');
+    }
   }
 
   // Gemini Pro Vision für Bildanalyse

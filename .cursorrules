@@ -1,0 +1,48 @@
+## Globale Cursor-Regeln (HomeBud)
+
+Diese Regeln gelten für alle Code-Generierungen, Edits und Antworten innerhalb dieses Repos.
+
+- Sprache: Antworte standardmäßig auf Deutsch.
+- Stil: Schreibe klar, knapp, gut strukturierte Antworten. Nutze Aufzählungen, wo sinnvoll.
+- Code-Qualität: Bevorzuge lesbaren, gut benannten Code. Kein übermäßiges Einzeiler-Magie.
+- Typen: In TypeScript/APIs möglichst explizite Signaturen, keine unnötigen any-Casts.
+- Kontrolle: Frühe Rückgaben, Fehlerpfade zuerst, keine leeren Catches.
+- Kommentare: Nur dort, wo „Warum“ erklärungsbedürftig ist; keine trivialen Kommentare.
+- Formatierung: Existierenden Stil respektieren; keine unnötigen Reformatierungen.
+- Linter: Nach Edits auf Linter-Fehler prüfen und beheben, sofern eindeutig.
+- Tools: Nicht-blockierende Befehle im Hintergrund starten; Pager mit `| cat` umgehen.
+
+### Projektspezifisch
+
+- UI/UX: Komponenten in `src/components/ui` und Seiten in `src/app` konsistent halten.
+- Datenstrukturen: Siehe `src/types/*` und Services in `src/services/*` als Single Source of Truth.
+- Struktur: Neue Features als modulare Komponenten anlegen, keine Monolith-Komponenten.
+
+### Prompt-Optimierung (Template)
+
+Nutze folgendes Template, um Prompts zu schärfen. Dieses Schema kann im Projekt-Ordner unter `.cursor/rules/prompt-optimization.md` gepflegt werden. Bitte anwenden, wenn unklar ist, was genau gebaut werden soll.
+
+1) Ziel: Was ist das konkrete Ergebnis/Output? (1–2 Sätze)
+2) Kontext: Welche Dateien/Module/Constraints sind relevant? (Bulletpoints)
+3) Qualitätskriterien: Tests, Linting, Performance, DX, DX-Hinweise
+4) Akzeptanzkriterien: Messbare, überprüfbare Bedingungen
+5) Risiken/Annahmen: Offene Punkte, die verifiziert werden sollten
+6) Nächste Schritte: Kleinste umsetzbare Schritte (2–5 Punkte)
+
+### Arbeitsweise
+
+- Erst lesen/suchen, dann ändern. Nutze semantische Suche, bevor du große Edits machst.
+- Mehrere unabhängige Reads/Checks parallel ausführen.
+- Vor Edits: Kurzes Status-Update; nach Edits: knappe Zusammenfassung.
+
+### Datei-/Bereichsspezifische Leitlinien
+
+- `src/components/**`: Aufteilbare Logik in Hooks auslagern; Props klar typisieren.
+- `src/services/**`: Keine UI-Logik; saubere Fehlerwerte/Exceptions; klare Rückgabetypen.
+- `src/app/**`: Seiten schlank halten; Datenbereitstellung via Services/Hooks.
+
+---
+
+Hinweis zur Modularisierung: Detailregeln und Vorlagen liegen zusätzlich in `.cursor/rules/`. Sie dienen der Pflege und können bei Bedarf in dieses Dokument übernommen/aktualisiert werden. Cursor liest primär diese `.cursorrules`.
+
+

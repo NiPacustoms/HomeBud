@@ -26,6 +26,8 @@ export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState<'overview' | 'modules' | 'core'>('core')
   const [showDashboardCustomization, setShowDashboardCustomization] = useState(false)
   
+
+  
   // Mock-Daten für Dashboard-Kacheln mit aktuellen Werten
   const [dashboardTiles, setDashboardTiles] = useState<DashboardTile[]>([
     // Monitoring Module
@@ -121,17 +123,42 @@ export default function DashboardPage() {
     compliance: 'Legal & Compliance'
   }
 
+
+
   const getModulesForCategory = (category: ModuleCategory) => {
     return AVAILABLE_MODULES.filter(module => module.category === category)
   }
 
-  const featuredModules = AVAILABLE_MODULES.filter(module => module.features && module.features.length > 0).slice(0, 6)
-  
-  // Stelle sicher, dass das Smart-Grow-System in den Featured Modules enthalten ist
-  const smartGrowSystem = AVAILABLE_MODULES.find(module => module.id === 'smart-grow-system')
-  const finalFeaturedModules = smartGrowSystem && !featuredModules.find(m => m.id === 'smart-grow-system') 
-    ? [smartGrowSystem, ...featuredModules.slice(0, 5)]
-    : featuredModules
+  // Featured Modules für die Übersicht
+  const finalFeaturedModules = [
+    {
+      id: 'ai-diagnosis',
+      name: 'KI-Diagnose',
+      description: 'Automatische Pflanzenanalyse mit KI',
+      icon: '🤖',
+      status: 'available',
+      category: 'diagnosis' as ModuleCategory,
+      color: 'from-blue-500 to-cyan-600'
+    },
+    {
+      id: 'vpd-optimization',
+      name: 'VPD-Optimierung',
+      description: 'Wissenschaftliche VPD-Berechnung',
+      icon: '🌡️',
+      status: 'available',
+      category: 'monitoring' as ModuleCategory,
+      color: 'from-purple-500 to-pink-600'
+    },
+    {
+      id: 'mycorrhiza',
+      name: 'Mykorrhiza-Manager',
+      description: 'Biologische Nährstoffoptimierung',
+      icon: '🍄',
+      status: 'available',
+      category: 'biological' as ModuleCategory,
+      color: 'from-green-500 to-emerald-600'
+    }
+  ]
 
   const handleTileToggle = (tileId: string) => {
     setDashboardTiles((prev: DashboardTile[]) => prev.map((tile: DashboardTile) => 
@@ -461,12 +488,7 @@ export default function DashboardPage() {
                         )}
                       </div>
                       <p className="text-white/70 text-sm mb-4">{module.description}</p>
-                      {module.features && module.features.slice(0, 2).map((feature, idx) => (
-                        <div key={idx} className="flex items-start space-x-2 text-xs mb-1">
-                          <span className="text-green-400 mt-1">•</span>
-                          <span className="text-white/80">{feature}</span>
-                        </div>
-                      ))}
+
                     </motion.div>
                   ))}
                 </div>
@@ -586,16 +608,7 @@ export default function DashboardPage() {
                         </div>
                         <p className="text-white/70 mb-4">{module.description}</p>
                         
-                        {module.features && (
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                            {module.features.map((feature, idx) => (
-                              <div key={idx} className="flex items-start space-x-2 text-sm">
-                                <span className="text-green-400 mt-1">•</span>
-                                <span className="text-white/80">{feature}</span>
-                              </div>
-                            ))}
-                          </div>
-                        )}
+
                       </div>
                     </div>
                   </motion.div>

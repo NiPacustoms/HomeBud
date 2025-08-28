@@ -1,171 +1,171 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
-import { User } from 'firebase/auth'
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { AuthService, AuthUser } from '@/services/firebase/authService';
 
-export interface UserProfile {
-  uid: string
-  email: string
-  displayName?: string
-  photoURL?: string
-  emailVerified: boolean
-  createdAt: Date
-  lastLoginAt: Date
-  preferences: {
-    theme: 'light' | 'dark' | 'system'
-    language: 'de' | 'en'
-    notifications: {
-      email: boolean
-      push: boolean
-      sms: boolean
-    }
-    privacy: {
-      profileVisible: boolean
-      growDataVisible: boolean
-      allowAnalytics: boolean
-    }
+// Async Thunks
+export const loginUser = createAsyncThunk(
+  'auth/login',
+  async ({ email, password }: { email: string; password: string }) => {
+    const user = await AuthService.login(email, password);
+    return user;
   }
-  subscription: {
-    plan: 'free' | 'premium' | 'pro'
-    status: 'active' | 'inactive' | 'cancelled'
-    validUntil: Date
-    features: string[]
-  }
-}
+);
 
+export const loginWithGoogle = createAsyncThunk(
+  'auth/loginWithGoogle',
+  async () => {
+    const user = await AuthService.loginWithGoogle();
+    return user;
+  }
+);
+
+export const registerUser = createAsyncThunk(
+  'auth/register',
+  async ({ email, password, displayName }: { email: string; password: string; displayName?: string }) => {
+    const user = await AuthService.register(email, password, displayName);
+    return user;
+  }
+);
+
+export const logoutUser = createAsyncThunk(
+  'auth/logout',
+  async () => {
+    await AuthService.logout();
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  'auth/resetPassword',
+  async (email: string) => {
+    await AuthService.resetPassword(email);
+  }
+);
+
+// Auth State Interface
 interface AuthState {
-  user: User | null
-  profile: UserProfile | null
-  isAuthenticated: boolean
-  isLoading: boolean
-  error: string | null
-  isInitialized: boolean
+  user: AuthUser | null;
+  loading: boolean;
+  error: string | null;
+  isAuthenticated: boolean;
 }
 
+// Initial State
 const initialState: AuthState = {
   user: null,
-  profile: null,
-  isAuthenticated: false,
-  isLoading: false,
+  loading: false,
   error: null,
-  isInitialized: false,
-}
+  isAuthenticated: false,
+};
 
-// Async thunks
-export const signInWithEmail = createAsyncThunk(
-  'auth/signInWithEmail',
-  async ({ email, password }: { email: string; password: string }) => {
-    // TODO: Implement Firebase auth
-    return { user: null, profile: null }
-  }
-)
-
-export const signUpWithEmail = createAsyncThunk(
-  'auth/signUpWithEmail',
-  async ({ email, password, displayName }: { email: string; password: string; displayName?: string }) => {
-    // TODO: Implement Firebase auth
-    return { user: null, profile: null }
-  }
-)
-
-export const signOut = createAsyncThunk(
-  'auth/signOut',
-  async () => {
-    // TODO: Implement Firebase sign out
-    return null
-  }
-)
-
-export const updateProfile = createAsyncThunk(
-  'auth/updateProfile',
-  async (updates: Partial<UserProfile>) => {
-    // TODO: Implement profile update
-    return updates
-  }
-)
-
+// Auth Slice
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<User | null>) => {
-      state.user = action.payload
-      state.isAuthenticated = !!action.payload
-    },
-    setProfile: (state, action: PayloadAction<UserProfile | null>) => {
-      state.profile = action.payload
-    },
-    setLoading: (state, action: PayloadAction<boolean>) => {
-      state.isLoading = action.payload
-    },
-    setError: (state, action: PayloadAction<string | null>) => {
-      state.error = action.payload
-    },
-    setInitialized: (state, action: PayloadAction<boolean>) => {
-      state.isInitialized = action.payload
+    setUser: (state, action: PayloadAction<AuthUser | null>) => {
+      state.user = action.payload;
+      state.isAuthenticated = !!action.payload;
+      state.error = null;
     },
     clearError: (state) => {
-      state.error = null
+      state.error = null;
     },
-    updatePreferences: (state, action: PayloadAction<Partial<UserProfile['preferences']>>) => {
-      if (state.profile) {
-        state.profile.preferences = { ...state.profile.preferences, ...action.payload }
-      }
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
     },
   },
   extraReducers: (builder) => {
+    // Login
     builder
-      // Sign in
-      .addCase(signInWithEmail.pending, (state) => {
-        state.isLoading = true
-        state.error = null
+      .addCase(loginUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
       })
-      .addCase(signInWithEmail.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.user = action.payload.user
-        state.profile = action.payload.profile
-        state.isAuthenticated = true
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.isAuthenticated = true;
+        state.error = null;
       })
-      .addCase(signInWithEmail.rejected, (state, action) => {
-        state.isLoading = false
-        state.error = action.error.message || 'Anmeldung fehlgeschlagen'
+      .addCase(loginUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Login fehlgeschlagen';
+      });
+
+    // Google Login
+    builder
+      .addCase(loginWithGoogle.pending, (state) => {
+        state.loading = true;
+        state.error = null;
       })
-      // Sign up
-      .addCase(signUpWithEmail.pending, (state) => {
-        state.isLoading = true
-        state.error = null
+      .addCase(loginWithGoogle.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.isAuthenticated = true;
+        state.error = null;
       })
-      .addCase(signUpWithEmail.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.user = action.payload.user
-        state.profile = action.payload.profile
-        state.isAuthenticated = true
+      .addCase(loginWithGoogle.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Google Login fehlgeschlagen';
+      });
+
+    // Register
+    builder
+      .addCase(registerUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
       })
-      .addCase(signUpWithEmail.rejected, (state, action) => {
-        state.isLoading = false
-        state.error = action.error.message || 'Registrierung fehlgeschlagen'
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.isAuthenticated = true;
+        state.error = null;
       })
-      // Sign out
-      .addCase(signOut.fulfilled, (state) => {
-        state.user = null
-        state.profile = null
-        state.isAuthenticated = false
+      .addCase(registerUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Registrierung fehlgeschlagen';
+      });
+
+    // Logout
+    builder
+      .addCase(logoutUser.pending, (state) => {
+        state.loading = true;
       })
-      // Update profile
-      .addCase(updateProfile.fulfilled, (state, action) => {
-        if (state.profile) {
-          state.profile = { ...state.profile, ...action.payload }
-        }
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.loading = false;
+        state.user = null;
+        state.isAuthenticated = false;
+        state.error = null;
       })
+      .addCase(logoutUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Logout fehlgeschlagen';
+      });
+
+    // Reset Password
+    builder
+      .addCase(resetPassword.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(resetPassword.fulfilled, (state) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Passwort-Reset fehlgeschlagen';
+      });
   },
-})
+});
 
-export const {
-  setUser,
-  setProfile,
-  setLoading,
-  setError,
-  setInitialized,
-  clearError,
-  updatePreferences,
-} = authSlice.actions
+// Actions
+export const { setUser, clearError, setLoading } = authSlice.actions;
 
-export default authSlice.reducer
+// Selectors
+export const selectUser = (state: { auth: AuthState }) => state.auth.user;
+export const selectIsAuthenticated = (state: { auth: AuthState }) => state.auth.isAuthenticated;
+export const selectAuthLoading = (state: { auth: AuthState }) => state.auth.loading;
+export const selectAuthError = (state: { auth: AuthState }) => state.auth.error;
+
+// Reducer
+export default authSlice.reducer;

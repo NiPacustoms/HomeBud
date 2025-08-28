@@ -10,6 +10,8 @@ export class StrainDatabaseService {
   private static instance: StrainDatabaseService;
   private strainDatabase: StrainDatabase | null = null;
   private isInitialized = false;
+  private lastFetchedAt: number | null = null;
+  private memoryCacheAll: Strain[] | null = null;
 
   static getInstance(): StrainDatabaseService {
     if (!StrainDatabaseService.instance) {
@@ -23,12 +25,17 @@ export class StrainDatabaseService {
 
     try {
       // Lade die Strain-Datenbank aus dem public/data Ordner
-      const response = await fetch('/data/strain-database.json');
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 8000);
+      const response = await fetch('/data/strain-database.json', { signal: controller.signal, cache: 'no-cache' });
+      clearTimeout(timeout);
       if (!response.ok) {
         throw new Error('Strain-Datenbank konnte nicht geladen werden');
       }
       
       this.strainDatabase = await response.json();
+      this.lastFetchedAt = Date.now();
+      this.memoryCacheAll = this.strainDatabase.strains;
       this.isInitialized = true;
     } catch (error) {
       console.error('Fehler beim Laden der Strain-Datenbank:', error);
@@ -46,11 +53,19 @@ export class StrainDatabaseService {
         lastUpdated: new Date(),
         version: '1.0.0'
       };
+      this.memoryCacheAll = [];
     }
   }
 
   // Grundlegende Datenbank-Operationen
   async getAllStrains(): Promise<Strain[]> {
+    if (this.memoryCacheAll && this.memoryCacheAll.length > 0) {
+      const maxAgeMs = 24 * 60 * 60 * 1000;
+      if (!this.lastFetchedAt || Date.now() - this.lastFetchedAt > maxAgeMs) {
+        this.initializeDatabase().catch(() => {});
+      }
+      return this.memoryCacheAll;
+    }
     await this.initializeDatabase();
     return this.strainDatabase?.strains || [];
   }

@@ -1,36 +1,19 @@
 'use client'
 
-import React, { useRef, useEffect, useState } from 'react'
-import { motion, useScroll, useTransform, useInView } from 'framer-motion'
+import React, { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import BackButton from '@/components/ui/BackButton'
 
 export default function ImpressumPage() {
   const router = useRouter()
-  const [isNavVisible, setIsNavVisible] = useState(true)
   const heroRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
-  const [isLoaded, setIsLoaded] = useState(false)
-  
-  useEffect(() => {
-    setIsLoaded(true)
-  }, [])
   
   const { scrollY } = useScroll()
   const heroY = useTransform(scrollY, [0, 500], [0, -100])
   const heroOpacity = useTransform(scrollY, [0, 300], [1, 0.8])
   const heroScale = useTransform(scrollY, [0, 300], [1, 0.95])
-
-  const contentInView = useInView(contentRef, { once: true, amount: 0.3 })
-
-  // Navigation visibility
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsNavVisible(window.scrollY < 100)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
 
   // Impressum sections
   const impressumSections = [

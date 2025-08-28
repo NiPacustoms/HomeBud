@@ -1,13 +1,12 @@
 'use client'
 
 import React, { useRef, useEffect, useState } from 'react'
-import { motion, useScroll, useTransform, useInView } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import Logo from '@/components/ui/Logo'
 
 export default function LandingPage() {
   const router = useRouter()
-  const [isLoaded, setIsLoaded] = useState(false)
   const [mounted, setMounted] = useState(false)
   
   const containerRef = useRef<HTMLDivElement>(null)
@@ -20,18 +19,9 @@ export default function LandingPage() {
   const heroOpacity = useTransform(scrollY, [0, 300], [1, 0.8])
   const heroScale = useTransform(scrollY, [0, 300], [1, 0.95])
 
-  const featuresInView = useInView(featuresRef, { once: true, amount: 0.3 })
-  const statsInView = useInView(statsRef, { once: true, amount: 0.3 })
-
   useEffect(() => {
     setMounted(true)
   }, [])
-
-  useEffect(() => {
-    if (mounted && typeof window !== 'undefined') {
-      setIsLoaded(true)
-    }
-  }, [mounted])
 
   const handleGetStarted = () => {
     if (router) {

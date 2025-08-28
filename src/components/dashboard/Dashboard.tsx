@@ -2,12 +2,16 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { Settings, Customize } from 'lucide-react'
 import DailyDataEntry from './DailyDataEntry'
 import CurrentValuesDisplay from './CurrentValuesDisplay'
 import DataVisualization from './DataVisualization'
 import MeasurementAnalysis from './MeasurementAnalysis'
 import MeasurementReminders from './MeasurementReminders'
+import DashboardCustomization from './DashboardCustomization'
 import { DailyDataEntry as DailyDataEntryType, MeasurementReminder, MeasurementChecklist } from '@/types/plant'
+import { DashboardTile } from '@/types/dashboard'
+import useDashboard from '@/hooks/useDashboard'
 
 interface DashboardProps {
   className?: string
@@ -18,6 +22,9 @@ export default function Dashboard({ className = '' }: DashboardProps) {
   const [reminders, setReminders] = useState<MeasurementReminder[]>([])
   const [checklists, setChecklists] = useState<MeasurementChecklist[]>([])
   const [showAnalysis, setShowAnalysis] = useState(false)
+  const [showCustomization, setShowCustomization] = useState(false)
+
+  const { tiles, saveTiles } = useDashboard()
 
   // Mock-Daten für Demo
   useEffect(() => {
@@ -242,16 +249,32 @@ export default function Dashboard({ className = '' }: DashboardProps) {
     ))
   }
 
+  const handleSaveDashboardTiles = async (newTiles: DashboardTile[]) => {
+    await saveTiles(newTiles)
+    setShowCustomization(false)
+  }
+
   const lastEntry = dailyData[0]
 
   return (
     <div className={`space-y-6 ${className}`}>
-      {/* Header */}
+      {/* Header mit Anpassen-Button */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center"
+        className="text-center relative"
       >
+        <div className="absolute top-0 right-0">
+          <button
+            onClick={() => setShowCustomization(true)}
+            className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-lg"
+            title="Dashboard anpassen"
+          >
+            <Customize className="w-4 h-4" />
+            <span className="hidden sm:inline">Anpassen</span>
+          </button>
+        </div>
+        
         <h1 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
           🏠 HomeBud Dashboard
         </h1>
@@ -357,6 +380,14 @@ export default function Dashboard({ className = '' }: DashboardProps) {
           </div>
         </div>
       </motion.div>
+
+      {/* Dashboard-Anpassung */}
+      <DashboardCustomization
+        isOpen={showCustomization}
+        onClose={() => setShowCustomization(false)}
+        onSave={handleSaveDashboardTiles}
+        currentTiles={tiles as DashboardTile[]}
+      />
     </div>
   )
 }

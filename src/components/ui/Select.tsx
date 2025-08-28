@@ -1,38 +1,51 @@
 'use client'
 
-import React, { forwardRef } from 'react'
+import React, { forwardRef, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface SelectOption {
+  value: string
+  label: string
+  disabled?: boolean
+}
+
+interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'onChange'> {
+  options: SelectOption[]
   label?: string
   error?: string
   helperText?: string
-  leftIcon?: React.ReactNode
-  rightIcon?: React.ReactNode
+  placeholder?: string
   variant?: 'default' | 'outlined' | 'filled'
   size?: 'sm' | 'md' | 'lg'
   fullWidth?: boolean
+  onChange?: (value: string) => void
 }
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(({
+export const Select = forwardRef<HTMLSelectElement, SelectProps>(({
+  options,
   label,
   error,
   helperText,
-  leftIcon,
-  rightIcon,
+  placeholder = 'Bitte wählen...',
   variant = 'default',
   size = 'md',
   fullWidth = false,
   className = '',
   id,
+  value,
+  onChange,
   ...props
 }, ref) => {
-  const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`
+  const selectId = id || `select-${Math.random().toString(36).substr(2, 9)}`
   const hasError = !!error
+  const [isOpen, setIsOpen] = useState(false)
+
+  const selectedOption = options.find(opt => opt.value === value)
 
   const baseClasses = cn(
     'block w-full border rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-0',
-    'disabled:opacity-50 disabled:cursor-not-allowed',
+    'disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer',
     fullWidth && 'w-full'
   )
 
@@ -60,17 +73,16 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
     lg: 'px-4 py-3 text-base'
   }
 
-  const iconClasses = {
-    sm: 'w-4 h-4',
-    md: 'w-4 h-4',
-    lg: 'w-5 h-5'
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newValue = event.target.value
+    onChange?.(newValue)
   }
 
   return (
     <div className={cn('space-y-1', fullWidth && 'w-full')}>
       {label && (
         <label
-          htmlFor={inputId}
+          htmlFor={selectId}
           className="block text-sm font-medium text-gray-700 dark:text-gray-300"
         >
           {label}
@@ -78,44 +90,51 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
       )}
       
       <div className="relative">
-        {leftIcon && (
-          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-            <div className={iconClasses[size]}>
-              {leftIcon}
-            </div>
-          </div>
-        )}
-        
-        <input
+        <select
           ref={ref}
-          id={inputId}
+          id={selectId}
+          value={value}
+          onChange={handleSelectChange}
           className={cn(
             baseClasses,
             variantClasses[variant],
             sizeClasses[size],
-            leftIcon && 'pl-10',
-            rightIcon && 'pr-10',
+            'appearance-none',
             className
           )}
           aria-invalid={hasError ? 'true' : 'false'}
           aria-describedby={
-            hasError ? `${inputId}-error` : helperText ? `${inputId}-helper` : undefined
+            hasError ? `${selectId}-error` : helperText ? `${selectId}-helper` : undefined
           }
           {...props}
-        />
+        >
+          {placeholder && (
+            <option value="" disabled>
+              {placeholder}
+            </option>
+          )}
+          {options.map((option) => (
+            <option
+              key={option.value}
+              value={option.value}
+              disabled={option.disabled}
+            >
+              {option.label}
+            </option>
+          ))}
+        </select>
         
-        {rightIcon && (
-          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-            <div className={iconClasses[size]}>
-              {rightIcon}
-            </div>
-          </div>
-        )}
+        {/* Custom dropdown arrow */}
+        <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+          <svg className="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+          </svg>
+        </div>
       </div>
       
       {hasError && (
         <p
-          id={`${inputId}-error`}
+          id={`${selectId}-error`}
           className="text-sm text-red-600 dark:text-red-400"
           role="alert"
         >
@@ -125,7 +144,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
       
       {helperText && !hasError && (
         <p
-          id={`${inputId}-helper`}
+          id={`${selectId}-helper`}
           className="text-sm text-gray-500 dark:text-gray-400"
         >
           {helperText}
@@ -135,6 +154,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
   )
 })
 
-Input.displayName = 'Input'
+Select.displayName = 'Select'
 
-export default Input
+export default Select
