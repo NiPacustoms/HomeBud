@@ -69,6 +69,14 @@ const nextConfig = {
         tls: false,
         undici: false,
       };
+    } else {
+      // Verhindere, dass firebase/auth (und damit undici) in den Server-Build gelangt
+      config.resolve.alias = {
+        ...(config.resolve.alias || {}),
+        'firebase/auth': false,
+        '@firebase/auth': false,
+        undici: false,
+      };
     }
     return config;
   },
