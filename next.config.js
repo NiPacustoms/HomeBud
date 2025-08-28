@@ -67,6 +67,7 @@ const nextConfig = {
         fs: false,
         net: false,
         tls: false,
+        undici: false,
       };
     }
     return config;
