@@ -15,15 +15,12 @@ import {
 } from 'lucide-react'
 import { 
   DosageCalculation, 
-  MycorrhizaRecommendation,
   RootAssessment,
-  MycorrhizaComparison,
   GrowthPhase 
 } from '@/types/plant'
 import { 
   mycorrhizaStrains,
   calculateMycorrhizaDosage,
-  getMycorrhizaRecommendations,
   calculateRootHealthScore
 } from '@/services/mycorrhizaService'
 
@@ -43,18 +40,18 @@ export default function MycorrhizaIntegration() {
   const [dosageResult, setDosageResult] = useState<DosageCalculation | null>(null)
   
   // Empfehlungssystem
-  const [recommendationData] = useState({
-    plantType: 'cannabis',
-    potSize: 10,
-    substrateType: 'soil',
-    location: 'indoor' as 'indoor' | 'outdoor' | 'greenhouse',
-    goals: [] as string[]
-  })
-  const [recommendations, setRecommendations] = useState<MycorrhizaRecommendation[]>([])
+  // const [recommendationData] = useState({
+  //   plantType: 'cannabis',
+  //   potSize: 10,
+  //   substrateType: 'soil',
+  //   location: 'indoor' as 'indoor' | 'outdoor' | 'greenhouse',
+  //   goals: [] as string[]
+  // })
+  // const [recommendations, setRecommendations] = useState<MycorrhizaRecommendation[]>([])
   
   // Erfolgs-Monitoring
   const [assessments, setAssessments] = useState<RootAssessment[]>([])
-  const [comparisons, setComparisons] = useState<MycorrhizaComparison[]>([])
+  // const [comparisons, setComparisons] = useState<MycorrhizaComparison[]>([])
   const [showAssessmentForm, setShowAssessmentForm] = useState(false)
   const [newAssessment, setNewAssessment] = useState<Partial<RootAssessment>>({
     plantId: 'current',
@@ -103,16 +100,16 @@ export default function MycorrhizaIntegration() {
   }
 
   // Empfehlungen generieren
-  const handleGenerateRecommendations = () => {
-    const results = getMycorrhizaRecommendations(
-      recommendationData.plantType,
-      recommendationData.potSize,
-      recommendationData.substrateType,
-      recommendationData.location,
-      recommendationData.goals
-    )
-    setRecommendations(results)
-  }
+  // const handleGenerateRecommendations = () => {
+  //   const results = getMycorrhizaRecommendations(
+  //     recommendationData.plantType,
+  //     recommendationData.potSize,
+  //     recommendationData.substrateType,
+  //     recommendationData.location,
+  //     recommendationData.goals
+  //   )
+  //   setRecommendations(results)
+  // }
 
   // Wurzelbewertung hinzufügen
   const handleAddAssessment = () => {
