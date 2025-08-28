@@ -1,10 +1,23 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { AuthService, AuthUser } from '@/services/firebase/authService';
+
+// Dynamische Imports für SSR-Kompatibilität
+let AuthService: any = null;
+let AuthUser: any = null;
+
+const getAuthService = async () => {
+  if (!AuthService) {
+    const authModule = await import('@/services/firebase/authService');
+    AuthService = authModule.AuthService;
+    AuthUser = authModule.AuthUser;
+  }
+  return { AuthService, AuthUser };
+};
 
 // Async Thunks
 export const loginUser = createAsyncThunk(
   'auth/login',
   async ({ email, password }: { email: string; password: string }) => {
+    const { AuthService } = await getAuthService();
     const user = await AuthService.login(email, password);
     return user;
   }
@@ -13,6 +26,7 @@ export const loginUser = createAsyncThunk(
 export const loginWithGoogle = createAsyncThunk(
   'auth/loginWithGoogle',
   async () => {
+    const { AuthService } = await getAuthService();
     const user = await AuthService.loginWithGoogle();
     return user;
   }
@@ -21,6 +35,7 @@ export const loginWithGoogle = createAsyncThunk(
 export const registerUser = createAsyncThunk(
   'auth/register',
   async ({ email, password, displayName }: { email: string; password: string; displayName?: string }) => {
+    const { AuthService } = await getAuthService();
     const user = await AuthService.register(email, password, displayName);
     return user;
   }
@@ -29,6 +44,7 @@ export const registerUser = createAsyncThunk(
 export const logoutUser = createAsyncThunk(
   'auth/logout',
   async () => {
+    const { AuthService } = await getAuthService();
     await AuthService.logout();
   }
 );
@@ -36,13 +52,14 @@ export const logoutUser = createAsyncThunk(
 export const resetPassword = createAsyncThunk(
   'auth/resetPassword',
   async (email: string) => {
+    const { AuthService } = await getAuthService();
     await AuthService.resetPassword(email);
   }
 );
 
 // Auth State Interface
 interface AuthState {
-  user: AuthUser | null;
+  user: any | null;
   loading: boolean;
   error: string | null;
   isAuthenticated: boolean;
@@ -61,7 +78,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<AuthUser | null>) => {
+    setUser: (state, action: PayloadAction<any | null>) => {
       state.user = action.payload;
       state.isAuthenticated = !!action.payload;
       state.error = null;
