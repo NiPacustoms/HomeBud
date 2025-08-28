@@ -1,20 +1,25 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
-// Vollständig gemockter Auth Service - KEINE externen Dependencies!
+// Mock Auth Service für Build-Kompatibilität
 const MockAuthService = {
   login: async (email: string, password: string) => {
-    return Promise.resolve({ uid: 'mock-uid', email, displayName: 'Mock User' });
+    // Mock login - nur für Build
+    return { uid: 'mock-uid', email, displayName: 'Mock User' };
   },
   loginWithGoogle: async () => {
-    return Promise.resolve({ uid: 'mock-google-uid', email: 'mock@google.com', displayName: 'Mock Google User' });
+    // Mock Google login - nur für Build
+    return { uid: 'mock-google-uid', email: 'mock@google.com', displayName: 'Mock Google User' };
   },
   register: async (email: string, password: string, displayName?: string) => {
-    return Promise.resolve({ uid: 'mock-register-uid', email, displayName: displayName || 'Mock User' });
+    // Mock register - nur für Build
+    return { uid: 'mock-register-uid', email, displayName: displayName || 'Mock User' };
   },
   logout: async () => {
+    // Mock logout - nur für Build
     return Promise.resolve();
   },
   resetPassword: async (email: string) => {
+    // Mock reset password - nur für Build
     return Promise.resolve();
   }
 };
