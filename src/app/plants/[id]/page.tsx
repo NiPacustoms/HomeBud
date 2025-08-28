@@ -2,8 +2,6 @@
 
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
-import { useAppSelector, useAppDispatch } from '@/store/store'
-import { selectCurrentPlant, setCurrentPlant } from '@/store/slices/plantSlice'
 import { Plant } from '@/types/plant'
 import { Card } from '@/components/ui/Card'
 import { StatusCard } from '@/components/ui/StatusCard'
@@ -17,8 +15,7 @@ interface PlantDetailProps {
 }
 
 export default function PlantDetailPage({ params }: PlantDetailProps) {
-  const dispatch = useAppDispatch()
-  const plant = useAppSelector(selectCurrentPlant)
+  const [plant, setPlant] = useState<Plant | null>(null)
   const [activeTab, setActiveTab] = useState<'overview' | 'timeline' | 'diagnose'>('overview')
   const [isQuickLogOpen, setIsQuickLogOpen] = useState(false)
   const [isHeroCollapsed, setIsHeroCollapsed] = useState(false)
@@ -71,8 +68,8 @@ export default function PlantDetailPage({ params }: PlantDetailProps) {
       updatedAt: new Date().toISOString()
     }
     
-    dispatch(setCurrentPlant(mockPlant))
-  }, [params.id, dispatch])
+    setPlant(mockPlant)
+  }, [params.id])
 
   if (!plant) {
     return (

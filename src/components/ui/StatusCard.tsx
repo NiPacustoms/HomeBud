@@ -4,6 +4,8 @@ import { Card } from './Card'
 interface StatusCardProps {
   title: string
   value: string
+  subtitle?: string
+  status?: 'good' | 'excellent' | 'warning' | 'critical'
   change?: string
   changeType?: 'positive' | 'negative' | 'neutral'
   icon?: ReactNode
@@ -13,6 +15,8 @@ interface StatusCardProps {
 export function StatusCard({ 
   title, 
   value, 
+  subtitle,
+  status,
   change, 
   changeType = 'neutral', 
   icon, 
@@ -30,6 +34,13 @@ export function StatusCard({
     neutral: 'bg-neutral-50 dark:bg-neutral-800',
   }
 
+  const statusColorClasses = {
+    excellent: 'text-green-600 dark:text-green-400',
+    good: 'text-blue-600 dark:text-blue-400',
+    warning: 'text-yellow-600 dark:text-yellow-400',
+    critical: 'text-red-600 dark:text-red-400',
+  }
+
   return (
     <Card className={className}>
       <div className="p-6">
@@ -41,6 +52,11 @@ export function StatusCard({
             <p className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">
               {value}
             </p>
+            {subtitle && (
+              <p className={`text-sm font-medium mt-1 ${status ? statusColorClasses[status] : 'text-neutral-600 dark:text-neutral-400'}`}>
+                {subtitle}
+              </p>
+            )}
             {change && (
               <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium mt-2 ${changeBgClasses[changeType]} ${changeColorClasses[changeType]}`}>
                 <span className="mr-1">
