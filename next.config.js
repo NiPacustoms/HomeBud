@@ -10,7 +10,7 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
   experimental: {
-    serverComponentsExternalPackages: ['@prisma/client', 'undici'],
+    serverComponentsExternalPackages: ['@prisma/client', 'undici', 'firebase-admin'],
   },
   optimizeFonts: false,
   poweredByHeader: false,
@@ -67,23 +67,33 @@ const nextConfig = {
         fs: false,
         net: false,
         tls: false,
+        crypto: false,
       }
     }
-    
-    // Private Fields Support für Undici
-    config.module.rules.push({
-      test: /\.m?js$/,
-      resolve: {
-        fullySpecified: false,
+
+    // Private Fields Support und Module-Parsing für undici
+    config.module.rules.push(
+      {
+        test: /\.m?js$/,
+        include: /node_modules\/undici/,
+        type: 'javascript/auto',
+        resolve: {
+          fullySpecified: false,
+        },
       },
-    })
-    
-    // Ignoriere undici-Module komplett
-    config.module.rules.push({
-      test: /node_modules\/undici/,
-      use: 'ignore-loader'
-    });
-    
+      {
+        test: /\.js$/,
+        include: /node_modules\/undici/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+            plugins: ['@babel/plugin-proposal-private-methods']
+          }
+        }
+      }
+    )
+
     return config
   },
 };

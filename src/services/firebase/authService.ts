@@ -1,6 +1,4 @@
-// Firebase Auth Service mit compat-Version für bessere Webpack-Kompatibilität
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, updateProfile } from 'firebase/auth';
-import { getFirebaseAuth } from '@/lib/firebase';
+// Firebase Auth Service mit dynamischen Imports für bessere Webpack-Kompatibilität
 
 export interface AuthUser {
   uid: string;
@@ -12,7 +10,19 @@ export interface AuthUser {
 export class AuthService {
   // Email/Password Registrierung
   static async register(email: string, password: string, displayName?: string): Promise<AuthUser> {
+    if (typeof window === 'undefined') {
+      return Promise.resolve({
+        uid: 'mock-register-uid',
+        email,
+        displayName: displayName || 'Mock User',
+        photoURL: null
+      });
+    }
+
     try {
+      const { getAuth, createUserWithEmailAndPassword, updateProfile } = await import('firebase/auth');
+      const { getFirebaseAuth } = await import('@/lib/firebase');
+      
       const auth = getFirebaseAuth();
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
@@ -30,7 +40,19 @@ export class AuthService {
 
   // Email/Password Login
   static async login(email: string, password: string): Promise<AuthUser> {
+    if (typeof window === 'undefined') {
+      return Promise.resolve({
+        uid: 'mock-login-uid',
+        email,
+        displayName: 'Mock User',
+        photoURL: null
+      });
+    }
+
     try {
+      const { getAuth, signInWithEmailAndPassword } = await import('firebase/auth');
+      const { getFirebaseAuth } = await import('@/lib/firebase');
+      
       const auth = getFirebaseAuth();
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       return this.mapFirebaseUser(userCredential.user);
@@ -41,7 +63,19 @@ export class AuthService {
 
   // Google Login
   static async loginWithGoogle(): Promise<AuthUser> {
+    if (typeof window === 'undefined') {
+      return Promise.resolve({
+        uid: 'mock-google-uid',
+        email: 'mock@google.com',
+        displayName: 'Mock Google User',
+        photoURL: null
+      });
+    }
+
     try {
+      const { getAuth, GoogleAuthProvider, signInWithPopup } = await import('firebase/auth');
+      const { getFirebaseAuth } = await import('@/lib/firebase');
+      
       const auth = getFirebaseAuth();
       const provider = new GoogleAuthProvider();
       const userCredential = await signInWithPopup(auth, provider);
@@ -53,7 +87,14 @@ export class AuthService {
 
   // Logout
   static async logout(): Promise<void> {
+    if (typeof window === 'undefined') {
+      return Promise.resolve();
+    }
+
     try {
+      const { getAuth, signOut } = await import('firebase/auth');
+      const { getFirebaseAuth } = await import('@/lib/firebase');
+      
       const auth = getFirebaseAuth();
       await signOut(auth);
     } catch (error) {
@@ -63,7 +104,14 @@ export class AuthService {
 
   // Passwort zurücksetzen
   static async resetPassword(email: string): Promise<void> {
+    if (typeof window === 'undefined') {
+      return Promise.resolve();
+    }
+
     try {
+      const { getAuth, sendPasswordResetEmail } = await import('firebase/auth');
+      const { getFirebaseAuth } = await import('@/lib/firebase');
+      
       const auth = getFirebaseAuth();
       await sendPasswordResetEmail(auth, email);
     } catch (error) {
@@ -78,10 +126,17 @@ export class AuthService {
       return () => {};
     }
 
-    const auth = getFirebaseAuth();
-    return onAuthStateChanged(auth, (user) => {
-      callback(user ? this.mapFirebaseUser(user) : null);
+    // Dynamischer Import für Auth State
+    import('firebase/auth').then(({ onAuthStateChanged }) => {
+      import('@/lib/firebase').then(({ getFirebaseAuth }) => {
+        const auth = getFirebaseAuth();
+        return onAuthStateChanged(auth, (user) => {
+          callback(user ? this.mapFirebaseUser(user) : null);
+        });
+      });
     });
+
+    return () => {};
   }
 
   // Aktueller Benutzer
@@ -91,6 +146,7 @@ export class AuthService {
     }
 
     try {
+      const { getFirebaseAuth } = await import('@/lib/firebase');
       const auth = getFirebaseAuth();
       const user = auth.currentUser;
       return user ? this.mapFirebaseUser(user) : null;

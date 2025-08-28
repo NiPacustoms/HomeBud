@@ -5,28 +5,15 @@ import { motion } from 'framer-motion'
 import { Card } from '@/components/ui/Card'
 import { 
   Calculator, 
-  Calendar, 
   TrendingUp, 
-  Image, 
   BarChart3, 
-  Leaf,
-  Save,
-  Download,
-  Clock,
   CheckCircle,
-  AlertCircle,
-  Info,
   Search,
-  Filter,
   Star,
   Award,
-  TestTube,
-  BookOpen,
-  Shield,
-  Zap
+  BookOpen
 } from 'lucide-react'
 import { 
-  MycorrhizaStrain, 
   DosageCalculation, 
   MycorrhizaRecommendation,
   RootAssessment,
@@ -37,7 +24,6 @@ import {
   mycorrhizaStrains,
   calculateMycorrhizaDosage,
   getMycorrhizaRecommendations,
-  calculateComparisonResults,
   calculateRootHealthScore
 } from '@/services/mycorrhizaService'
 
@@ -57,7 +43,7 @@ export default function MycorrhizaIntegration() {
   const [dosageResult, setDosageResult] = useState<DosageCalculation | null>(null)
   
   // Empfehlungssystem
-  const [recommendationData, setRecommendationData] = useState({
+  const [recommendationData] = useState({
     plantType: 'cannabis',
     potSize: 10,
     substrateType: 'soil',
