@@ -1,14 +1,12 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { 
-  Plus, 
   Search, 
   Filter, 
   Calendar, 
   Tag, 
   Sprout, 
-  Edit3, 
   Trash2, 
   Save,
   X,
@@ -38,15 +36,20 @@ export const NotesManager: React.FC = () => {
   const [selectedPlant, setSelectedPlant] = useState<string>('alle');
   const [showFilters, setShowFilters] = useState(false);
   
-  const [newNote, setNewNote] = useState<Partial<Note>>({
+  const [newNote, setNewNote] = useState<{
+    title: string;
+    content: string;
+    category: Note['category'];
+    tags: string[];
+    plantId?: string;
+    plantName?: string;
+    strainId?: string;
+    strainName?: string;
+  }>({
     title: '',
     content: '',
     category: 'beobachtung',
-    tags: [],
-    plantId: '',
-    plantName: '',
-    strainId: '',
-    strainName: ''
+    tags: []
   });
 
   const plants = [
@@ -90,12 +93,12 @@ export const NotesManager: React.FC = () => {
       content: newNote.content,
       category: newNote.category as Note['category'],
       timestamp: new Date(),
-      plantId: newNote.plantId,
-      plantName: newNote.plantName,
-      strainId: newNote.strainId,
-      strainName: newNote.strainName,
       tags: newNote.tags || [],
-      isVoiceNote: isRecording
+      isVoiceNote: isRecording,
+      ...(newNote.plantId && { plantId: newNote.plantId }),
+      ...(newNote.plantName && { plantName: newNote.plantName }),
+      ...(newNote.strainId && { strainId: newNote.strainId }),
+      ...(newNote.strainName && { strainName: newNote.strainName })
     };
     
     setNotes(prev => [note, ...prev]);
@@ -220,6 +223,7 @@ export const NotesManager: React.FC = () => {
               value={newNote.strainId}
               onChange={(e) => selectStrain(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              aria-label="Strain für Notiz auswählen"
             >
               <option value="">Keinen Strain verknüpfen</option>
               {strains.map(strain => (
@@ -269,6 +273,7 @@ export const NotesManager: React.FC = () => {
                 <button
                   onClick={() => removeTag(tag)}
                   className="ml-1 text-green-600 hover:text-green-800"
+                  aria-label={`Tag "${tag}" entfernen`}
                 >
                   <X size={12} />
                 </button>

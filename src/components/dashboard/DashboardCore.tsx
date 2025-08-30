@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import ValueVisualization from '../ui/ValueVisualization';
-import ActionRecommendations from '../ui/ActionRecommendations';
+
 import { FieldHelp } from '../ui/HelpSystem';
 import { ClientOnly } from '../ui/ClientOnly';
 
@@ -99,7 +99,7 @@ export default function DashboardCore({
   performanceData,
   photos
 }: DashboardCoreProps) {
-  const [showPhotoUpload, setShowPhotoUpload] = useState(false);
+
 
   const getPhaseName = (phase: string) => {
     switch (phase) {
@@ -131,9 +131,7 @@ export default function DashboardCore({
     console.log('Quick action:', action);
   };
 
-  const handlePhotoUpload = () => {
-    setShowPhotoUpload(true);
-  };
+
 
   return (
     <div className="space-y-6">
@@ -403,7 +401,7 @@ export default function DashboardCore({
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={handlePhotoUpload}
+            onClick={() => {}}
             className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
           >
             📷 Neues Foto

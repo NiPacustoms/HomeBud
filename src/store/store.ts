@@ -8,6 +8,7 @@ import communityReducer from './slices/communitySlice'
 import uiReducer from './slices/uiSlice'
 import plantReducer from './slices/plantSlice'
 import moduleReducer from './slices/moduleSlice'
+import diagnosisReducer from './slices/diagnosisSlice'
 
 // SSR-kompatible Store-Konfiguration
 const createStore = () => {
@@ -21,6 +22,7 @@ const createStore = () => {
       ui: uiReducer,
       plants: plantReducer,
       modules: moduleReducer,
+      diagnosis: diagnosisReducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({

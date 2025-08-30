@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { motion } from 'framer-motion'
 
 interface GrowCycle {
@@ -32,7 +32,7 @@ interface WeekViewProps {
   onCycleClick?: (cycle: GrowCycle) => void
 }
 
-export default function WeekView({ growCycles, currentDate, onTaskClick, onCycleClick }: WeekViewProps) {
+export default function WeekView({ growCycles, currentDate, onTaskClick }: WeekViewProps) {
   const getStageColor = (stage: string) => {
     switch (stage) {
       case 'planning': return 'bg-gray-500'
@@ -83,7 +83,7 @@ export default function WeekView({ growCycles, currentDate, onTaskClick, onCycle
 
   // Events für einen bestimmten Tag finden
   const getEventsForDate = (date: Date) => {
-    const events = []
+    const events: any[] = []
 
     // Grow-Zyklen finden
     growCycles.forEach(cycle => {

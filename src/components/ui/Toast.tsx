@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/utils'
@@ -39,11 +39,8 @@ const Toast: React.FC<ToastProps> = ({
   duration = 5000,
   onClose
 }) => {
-  const [isVisible, setIsVisible] = useState(true)
-
   useEffect(() => {
     const timer = setTimeout(() => {
-      setIsVisible(false)
       setTimeout(() => onClose(id), 300) // Wait for exit animation
     }, duration)
 
@@ -112,7 +109,6 @@ const Toast: React.FC<ToastProps> = ({
       
       <button
         onClick={() => {
-          setIsVisible(false)
           setTimeout(() => onClose(id), 300)
         }}
         className={cn(
@@ -130,30 +126,12 @@ const Toast: React.FC<ToastProps> = ({
 }
 
 export const ToastContainer: React.FC = () => {
-  const [toasts, setToasts] = useState<ToastProps[]>([])
-
-  const showToast = (toast: Omit<ToastProps, 'id' | 'onClose'>) => {
-    const id = Math.random().toString(36).substr(2, 9)
-    const newToast: ToastProps = {
-      ...toast,
-      id,
-      onClose: hideToast
-    }
-    setToasts(prev => [...prev, newToast])
-  }
-
-  const hideToast = (id: string) => {
-    setToasts(prev => prev.filter(toast => toast.id !== id))
-  }
-
   if (typeof window === 'undefined') return null
 
   return createPortal(
     <div className="fixed top-4 right-4 z-50 space-y-2">
       <AnimatePresence>
-        {toasts.map(toast => (
-          <Toast key={toast.id} {...toast} />
-        ))}
+        {/* Toasts will be rendered here when needed */}
       </AnimatePresence>
     </div>,
     document.body

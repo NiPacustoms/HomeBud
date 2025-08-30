@@ -34,7 +34,6 @@ export class CannabisWateringService {
     const cannabisStage = this.convertPlantStageToCannabisStage(stage)
     
     // Hole Basis-Daten aus der Datenbank
-    const stageData = cannabisWateringDatabase.cannabis_stages[cannabisStage]
     const scheduleData = cannabisWateringDatabase.watering_schedule[cannabisStage]?.[potSize]
     
     if (!scheduleData) {
@@ -46,9 +45,9 @@ export class CannabisWateringService {
     let intervalDays = scheduleData.base_interval_days
     
     // Umweltfaktoren anwenden
-    const seasonFactor = cannabisWateringDatabase.watering_rules.frequency_factors.season[environmentalFactors.season]
-    const temperatureFactor = cannabisWateringDatabase.watering_rules.frequency_factors.temperature[environmentalFactors.temperature]
-    const humidityFactor = cannabisWateringDatabase.watering_rules.frequency_factors.humidity[environmentalFactors.humidity]
+    const seasonFactor = cannabisWateringDatabase.watering_rules.frequency_factors.season[environmentalFactors.season] || 1
+    const temperatureFactor = cannabisWateringDatabase.watering_rules.frequency_factors.temperature[environmentalFactors.temperature] || 1
+    const humidityFactor = cannabisWateringDatabase.watering_rules.frequency_factors.humidity[environmentalFactors.humidity] || 1
     
     // Gesamtfaktor berechnen
     const totalFactor = seasonFactor * temperatureFactor * humidityFactor

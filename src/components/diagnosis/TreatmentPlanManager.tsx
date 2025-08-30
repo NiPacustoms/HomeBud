@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { completeTreatmentStep, updateTreatmentPlan } from '@/store/slices/diagnosisSlice'
-import { RootState } from '@/store/store'
+
 import { TreatmentPlan } from '@/store/slices/diagnosisSlice'
 
 interface TreatmentPlanManagerProps {
@@ -19,7 +19,7 @@ export default function TreatmentPlanManager({ plan, onUpdate }: TreatmentPlanMa
 
   const handleCompleteStep = async (stepId: string) => {
     try {
-      await dispatch(completeTreatmentStep({ planId: plan.id, stepId })).unwrap()
+      dispatch(completeTreatmentStep({ planId: plan.id, stepId }))
       onUpdate?.(plan)
     } catch (error) {
       console.error('Schritt als abgeschlossen markieren fehlgeschlagen:', error)
@@ -28,14 +28,14 @@ export default function TreatmentPlanManager({ plan, onUpdate }: TreatmentPlanMa
 
   const handleAddNotes = async (stepId: string, notes: string) => {
     try {
-      await dispatch(updateTreatmentPlan({
+      dispatch(updateTreatmentPlan({
         id: plan.id,
         updates: {
           steps: plan.steps.map(step => 
             step.id === stepId ? { ...step, notes } : step
           )
         }
-      })).unwrap()
+      }))
       setShowNotes(null)
       onUpdate?.(plan)
     } catch (error) {

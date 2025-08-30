@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CannabisWateringService, WateringCalculation, EnvironmentalFactors } from '@/services/cannabisWateringService'
-import { PlantStage, PotSize, Season, TemperatureLevel, HumidityLevel } from '@/types/plant'
+import { PlantStage, PotSize } from '@/types/plant'
 import { Card } from '@/components/ui/Card'
 import ValidatedResearchInfo from './ValidatedResearchInfo'
 
@@ -336,7 +336,7 @@ export default function CannabisWateringCalculator({
             <div>
               <h4 className="font-medium text-gray-700 mb-2">Spezielle Hinweise</h4>
               <ul className="space-y-1">
-                {cannabisStages[stage]?.special_notes?.slice(0, 3).map((note, index) => (
+                {cannabisStages[stage]?.special_notes?.slice(0, 3).map((note: string, index: number) => (
                   <li key={index} className="text-sm text-gray-600 flex items-start">
                     <span className="text-blue-500 mr-2">•</span>
                     {note}

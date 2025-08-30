@@ -5,14 +5,12 @@ import { motion } from 'framer-motion'
 import { Card } from '@/components/ui/Card'
 import { 
   BarChart3, 
-  TrendingUp, 
   Award, 
   Star, 
   CheckCircle, 
   XCircle,
   Info,
   Filter,
-  Search,
   Zap,
   Shield,
   Leaf,
@@ -20,7 +18,6 @@ import {
   Thermometer,
   Droplets,
   Snowflake,
-  Sun,
   Home,
   TreePine
 } from 'lucide-react'

@@ -50,7 +50,7 @@ export const DataVisualization: React.FC<DataVisualizationProps> = ({
     const xSum = (n * (n - 1)) / 2
     const ySum = sum
     const xySum = values.reduce((acc, val, i) => acc + val * i, 0)
-    const x2Sum = values.reduce((acc, val, i) => acc + i * i, 0)
+    const x2Sum = values.reduce((acc, _, i) => acc + i * i, 0)
     
     const slope = (n * xySum - xSum * ySum) / (n * x2Sum - xSum * xSum)
     const trend = slope > 0 ? 'steigend' : slope < 0 ? 'fallend' : 'stabil'

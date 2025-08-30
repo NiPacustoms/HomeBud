@@ -24,6 +24,10 @@ export default function CannabisGrowthAnimation(): JSX.Element {
 
   const current = stages[index];
 
+  if (!current) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="w-full h-72 flex items-center justify-center">
       <div className={`w-full h-full flex flex-col items-center justify-center transition-colors duration-500 ${current.bg}`}>

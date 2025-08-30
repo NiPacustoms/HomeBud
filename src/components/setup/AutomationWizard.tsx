@@ -16,7 +16,7 @@ interface AutomationWizardProps {
   onUpdate: (automation: any) => void
 }
 
-export default function AutomationWizard({ onUpdate }: AutomationWizardProps) {
+export default function AutomationWizard({}: AutomationWizardProps) {
   const [activeTab, setActiveTab] = useState('sensors')
   const [rules, setRules] = useState<AutomationRule[]>([
     {

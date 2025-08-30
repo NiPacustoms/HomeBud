@@ -14,7 +14,7 @@ interface ValidatedResearchInfoProps {
 export default function ValidatedResearchInfo({ stage, potSize, onClose }: ValidatedResearchInfoProps) {
   const [activeTab, setActiveTab] = useState<'research' | 'parameters' | 'sources'>('research')
 
-  const stageData = cannabisWateringDatabase.cannabis_stages[stage]
+  const stageData = cannabisWateringDatabase.cannabis_stages[stage as keyof typeof cannabisWateringDatabase.cannabis_stages]
   const potData = cannabisWateringDatabase.pot_sizes[potSize]
   const scheduleData = cannabisWateringDatabase.watering_schedule[stage]?.[potSize]
 
@@ -101,7 +101,9 @@ export default function ValidatedResearchInfo({ stage, potSize, onClose }: Valid
                         {scheduleData?.water_amount_liters}L
                       </div>
                       <div className="text-xs text-gray-500">
-                        {Math.round((scheduleData?.water_amount_liters / scheduleData?.pot_volume_liters) * 100)}% des Topfvolumens
+                        {scheduleData?.water_amount_liters && scheduleData?.pot_volume_liters 
+                          ? Math.round((scheduleData.water_amount_liters / scheduleData.pot_volume_liters) * 100)
+                          : 0}% des Topfvolumens
                       </div>
                     </div>
                     <div>

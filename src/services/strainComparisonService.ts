@@ -71,27 +71,10 @@ export interface StrainComparisonFilters {
 }
 
 // Bewertungsskalen für verschiedene Eigenschaften
-const rootColonizationScores = {
-  'Sehr hoch': 10,
-  'Hoch': 8,
-  'Mittel': 6,
-  'Niedrig': 4
-}
 
-const stressToleranceScores = {
-  'Dürre': 3,
-  'Hitze': 3,
-  'Salz': 3,
-  'Kälte': 3,
-  'Trockenheit': 2
-}
 
-const nutrientUptakeScores = {
-  'Phosphor': 4,
-  'Stickstoff': 3,
-  'Kalium': 3,
-  'allgemeine Nährstoffe': 2
-}
+
+
 
 // Strain-Vergleich durchführen
 export const compareStrains = (strain1Id: string, strain2Id: string): StrainComparison => {

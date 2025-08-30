@@ -18,7 +18,7 @@ interface TrainingAssistantProps {
   onUpdate: (training: any) => void
 }
 
-export default function TrainingAssistant({ onUpdate }: TrainingAssistantProps) {
+export default function TrainingAssistant({}: TrainingAssistantProps) {
   const [activeTab, setActiveTab] = useState('lst')
   const [trainingTasks, setTrainingTasks] = useState<TrainingTask[]>([
     {
@@ -112,9 +112,7 @@ export default function TrainingAssistant({ onUpdate }: TrainingAssistantProps) 
     { step: 4, title: 'Weiteres Training', description: 'Neue Triebe für LST vorbereiten' }
   ]
 
-  const getTasksByType = (type: string) => {
-    return trainingTasks.filter(task => task.type === type)
-  }
+
 
   return (
     <div className="space-y-6">

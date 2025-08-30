@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import Logo, { LogoOnly, LogoNoBackground, LogoText } from '@/components/ui/Logo'
+import { LogoText } from '@/components/ui/Logo'
 import Analytics from '@/components/dashboard/Analytics'
 import DashboardCustomization from '@/components/dashboard/DashboardCustomization'
 
@@ -339,10 +339,10 @@ export default function Sidebar() {
           setShowDashboardCustomization(false);
         }}
         currentTiles={[
-          { id: 'temperature', label: 'Temperatur', moduleId: 'monitoring', enabled: true },
-          { id: 'humidity', label: 'Luftfeuchtigkeit', moduleId: 'monitoring', enabled: true },
-          { id: 'ph', label: 'pH-Wert', moduleId: 'monitoring', enabled: true },
-          { id: 'ec', label: 'EC-Wert', moduleId: 'monitoring', enabled: true }
+          { id: 'temperature', label: 'Temperatur', moduleId: 'monitoring', enabled: true, size: 'small', position: 0 },
+          { id: 'humidity', label: 'Luftfeuchtigkeit', moduleId: 'monitoring', enabled: true, size: 'small', position: 1 },
+          { id: 'ph', label: 'pH-Wert', moduleId: 'monitoring', enabled: true, size: 'small', position: 2 },
+          { id: 'ec', label: 'EC-Wert', moduleId: 'monitoring', enabled: true, size: 'small', position: 3 }
         ]}
       />
     </>

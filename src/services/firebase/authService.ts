@@ -20,10 +20,11 @@ export class AuthService {
     }
 
     try {
-      const { getAuth, createUserWithEmailAndPassword, updateProfile } = await import('firebase/auth');
-      const { getFirebaseAuth } = await import('@/lib/firebase');
+      const { createUserWithEmailAndPassword, updateProfile } = await import('firebase/auth');
+      const { app } = await import('@/services/firebase/app');
+      const { getAuth } = await import('firebase/auth');
       
-      const auth = getFirebaseAuth();
+      const auth = getAuth(app);
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
@@ -50,10 +51,11 @@ export class AuthService {
     }
 
     try {
-      const { getAuth, signInWithEmailAndPassword } = await import('firebase/auth');
-      const { getFirebaseAuth } = await import('@/lib/firebase');
+      const { signInWithEmailAndPassword } = await import('firebase/auth');
+      const { app } = await import('@/services/firebase/app');
+      const { getAuth } = await import('firebase/auth');
       
-      const auth = getFirebaseAuth();
+      const auth = getAuth(app);
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       return this.mapFirebaseUser(userCredential.user);
     } catch (error) {
@@ -73,10 +75,11 @@ export class AuthService {
     }
 
     try {
-      const { getAuth, GoogleAuthProvider, signInWithPopup } = await import('firebase/auth');
-      const { getFirebaseAuth } = await import('@/lib/firebase');
+      const { GoogleAuthProvider, signInWithPopup } = await import('firebase/auth');
+      const { app } = await import('@/services/firebase/app');
+      const { getAuth } = await import('firebase/auth');
       
-      const auth = getFirebaseAuth();
+      const auth = getAuth(app);
       const provider = new GoogleAuthProvider();
       const userCredential = await signInWithPopup(auth, provider);
       return this.mapFirebaseUser(userCredential.user);
@@ -92,10 +95,11 @@ export class AuthService {
     }
 
     try {
-      const { getAuth, signOut } = await import('firebase/auth');
-      const { getFirebaseAuth } = await import('@/lib/firebase');
+      const { signOut } = await import('firebase/auth');
+      const { app } = await import('@/services/firebase/app');
+      const { getAuth } = await import('firebase/auth');
       
-      const auth = getFirebaseAuth();
+      const auth = getAuth(app);
       await signOut(auth);
     } catch (error) {
       throw this.handleAuthError(error);
@@ -109,10 +113,11 @@ export class AuthService {
     }
 
     try {
-      const { getAuth, sendPasswordResetEmail } = await import('firebase/auth');
-      const { getFirebaseAuth } = await import('@/lib/firebase');
+      const { sendPasswordResetEmail } = await import('firebase/auth');
+      const { app } = await import('@/services/firebase/app');
+      const { getAuth } = await import('firebase/auth');
       
-      const auth = getFirebaseAuth();
+      const auth = getAuth(app);
       await sendPasswordResetEmail(auth, email);
     } catch (error) {
       throw this.handleAuthError(error);
@@ -127,9 +132,9 @@ export class AuthService {
     }
 
     // Dynamischer Import für Auth State
-    import('firebase/auth').then(({ onAuthStateChanged }) => {
-      import('@/lib/firebase').then(({ getFirebaseAuth }) => {
-        const auth = getFirebaseAuth();
+    import('firebase/auth').then(({ onAuthStateChanged, getAuth }) => {
+      import('@/services/firebase/app').then(({ app }) => {
+        const auth = getAuth(app);
         return onAuthStateChanged(auth, (user) => {
           callback(user ? this.mapFirebaseUser(user) : null);
         });
@@ -146,8 +151,9 @@ export class AuthService {
     }
 
     try {
-      const { getFirebaseAuth } = await import('@/lib/firebase');
-      const auth = getFirebaseAuth();
+      const { app } = await import('@/services/firebase/app');
+      const { getAuth } = await import('firebase/auth');
+      const auth = getAuth(app);
       const user = auth.currentUser;
       return user ? this.mapFirebaseUser(user) : null;
     } catch (error) {

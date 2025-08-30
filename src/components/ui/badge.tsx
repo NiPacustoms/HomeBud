@@ -8,7 +8,7 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
-  ({ className = '', variant = 'default', size = 'md', children, ...props }, ref) => {
+  ({ className = '', variant = 'default', size = 'md', children }, ref) => {
     const baseClasses = "inline-flex items-center rounded-full font-medium transition-colors"
     
     const variantClasses = {
@@ -32,7 +32,7 @@ export const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
         className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        {...props}
+
       >
         {children}
       </motion.div>

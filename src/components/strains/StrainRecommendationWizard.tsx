@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import { UserPreferences, StrainRecommendation } from '../../types/strain';
 import StrainCard from './StrainCard';
-import GuidedInput from '../ui/GuidedInput';
-import { FieldHelp } from '../ui/HelpSystem';
+
+
 
 interface StrainRecommendationWizardProps {
   onGetRecommendations: (preferences: UserPreferences) => void;

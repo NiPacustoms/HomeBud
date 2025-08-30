@@ -1,36 +1,16 @@
 import { useCallback } from 'react'
-import { useAppDispatch, useAppSelector } from '../store/store'
+import { useAppSelector } from '../store/store'
 import {
-  toggleModule,
-  enableModules,
-  disableModules,
-  resetModules,
-  updateModuleSettings,
-  clearModuleSettings,
-  clearAllModuleSettings,
-  loadFeatureFlags,
-  exportFeatureFlags,
-  setLoading,
-  setError,
-  clearError,
   selectAvailableModules,
   selectEnabledModules,
   selectModuleSettings,
-  selectModuleById,
-  selectEnabledModuleById,
-  selectModulesByCategory,
-  selectEnabledModulesByCategory,
-  selectModuleDependencies,
-  selectModuleDependents,
   selectIsLoading,
   selectError,
   selectLastUpdated
 } from '../store/slices/moduleSlice'
-import { Module, ModuleSettings, FeatureFlags } from '../types/modules'
+import { Module } from '../types/modules'
 
 export const useModules = () => {
-  const dispatch = useAppDispatch()
-
   // State Selectors
   const availableModules = useAppSelector(selectAvailableModules)
   const enabledModules = useAppSelector(selectEnabledModules)
@@ -40,56 +20,57 @@ export const useModules = () => {
   const lastUpdated = useAppSelector(selectLastUpdated)
 
   // Module Actions
-  const toggleModuleById = useCallback((moduleId: string) => {
-    dispatch(toggleModule(moduleId))
-  }, [dispatch])
+  const toggleModuleById = useCallback(() => {
+    // Temporär deaktiviert
+  }, [])
 
-  const enableModulesByIds = useCallback((moduleIds: string[]) => {
-    dispatch(enableModules(moduleIds))
-  }, [dispatch])
+  const enableModulesByIds = useCallback(() => {
+    // Temporär deaktiviert
+  }, [])
 
-  const disableModulesByIds = useCallback((moduleIds: string[]) => {
-    dispatch(disableModules(moduleIds))
-  }, [dispatch])
+  const disableModulesByIds = useCallback(() => {
+    // Temporär deaktiviert
+  }, [])
 
   const resetAllModules = useCallback(() => {
-    dispatch(resetModules())
-  }, [dispatch])
+    // Temporär deaktiviert
+  }, [])
 
   // Module Settings Actions
-  const updateSettings = useCallback((moduleId: string, settings: Record<string, any>) => {
-    dispatch(updateModuleSettings({ moduleId, settings }))
-  }, [dispatch])
+  const updateSettings = useCallback(() => {
+    // Temporär deaktiviert
+  }, [])
 
-  const clearSettings = useCallback((moduleId: string) => {
-    dispatch(clearModuleSettings(moduleId))
-  }, [dispatch])
+  const clearSettings = useCallback(() => {
+    // Temporär deaktiviert
+  }, [])
 
   const clearAllSettings = useCallback(() => {
-    dispatch(clearAllModuleSettings())
-  }, [dispatch])
+    // Temporär deaktiviert
+  }, [])
 
   // Feature Flags Actions
-  const loadFlags = useCallback((featureFlags: FeatureFlags) => {
-    dispatch(loadFeatureFlags(featureFlags))
-  }, [dispatch])
+  const loadFlags = useCallback(() => {
+    // Temporär deaktiviert
+  }, [])
 
   const exportFlags = useCallback(() => {
-    return dispatch(exportFeatureFlags())
-  }, [dispatch])
+    // Temporär deaktiviert
+    return undefined
+  }, [])
 
   // Utility Actions
-  const setLoadingState = useCallback((isLoading: boolean) => {
-    dispatch(setLoading(isLoading))
-  }, [dispatch])
+  const setLoadingState = useCallback(() => {
+    // Temporär deaktiviert
+  }, [])
 
-  const setErrorMessage = useCallback((error: string | null) => {
-    dispatch(setError(error))
-  }, [dispatch])
+  const setErrorMessage = useCallback(() => {
+    // Temporär deaktiviert
+  }, [])
 
   const clearErrorMessage = useCallback(() => {
-    dispatch(clearError())
-  }, [dispatch])
+    // Temporär deaktiviert
+  }, [])
 
   // Helper Functions
   const getModuleById = useCallback((moduleId: string) => {

@@ -67,8 +67,10 @@ export const MeasurementButton: React.FC<MeasurementButtonProps> = ({
       onClick={onClick}
       disabled={disabled || loading}
       className={baseClasses}
-      whileHover={!disabled && !loading ? { scale: 1.02, y: -1 } : undefined}
-      whileTap={!disabled && !loading ? { scale: 0.98 } : undefined}
+      {...(!disabled && !loading && {
+        whileHover: { scale: 1.02, y: -1 },
+        whileTap: { scale: 0.98 }
+      })}
       transition={{ duration: 0.2 }}
     >
       {icon && iconPosition === 'left' && (

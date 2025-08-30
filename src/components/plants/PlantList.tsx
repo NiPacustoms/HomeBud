@@ -20,6 +20,8 @@ const stageLabels: Record<PlantStage, string> = {
   seedling: 'Keimling',
   vegetative: 'Vegetativ',
   flowering: 'Blüte',
+  late_flowering: 'Späte Blüte',
+  flushing: 'Spülphase',
   harvest: 'Ernte',
   drying: 'Trocknung',
   curing: 'Reifung'
@@ -29,6 +31,8 @@ const stageColors: Record<PlantStage, string> = {
   seedling: 'bg-blue-100 text-blue-800',
   vegetative: 'bg-green-100 text-green-800',
   flowering: 'bg-purple-100 text-purple-800',
+  late_flowering: 'bg-purple-200 text-purple-900',
+  flushing: 'bg-pink-100 text-pink-800',
   harvest: 'bg-yellow-100 text-yellow-800',
   drying: 'bg-orange-100 text-orange-800',
   curing: 'bg-red-100 text-red-800'
@@ -73,7 +77,7 @@ export default function PlantList({ onPlantSelect }: PlantListProps) {
       case 'stage':
         return a.stage.localeCompare(b.stage)
       case 'age':
-        return getAgeInDays(a.startDate) - getAgeInDays(b.startDate)
+        return getAgeInDays(new Date(a.startDate)) - getAgeInDays(new Date(b.startDate))
       case 'health':
         const aHealth = a.health.status === 'critical' ? 0 : 
                        a.health.status === 'warning' ? 1 : 
@@ -222,7 +226,7 @@ export default function PlantList({ onPlantSelect }: PlantListProps) {
                     </span>
                   </td>
                   <td className="px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">
-                    {getAgeInDays(plant.startDate)} Tage
+                    {getAgeInDays(new Date(plant.startDate))} Tage
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center space-x-1">

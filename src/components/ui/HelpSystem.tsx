@@ -93,7 +93,7 @@ export default function HelpSystem({
 // Spezialisierte Komponenten für häufige Anwendungsfälle
 export function InfoIcon({ content, title }: { content: string; title?: string }) {
   return (
-    <HelpSystem content={content} title={title} showIcon={true}>
+    <HelpSystem content={content} {...(title && { title })} showIcon={true}>
       <span></span>
     </HelpSystem>
   );
@@ -111,7 +111,7 @@ export function FieldHelp({
   position?: 'top' | 'bottom' | 'left' | 'right';
 }) {
   return (
-    <HelpSystem content={content} title={title} position={position} showIcon={false}>
+    <HelpSystem content={content} {...(title && { title })} position={position} showIcon={false}>
       {children}
     </HelpSystem>
   );

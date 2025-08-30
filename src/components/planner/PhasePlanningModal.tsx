@@ -97,8 +97,8 @@ export default function PhasePlanningModal({
     const newPhase: Omit<GrowthPhase, 'id' | 'createdAt' | 'updatedAt'> = {
       cycleId: selectedCycle,
       stage: 'planning',
-      startDate: new Date().toISOString().split('T')[0],
-      endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+      startDate: new Date().toISOString().split('T')[0] as string,
+      endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] as string,
       notes: ''
     }
 
@@ -159,6 +159,7 @@ export default function PhasePlanningModal({
               <button
                 onClick={onClose}
                 className="text-white/60 hover:text-white transition-colors"
+                aria-label="Modal schließen"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -175,6 +176,7 @@ export default function PhasePlanningModal({
                 value={selectedCycle}
                 onChange={(e) => setSelectedCycle(e.target.value)}
                 className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                aria-label="Grow-Zyklus für Phasenplanung auswählen"
               >
                 <option value="">Zyklus auswählen...</option>
                 {growCycles.map(cycle => (
@@ -228,6 +230,7 @@ export default function PhasePlanningModal({
                             value={phase.stage}
                             onChange={(e) => updatePhase(index, 'stage', e.target.value)}
                             className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            aria-label={`Phase ${index + 1} auswählen`}
                           >
                             {stageOptions.map(option => (
                               <option key={option.value} value={option.value}>
@@ -247,6 +250,7 @@ export default function PhasePlanningModal({
                             value={phase.startDate}
                             onChange={(e) => updatePhase(index, 'startDate', e.target.value)}
                             className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            aria-label={`Startdatum für Phase ${index + 1}`}
                           />
                         </div>
 
@@ -260,6 +264,7 @@ export default function PhasePlanningModal({
                             value={phase.endDate}
                             onChange={(e) => updatePhase(index, 'endDate', e.target.value)}
                             className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            aria-label={`Enddatum für Phase ${index + 1}`}
                           />
                         </div>
 

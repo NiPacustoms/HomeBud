@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { 
   MorphingBackground, 
@@ -16,13 +16,11 @@ import {
 import { 
   Shield, 
   Calculator, 
-  Calendar, 
   Camera, 
   BarChart3, 
   Zap,
   Save,
   Download,
-  Clock,
   CheckCircle,
   AlertCircle,
   Info,
@@ -61,29 +59,29 @@ interface DiseaseTreatment {
   isActive: boolean
 }
 
-interface FungalDetection {
-  id: string
-  date: Date
-  imageUrl: string
-  detection: 'beneficial' | 'pathogenic' | 'unknown'
-  confidence: number
-  notes: string
-}
+// interface FungalDetection {
+//   id: string
+//   date: Date
+//   imageUrl: string
+//   detection: 'beneficial' | 'pathogenic' | 'unknown'
+//   confidence: number
+//   notes: string
+// }
 
-interface SoilBiologyData {
-  date: Date
-  ec: number
-  ph: number
-  biologicalActivity: number
-  trichodermaCount: number
-  pathogenCount: number
-}
+// interface SoilBiologyData {
+//   date: Date
+//   ec: number
+//   ph: number
+//   biologicalActivity: number
+//   trichodermaCount: number
+//   pathogenCount: number
+// }
 
 export default function TrichodermaApplication() {
   const [activeTab, setActiveTab] = useState<'strains' | 'dosage' | 'disease' | 'detection' | 'dashboard'>('strains')
   const [selectedStrain, setSelectedStrain] = useState<string>('')
-  const [detections, setDetections] = useState<FungalDetection[]>([])
-  const [soilData, setSoilData] = useState<SoilBiologyData[]>([])
+  // const [detections, setDetections] = useState<FungalDetection[]>([])
+  // const [soilData, setSoilData] = useState<SoilBiologyData[]>([])
 
   const trichodermaStrains: TrichodermaStrain[] = [
     {
@@ -261,13 +259,13 @@ export default function TrichodermaApplication() {
     }
   ]
 
-  const addFungalDetection = (detection: Omit<FungalDetection, 'id'>) => {
-    const newDetection: FungalDetection = {
-      ...detection,
-      id: Date.now().toString()
-    }
-    setDetections([...detections, newDetection])
-  }
+  // const addFungalDetection = (detection: Omit<FungalDetection, 'id'>) => {
+  //   const newDetection: FungalDetection = {
+  //     ...detection,
+  //     id: Date.now().toString()
+  //   }
+  //   setDetections([...detections, newDetection])
+  // }
 
   const getSoilBiologyTrends = () => {
     // Simulierte Daten für Bodenbiologie-Trends
@@ -422,7 +420,7 @@ export default function TrichodermaApplication() {
                       </div>
                       <HomeBudButton 
                         variant={selectedStrain === strain.id ? "secondary" : "primary"}
-                        size="small"
+                        size="default"
                         onClick={() => setSelectedStrain(strain.id)}
                       >
                         {selectedStrain === strain.id ? 'Ausgewählt' : 'Auswählen'}
@@ -508,7 +506,7 @@ export default function TrichodermaApplication() {
                         </div>
                       </div>
                       
-                      <HomeBudButton variant="primary" size="small">
+                      <HomeBudButton variant="primary" size="default">
                         Anwenden
                       </HomeBudButton>
                     </div>
@@ -566,11 +564,11 @@ export default function TrichodermaApplication() {
                       <div className="flex space-x-2">
                         <HomeBudButton 
                           variant={treatment.isActive ? "secondary" : "primary"}
-                          size="small"
+                          size="default"
                         >
                           {treatment.isActive ? 'Pausieren' : 'Aktivieren'}
                         </HomeBudButton>
-                        <HomeBudButton variant="secondary" size="small">
+                        <HomeBudButton variant="secondary" size="default">
                           Anpassen
                         </HomeBudButton>
                       </div>
@@ -600,59 +598,16 @@ export default function TrichodermaApplication() {
                 </HomeBudButton>
               </div>
 
-              {detections.length === 0 ? (
-                <InteractiveCard className="p-12 text-center">
-                  <Camera className="w-16 h-16 text-white/30 mx-auto mb-4" />
-                  <h4 className="text-lg font-semibold mb-2">Noch keine Pilz-Detektionen</h4>
-                  <p className="text-white/70 mb-4">
-                    Laden Sie ein Foto hoch, um Pilzwachstum zu analysieren und zu klassifizieren.
-                  </p>
-                  <HomeBudButton variant="primary">
-                    Erste Analyse starten
-                  </HomeBudButton>
-                </InteractiveCard>
-              ) : (
-                <div className="grid gap-4">
-                  {detections.map((detection) => (
-                    <InteractiveCard key={detection.id} className="p-6">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-4">
-                          <div className="w-16 h-16 bg-white/10 rounded-lg flex items-center justify-center">
-                            <Camera className="w-8 h-8 text-white/50" />
-                          </div>
-                          
-                          <div>
-                            <h4 className="text-lg font-semibold">
-                              Pilz-Detektion - {detection.date.toLocaleDateString()}
-                            </h4>
-                            <div className="flex items-center space-x-4 mt-1 text-sm text-white/60">
-                              <span className={`px-2 py-1 rounded text-xs ${
-                                detection.detection === 'beneficial' ? 'bg-green-500/20 text-green-400' :
-                                detection.detection === 'pathogenic' ? 'bg-red-500/20 text-red-400' :
-                                'bg-yellow-500/20 text-yellow-400'
-                              }`}>
-                                {detection.detection === 'beneficial' ? 'Nützlich' :
-                                 detection.detection === 'pathogenic' ? 'Pathogen' : 'Unbekannt'}
-                              </span>
-                              <span>Konfidenz: {detection.confidence}%</span>
-                            </div>
-                            <p className="text-sm text-white/80 mt-2">{detection.notes}</p>
-                          </div>
-                        </div>
-                        
-                        <div className="flex space-x-2">
-                          <HomeBudButton variant="secondary" size="small">
-                            Details
-                          </HomeBudButton>
-                          <HomeBudButton variant="secondary" size="small">
-                            Bearbeiten
-                          </HomeBudButton>
-                        </div>
-                      </div>
-                    </InteractiveCard>
-                  ))}
-                </div>
-              )}
+              <InteractiveCard className="p-12 text-center">
+                <Camera className="w-16 h-16 text-white/30 mx-auto mb-4" />
+                <h4 className="text-lg font-semibold mb-2">Noch keine Pilz-Detektionen</h4>
+                <p className="text-white/70 mb-4">
+                  Laden Sie ein Foto hoch, um Pilzwachstum zu analysieren und zu klassifizieren.
+                </p>
+                <HomeBudButton variant="primary">
+                  Erste Analyse starten
+                </HomeBudButton>
+              </InteractiveCard>
             </motion.div>
           )}
 

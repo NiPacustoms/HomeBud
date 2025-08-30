@@ -16,28 +16,19 @@ import {
 import { 
   Shield, 
   Calculator, 
-  Calendar, 
-  Camera, 
   BarChart3, 
-  Zap,
   Save,
   Download,
   Clock,
   CheckCircle,
-  AlertCircle,
   Info,
-  Activity,
-  Droplets,
-  TrendingUp,
   Filter,
   Search,
   Plus,
   Edit,
   Trash2,
   Target,
-  Thermometer,
   Droplet,
-  Leaf,
   Package
 } from 'lucide-react'
 import { 
@@ -333,7 +324,7 @@ export default function TrichodermaApplicationEnhanced() {
                       </div>
                       <HomeBudButton 
                         variant={selectedStrain === strain.id ? "secondary" : "primary"}
-                        size="small"
+                        size="default"
                         onClick={() => setSelectedStrain(strain.id)}
                       >
                         {selectedStrain === strain.id ? 'Ausgewählt' : 'Auswählen'}
@@ -853,12 +844,12 @@ export default function TrichodermaApplicationEnhanced() {
                             )}
                           </div>
                           <div className="flex space-x-2">
-                            <HomeBudButton variant="secondary" size="small">
+                            <HomeBudButton variant="secondary" size="default">
                               <Edit className="w-3 h-3" />
                             </HomeBudButton>
                             <HomeBudButton 
                               variant="secondary" 
-                              size="small"
+                              size="default"
                               onClick={() => {
                                 trichodermaService.deleteApplicationRecord(record.id)
                                 setApplicationRecords(trichodermaService.getApplicationRecords())

@@ -79,7 +79,7 @@ export default function DayView({ growCycles, currentDate, onTaskClick, onCycleC
 
   // Events für den aktuellen Tag finden
   const dayEvents = useMemo(() => {
-    const events = []
+    const events: any[] = []
 
     // Grow-Zyklen finden
     growCycles.forEach(cycle => {

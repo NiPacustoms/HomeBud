@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { AuthService, AuthUser } from '@/services/firebase/authService';
-import { FirestoreService } from '@/services/firebase/firestoreService';
+import { FirestoreService, FirestoreDocument } from '@/services/firebase/firestoreService';
 
 export interface UseFirebaseReturn {
   // Auth State
@@ -17,15 +17,15 @@ export interface UseFirebaseReturn {
 
   // Firestore Methods
   createDocument: <T>(collectionName: string, data: T) => Promise<string>;
-  getDocument: <T>(collectionName: string, id: string) => Promise<T | null>;
+  getDocument: <T extends FirestoreDocument>(collectionName: string, id: string) => Promise<T | null>;
   updateDocument: <T>(collectionName: string, id: string, data: T) => Promise<void>;
   deleteDocument: (collectionName: string, id: string) => Promise<void>;
-  getUserDocuments: <T>(collectionName: string, options?: any) => Promise<T[]>;
-  subscribeToDocuments: <T>(
+  getUserDocuments: <T extends FirestoreDocument>(collectionName: string, options?: any) => Promise<T[]>;
+  subscribeToDocuments: <T extends FirestoreDocument>(
     collectionName: string,
     callback: (documents: T[]) => void,
     options?: any
-  ) => () => void;
+  ) => Promise<() => void>;
 
   // Convenience Methods
   getPlants: () => Promise<any[]>;
@@ -104,14 +104,14 @@ export const useFirebase = (): UseFirebaseReturn => {
   const createDocument = useCallback(async <T>(collectionName: string, data: T): Promise<string> => {
     try {
       setError(null);
-      return await FirestoreService.create(collectionName, data);
+      return await FirestoreService.create(collectionName, data as any);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Dokument-Erstellung fehlgeschlagen');
       throw err;
     }
   }, []);
 
-  const getDocument = useCallback(async <T>(collectionName: string, id: string): Promise<T | null> => {
+  const getDocument = useCallback(async <T extends FirestoreDocument>(collectionName: string, id: string): Promise<T | null> => {
     try {
       setError(null);
       return await FirestoreService.get<T>(collectionName, id);
@@ -124,7 +124,7 @@ export const useFirebase = (): UseFirebaseReturn => {
   const updateDocument = useCallback(async <T>(collectionName: string, id: string, data: T): Promise<void> => {
     try {
       setError(null);
-      await FirestoreService.update(collectionName, id, data);
+      await FirestoreService.update(collectionName, id, data as any);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Dokument-Update fehlgeschlagen');
       throw err;
@@ -141,7 +141,7 @@ export const useFirebase = (): UseFirebaseReturn => {
     }
   }, []);
 
-  const getUserDocuments = useCallback(async <T>(collectionName: string, options?: any): Promise<T[]> => {
+  const getUserDocuments = useCallback(async <T extends FirestoreDocument>(collectionName: string, options?: any): Promise<T[]> => {
     try {
       setError(null);
       return await FirestoreService.getUserDocuments<T>(collectionName, options);
@@ -151,14 +151,14 @@ export const useFirebase = (): UseFirebaseReturn => {
     }
   }, []);
 
-  const subscribeToDocuments = useCallback(<T>(
+  const subscribeToDocuments = useCallback(async <T extends FirestoreDocument>(
     collectionName: string,
     callback: (documents: T[]) => void,
     options?: any
-  ): (() => void) => {
+  ): Promise<(() => void)> => {
     try {
       setError(null);
-      return FirestoreService.subscribeToUserDocuments(collectionName, callback, options);
+      return await FirestoreService.subscribeToUserDocuments(collectionName, callback, options);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Subscription fehlgeschlagen');
       throw err;

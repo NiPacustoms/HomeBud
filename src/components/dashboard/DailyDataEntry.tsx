@@ -5,8 +5,7 @@ import { useGrowType } from '@/hooks/useGrowType'
 import { AnimatePresence } from 'framer-motion'
 import { 
   GrowthPhase, 
-  GrowType, 
-  DailyDataEntry as DailyDataEntryType 
+  GrowType
 } from '@/types/plant'
 import { 
   calculateVPD, 

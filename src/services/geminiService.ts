@@ -91,6 +91,10 @@ export class GeminiDiagnosisService {
         const result = reader.result as string;
         // Entferne den "data:image/jpeg;base64," Prefix
         const base64 = result.split(',')[1];
+        if (!base64) {
+          reject(new Error('Fehler beim Konvertieren des Bildes'));
+          return;
+        }
         resolve(base64);
       };
       reader.onerror = reject;
@@ -134,7 +138,7 @@ export class GeminiDiagnosisService {
 
     try {
       const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), options.timeoutMs ?? 20000);
+      setTimeout(() => controller.abort(), options.timeoutMs ?? 20000);
       const signal = options.signal ?? controller.signal;
       const result = await model.generateContent([
         prompt,

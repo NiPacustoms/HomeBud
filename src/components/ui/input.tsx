@@ -3,14 +3,14 @@
 import React, { forwardRef } from 'react'
 import { cn } from '@/lib/utils'
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
   label?: string
   error?: string
   helperText?: string
   leftIcon?: React.ReactNode
   rightIcon?: React.ReactNode
   variant?: 'default' | 'outlined' | 'filled'
-  size?: 'sm' | 'md' | 'lg'
+  inputSize?: 'sm' | 'md' | 'lg'
   fullWidth?: boolean
 }
 
@@ -21,7 +21,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
   leftIcon,
   rightIcon,
   variant = 'default',
-  size = 'md',
+  inputSize = 'md',
   fullWidth = false,
   className = '',
   id,
@@ -80,7 +80,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
       <div className="relative">
         {leftIcon && (
           <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-            <div className={iconClasses[size]}>
+            <div className={iconClasses[inputSize]}>
               {leftIcon}
             </div>
           </div>
@@ -92,12 +92,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
           className={cn(
             baseClasses,
             variantClasses[variant],
-            sizeClasses[size],
+            sizeClasses[inputSize],
             leftIcon && 'pl-10',
             rightIcon && 'pr-10',
             className
           )}
-          aria-invalid={hasError ? 'true' : 'false'}
           aria-describedby={
             hasError ? `${inputId}-error` : helperText ? `${inputId}-helper` : undefined
           }
@@ -106,7 +105,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
         
         {rightIcon && (
           <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-            <div className={iconClasses[size]}>
+            <div className={iconClasses[inputSize]}>
               {rightIcon}
             </div>
           </div>

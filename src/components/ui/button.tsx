@@ -8,7 +8,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className = '', variant = 'default', size = 'md', children, disabled, ...props }, ref) => {
+  ({ className = '', variant = 'default', size = 'md', children, disabled }, ref) => {
     const baseClasses = "inline-flex items-center justify-center rounded-lg font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
     
     const variantClasses = {
@@ -33,7 +33,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled}
         whileHover={!disabled ? { scale: 1.02, y: -1 } : {}}
         whileTap={!disabled ? { scale: 0.98 } : {}}
-        {...props}
+
       >
         {children}
       </motion.button>

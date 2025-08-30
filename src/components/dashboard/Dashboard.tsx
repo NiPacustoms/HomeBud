@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Settings, Customize } from 'lucide-react'
+import { Settings } from 'lucide-react'
 import DailyDataEntry from './DailyDataEntry'
 import CurrentValuesDisplay from './CurrentValuesDisplay'
 import DataVisualization from './DataVisualization'
@@ -209,8 +209,7 @@ export default function Dashboard({ className = '' }: DashboardProps) {
             category: 'ventilation'
           }
         ],
-        createdAt: new Date(),
-        completedAt: undefined
+        createdAt: new Date()
       }
     ]
 
@@ -270,7 +269,7 @@ export default function Dashboard({ className = '' }: DashboardProps) {
             className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-lg"
             title="Dashboard anpassen"
           >
-            <Customize className="w-4 h-4" />
+                                    <Settings className="w-4 h-4" />
             <span className="hidden sm:inline">Anpassen</span>
           </button>
         </div>
@@ -291,7 +290,7 @@ export default function Dashboard({ className = '' }: DashboardProps) {
       >
         <DailyDataEntry
           onSave={handleSaveData}
-          lastEntry={lastEntry}
+          {...(lastEntry && { lastEntry })}
         />
       </motion.div>
 
@@ -302,9 +301,7 @@ export default function Dashboard({ className = '' }: DashboardProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <CurrentValuesDisplay
-            lastEntry={lastEntry}
-          />
+          <CurrentValuesDisplay />
         </motion.div>
       )}
 

@@ -38,8 +38,7 @@ export default function GuidedInput({
   steps,
   onComplete,
   onCancel,
-  showProgress = true,
-  showHelp = true
+  showProgress = true
 }: GuidedInputProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [values, setValues] = useState<Record<string, any>>({});
@@ -79,6 +78,8 @@ export default function GuidedInput({
   };
 
   const handleNext = () => {
+    if (!currentStepData) return;
+    
     const error = validateStep(currentStepData.id, values[currentStepData.id]);
     if (error) {
       setErrors(prev => ({ ...prev, [currentStepData.id]: error }));
@@ -287,13 +288,15 @@ export default function GuidedInput({
       )}
 
       <div className="mb-6">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-900">
-            {currentStepData.label}
-          </h3>
-        </div>
+        {currentStepData && (
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-gray-900">
+              {currentStepData.label}
+            </h3>
+          </div>
+        )}
 
-        {renderInput(currentStepData)}
+        {currentStepData && renderInput(currentStepData)}
       </div>
 
       <div className="flex justify-between">

@@ -4,9 +4,7 @@ import {
   DashboardTheme, 
   DashboardPreferences, 
   DashboardModule,
-  DashboardData,
-  DashboardViewMode,
-  RefreshInterval
+  DashboardData
 } from '@/types/dashboard';
 
 class DashboardService {
@@ -149,7 +147,6 @@ class DashboardService {
 
   // Kachel-Reihenfolge aktualisieren
   public async updateTileOrder(tiles: DashboardTile[]): Promise<void> {
-    const data = await this.loadDashboardData();
     const updatedTiles = tiles.map((tile, index) => ({ ...tile, position: index + 1, lastUpdated: new Date() }));
     await this.saveDashboardData({ tiles: updatedTiles });
   }
@@ -202,7 +199,7 @@ class DashboardService {
     }, 5 * 60 * 1000);
   }
 
-  private async syncToServer(data: DashboardData): Promise<void> {
+  private async syncToServer(_data: DashboardData): Promise<void> {
     try {
       // Simulierter Sync
       await new Promise(resolve => setTimeout(resolve, 50));

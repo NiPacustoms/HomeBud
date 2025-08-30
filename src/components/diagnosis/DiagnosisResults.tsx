@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useDispatch } from 'react-redux'
+import { useAppDispatch } from '@/store/store'
 import { createTreatmentPlan, submitFeedback } from '@/store/slices/diagnosisSlice'
 import { DiagnosisResult } from '@/store/slices/diagnosisSlice'
 
@@ -11,8 +11,8 @@ interface DiagnosisResultsProps {
   onClose?: () => void
 }
 
-export default function DiagnosisResults({ diagnosis, onClose }: DiagnosisResultsProps) {
-  const dispatch = useDispatch()
+export default function DiagnosisResults({ diagnosis }: DiagnosisResultsProps) {
+  const dispatch = useAppDispatch()
   const [showFeedback, setShowFeedback] = useState(false)
   const [feedback, setFeedback] = useState({ accuracy: 5, helpfulness: 5, comments: '' })
 

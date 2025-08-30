@@ -35,7 +35,7 @@ export class StrainDatabaseService {
       
       this.strainDatabase = await response.json();
       this.lastFetchedAt = Date.now();
-      this.memoryCacheAll = this.strainDatabase.strains;
+      this.memoryCacheAll = this.strainDatabase?.strains || [];
       this.isInitialized = true;
     } catch (error) {
       console.error('Fehler beim Laden der Strain-Datenbank:', error);

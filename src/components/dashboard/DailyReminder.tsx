@@ -136,7 +136,7 @@ export const DailyReminder: React.FC<DailyReminderProps> = ({
             <div className="font-medium text-neutral-700 dark:text-neutral-300">Letzter</div>
             <div className="text-lg font-bold text-neutral-900 dark:text-neutral-100">
               {dailyDataEntries.length > 0 ? 
-                new Date(dailyDataEntries[dailyDataEntries.length - 1].date).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' }) : 
+                new Date(dailyDataEntries[dailyDataEntries.length - 1]?.date || new Date()).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' }) : 
                 '-'
               }
             </div>

@@ -48,7 +48,7 @@ export default function StrainFilterPanel({
   };
 
   const handleFilterChange = (key: keyof StrainFilter, value: any) => {
-    const newFilter = { ...localFilter };
+    const newFilter = { ...localFilter } as any;
     
     if (value === null || value === undefined || (Array.isArray(value) && value.length === 0)) {
       delete newFilter[key];

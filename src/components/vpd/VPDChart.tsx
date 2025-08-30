@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useMemo } from 'react'
-import { motion } from 'framer-motion'
+
 
 interface VPDChartProps {
   onVPDChange?: (vpd: number, status: string) => void
@@ -102,7 +102,8 @@ export default function VPDChart({ onVPDChange, showCalculator = true }: VPDChar
   }
 
   const getVPDZone = (vpdValue: number): VPDZone => {
-    return vpdZones.find(zone => vpdValue >= zone.min && vpdValue < zone.max) || vpdZones[3]
+    const zone = vpdZones.find(zone => vpdValue >= zone.min && vpdValue < zone.max)
+    return zone || vpdZones[3]!
   }
 
   // Memoized chart data für bessere Performance

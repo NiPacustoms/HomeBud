@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useRef, useEffect, useState, useCallback } from 'react'
-import { motion, useScroll, useTransform, useInView, useMotionValue, useMotionTemplate } from 'framer-motion'
+import React, { useRef, useCallback } from 'react'
+import { motion, useScroll, useTransform, useMotionValue, useMotionTemplate } from 'framer-motion'
 import Logo from './Logo'
 
 // HomeBud Design System Components
@@ -137,7 +137,7 @@ export const InteractiveCard = React.memo(({
   className?: string
   onClick?: () => void
 }) => {
-  const [isHovered, setIsHovered] = useState(false)
+
   const cardRef = useRef<HTMLDivElement>(null)
   
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
@@ -160,7 +160,6 @@ export const InteractiveCard = React.memo(({
     if (cardRef.current) {
       cardRef.current.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)'
     }
-    setIsHovered(false)
   }, [])
   
   return (
@@ -168,7 +167,7 @@ export const InteractiveCard = React.memo(({
       ref={cardRef}
       className={`card-homebud-interactive ${className}`}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
+
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
       style={{ transformStyle: 'preserve-3d' }}
@@ -359,17 +358,9 @@ export const HomeBudLogo = React.memo(({
   size?: "small" | "default" | "large"
   onClick?: () => void
 }) => {
-  const sizeClasses = {
-    small: "w-6 h-6",
-    default: "w-8 h-8",
-    large: "w-12 h-12"
-  }
+
   
-  const textSizes = {
-    small: "text-lg",
-    default: "text-xl",
-    large: "text-2xl"
-  }
+
   
   return (
     <motion.div 

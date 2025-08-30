@@ -1,16 +1,13 @@
 'use client'
 
 import React, { useState, useRef, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { useDispatch, useSelector } from 'react-redux'
+import { motion } from 'framer-motion'
+import { useAppDispatch } from '@/store/store'
 import { 
   analyzePlantPhoto, 
-  analyzeManualSymptoms, 
-  createTreatmentPlan,
-  submitFeedback,
-  setAnalysisProgress 
+  analyzeManualSymptoms 
 } from '@/store/slices/diagnosisSlice'
-import { RootState } from '@/store/store'
+
 import { GeminiDiagnosisService } from '@/services/geminiService'
 
 interface AIDiagnosisAnalyzerProps {
@@ -24,32 +21,31 @@ export default function AIDiagnosisAnalyzer({
   plantName, 
   onDiagnosisComplete 
 }: AIDiagnosisAnalyzerProps) {
-  const dispatch = useDispatch()
-  const { isAnalyzing, analysisProgress, currentDiagnosis, error } = useSelector(
-    (state: RootState) => state.diagnosis
-  )
+  const dispatch = useAppDispatch()
+  const [isAnalyzing, setIsAnalyzing] = useState(false)
+  const [analysisProgress, setAnalysisProgress] = useState(0)
+  const [error] = useState<string | null>(null)
   
   const [activeMode, setActiveMode] = useState<'photo' | 'manual' | 'sensor'>('photo')
   const [uploadedImage, setUploadedImage] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [manualSymptoms, setManualSymptoms] = useState('')
   const [growthStage, setGrowthStage] = useState('')
-  const [showFeedback, setShowFeedback] = useState(false)
-  const [feedback, setFeedback] = useState({ accuracy: 5, helpfulness: 5, comments: '' })
+
+
   
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const canvasRef = useRef<HTMLCanvasElement>(null)
 
   // Simulate progress updates during analysis
   useEffect(() => {
     if (isAnalyzing) {
       const interval = setInterval(() => {
-        dispatch(setAnalysisProgress(Math.min(analysisProgress + 10, 90)))
+        setAnalysisProgress(prev => Math.min(prev + 10, 90))
       }, 300)
       return () => clearInterval(interval)
     }
-  }, [isAnalyzing, analysisProgress, dispatch])
+    return undefined
+  }, [isAnalyzing])
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -164,25 +160,7 @@ export default function AIDiagnosisAnalyzer({
     }
   }
 
-  const getSeverityColor = (severity: string) => {
-    switch (severity) {
-      case 'low': return 'from-green-500 to-emerald-600'
-      case 'medium': return 'from-yellow-500 to-orange-600'
-      case 'high': return 'from-red-500 to-pink-600'
-      case 'critical': return 'from-red-600 to-red-800'
-      default: return 'from-gray-500 to-gray-600'
-    }
-  }
 
-  const getSeverityText = (severity: string) => {
-    switch (severity) {
-      case 'low': return 'Gering'
-      case 'medium': return 'Mittel'
-      case 'high': return 'Hoch'
-      case 'critical': return 'Kritisch'
-      default: return severity
-    }
-  }
 
   return (
     <div className="space-y-6">

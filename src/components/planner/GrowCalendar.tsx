@@ -197,7 +197,7 @@ export default function GrowCalendar({
   // Events für einen bestimmten Tag finden
   const getEventsForDate = (date: Date) => {
     const dateStr = date.toISOString().split('T')[0]
-    const events = []
+    const events: any[] = []
 
     // Grow-Zyklen finden
     growCycles.forEach(cycle => {
@@ -539,8 +539,8 @@ export default function GrowCalendar({
         <WeekView 
           growCycles={growCycles}
           currentDate={currentDate}
-          onTaskClick={onTaskClick}
-          onCycleClick={onCycleClick}
+          {...(onTaskClick && { onTaskClick })}
+          {...(onCycleClick && { onCycleClick })}
         />
       )}
 
@@ -548,8 +548,8 @@ export default function GrowCalendar({
         <DayView 
           growCycles={growCycles}
           currentDate={currentDate}
-          onTaskClick={onTaskClick}
-          onCycleClick={onCycleClick}
+          {...(onTaskClick && { onTaskClick })}
+          {...(onCycleClick && { onCycleClick })}
         />
       )}
 

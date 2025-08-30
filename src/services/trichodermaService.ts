@@ -63,40 +63,46 @@ class TrichodermaService {
 
   // Alle Trichoderma-Stämme abrufen
   getAllStrains(): TrichodermaStrain[] {
-    return trichodermaData.trichoderma_strains
+    return trichodermaData.trichoderma_strains as TrichodermaStrain[]
   }
 
   // Stamm nach ID abrufen
   getStrainById(id: string): TrichodermaStrain | undefined {
-    return trichodermaData.trichoderma_strains.find(strain => strain.id === id)
+    return trichodermaData.trichoderma_strains.find(strain => strain.id === id) as TrichodermaStrain | undefined
   }
 
   // Stämme nach Wirkmechanismus filtern
   getStrainsByMechanism(mechanism: string): TrichodermaStrain[] {
     return trichodermaData.trichoderma_strains.filter(strain =>
       strain.mechanisms.some(m => m.toLowerCase().includes(mechanism.toLowerCase()))
-    )
+    ) as TrichodermaStrain[]
   }
 
   // Stämme nach Anwendungsmethode filtern
   getStrainsByApplicationMethod(method: string): TrichodermaStrain[] {
     return trichodermaData.trichoderma_strains.filter(strain =>
       strain.application_methods.some(m => m.toLowerCase().includes(method.toLowerCase()))
-    )
+    ) as TrichodermaStrain[]
   }
 
   // Stämme nach pH-Bereich filtern
   getStrainsByPH(pH: number): TrichodermaStrain[] {
-    return trichodermaData.trichoderma_strains.filter(strain =>
-      pH >= strain.optimal_soil_pH[0] && pH <= strain.optimal_soil_pH[1]
-    )
+    return trichodermaData.trichoderma_strains.filter(strain => {
+      const phRange = strain.optimal_soil_pH;
+      return phRange && phRange.length >= 2 && 
+             typeof phRange[0] === 'number' && typeof phRange[1] === 'number' &&
+             pH >= phRange[0] && pH <= phRange[1];
+    }) as TrichodermaStrain[]
   }
 
   // Stämme nach Temperaturbereich filtern
   getStrainsByTemperature(temp: number): TrichodermaStrain[] {
-    return trichodermaData.trichoderma_strains.filter(strain =>
-      temp >= strain.optimal_temperature_celsius[0] && temp <= strain.optimal_temperature_celsius[1]
-    )
+    return trichodermaData.trichoderma_strains.filter(strain => {
+      const tempRange = strain.optimal_temperature_celsius;
+      return tempRange && tempRange.length >= 2 && 
+             typeof tempRange[0] === 'number' && typeof tempRange[1] === 'number' &&
+             temp >= tempRange[0] && temp <= tempRange[1];
+    }) as TrichodermaStrain[]
   }
 
   // Alle Kombi-Pakete abrufen
@@ -162,8 +168,8 @@ class TrichodermaService {
       selectedCombo,
       calculatedDosage: {
         trichoderma_g: Math.round(trichoderma_g * 100) / 100,
-        mycorrhiza_g: mycorrhiza_g > 0 ? Math.round(mycorrhiza_g * 100) / 100 : undefined,
-        total_g: Math.round((trichoderma_g + mycorrhiza_g) * 100) / 100,
+        ...(mycorrhiza_g > 0 && { mycorrhiza_g: Math.round(mycorrhiza_g * 100) / 100 }),
+        total_g: Math.round((trichoderma_g + (mycorrhiza_g || 0)) * 100) / 100,
         application_method,
         frequency,
         notes

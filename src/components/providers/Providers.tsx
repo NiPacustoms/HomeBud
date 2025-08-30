@@ -3,6 +3,7 @@
 import { ReactNode } from 'react'
 import { ThemeProvider } from 'next-themes'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { AuthProvider } from '@/components/AuthClient'
 
 interface ProvidersProps {
   children: ReactNode
@@ -28,7 +29,9 @@ export function Providers({ children }: ProvidersProps) {
         enableSystem
         disableTransitionOnChange
       >
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>
   )

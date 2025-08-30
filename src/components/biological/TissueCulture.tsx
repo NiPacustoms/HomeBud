@@ -1,28 +1,21 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
-import { Progress } from '@/components/ui/progress'
+// import { Progress } from '@/components/ui/progress'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { 
   Beaker as Flask, 
   Scissors, 
   Droplets, 
-  Calendar, 
-  Camera, 
   CheckCircle, 
-  AlertCircle,
-  Clock,
-  Thermometer,
-  Lightbulb,
-  FileText,
-  Settings
+  Clock
 } from 'lucide-react'
 
 interface CloneData {
@@ -46,7 +39,7 @@ interface ChecklistItem {
 
 export default function TissueCulture() {
   const [clones, setClones] = useState<CloneData[]>([])
-  const [currentStep, setCurrentStep] = useState(1)
+  // const [currentStep, setCurrentStep] = useState(1)
   const [checklist, setChecklist] = useState<ChecklistItem[]>([
     { id: '1', text: 'Hände gewaschen & desinfiziert', completed: false, category: 'preparation' },
     { id: '2', text: 'Arbeitsplatz gereinigt, Flächen mit Alkohol besprüht', completed: false, category: 'preparation' },
@@ -79,11 +72,11 @@ export default function TissueCulture() {
     const clone: CloneData = {
       id: Date.now().toString(),
       strainName: newClone.strainName,
-      startDate: new Date().toISOString().split('T')[0],
+      startDate: new Date().toISOString().split('T')[0] || new Date().toISOString(),
       status: 'preparing',
       notes: newClone.notes,
       photos: [],
-      lastCheck: new Date().toISOString().split('T')[0]
+      lastCheck: new Date().toISOString().split('T')[0] || new Date().toISOString()
     }
 
     setClones([...clones, clone])
@@ -93,7 +86,7 @@ export default function TissueCulture() {
   const updateCloneStatus = (cloneId: string, status: CloneData['status']) => {
     setClones(clones.map(clone => 
       clone.id === cloneId 
-        ? { ...clone, status, lastCheck: new Date().toISOString().split('T')[0] }
+        ? { ...clone, status, lastCheck: new Date().toISOString().split('T')[0] || new Date().toISOString() }
         : clone
     ))
   }
@@ -224,7 +217,7 @@ export default function TissueCulture() {
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
-                {steps.map((step, index) => (
+                {steps.map((step) => (
                   <div key={step.id} className="border-l-4 border-green-500 pl-4">
                     <h3 className="text-lg font-semibold mb-2">
                       Schritt {step.id}: {step.title}
@@ -384,7 +377,7 @@ export default function TissueCulture() {
                     <Checkbox
                       id={item.id}
                       checked={item.completed}
-                      onCheckedChange={() => toggleChecklistItem(item.id)}
+                      onChange={() => toggleChecklistItem(item.id)}
                     />
                     <Label
                       htmlFor={item.id}

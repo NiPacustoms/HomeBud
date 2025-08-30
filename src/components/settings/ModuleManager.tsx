@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { AVAILABLE_MODULES, MODULES_BY_CATEGORY, Module, ModuleCategory } from '@/types/modules'
+import { AVAILABLE_MODULES, Module, ModuleCategory } from '@/types/modules'
 
 interface ModuleManagerProps {
   enabledModules: string[]

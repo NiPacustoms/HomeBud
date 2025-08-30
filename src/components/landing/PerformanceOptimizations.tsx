@@ -12,7 +12,7 @@ export const LazyImage = React.memo(({ src, alt, className }: { src: string; alt
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry?.isIntersecting) {
           setIsInView(true)
           observer.disconnect()
         }
@@ -97,18 +97,15 @@ export const VirtualList = React.memo(({
 export const AnimationContainer = React.memo(({ 
   children, 
   delay = 0, 
-  duration = 0.6,
-  threshold = 0.1 
+  duration = 0.6
 }: {
   children: React.ReactNode
   delay?: number
   duration?: number
-  threshold?: number
 }) => {
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { 
     once: true, 
-    threshold,
     margin: "-50px"
   })
 
@@ -153,7 +150,7 @@ export const useIntersectionObserver = (
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
-      setIsIntersecting(entry.isIntersecting)
+      setIsIntersecting(entry?.isIntersecting ?? false)
     }, options)
 
     if (ref.current) {
@@ -244,7 +241,8 @@ export const usePerformanceMonitor = () => {
             console.log('LCP:', entry.startTime)
           }
           if (entry.entryType === 'first-input') {
-            console.log('FID:', entry.processingStart - entry.startTime)
+            const firstInputEntry = entry as any
+            console.log('FID:', firstInputEntry.processingStart - entry.startTime)
           }
         }
       })
@@ -253,5 +251,6 @@ export const usePerformanceMonitor = () => {
 
       return () => observer.disconnect()
     }
+    return undefined
   }, [])
 }

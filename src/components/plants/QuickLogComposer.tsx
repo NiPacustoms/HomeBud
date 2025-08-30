@@ -117,7 +117,7 @@ export default function QuickLogComposer({
         plantId: plant.id,
         logData: {
           action: selectedAction,
-          date: new Date(),
+          date: new Date().toISOString(),
           data: formData
         }
       })).unwrap()

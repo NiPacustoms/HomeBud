@@ -47,8 +47,8 @@ export const MeasurementCard: React.FC<MeasurementCardProps> = ({
     <Component
       className={baseClasses}
       onClick={onClick}
-      whileHover={hover ? { scale: 1.02 } : undefined}
-      whileTap={onClick ? { scale: 0.98 } : undefined}
+      {...(hover && { whileHover: { scale: 1.02 } })}
+      {...(onClick && { whileTap: { scale: 0.98 } })}
       transition={{ duration: 0.2 }}
     >
       {children}

@@ -11,12 +11,10 @@ import {
   orderBy,
   limit,
   onSnapshot,
-  DocumentData,
-  QueryDocumentSnapshot,
   Timestamp,
+  getFirestore,
 } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
-import { AuthService, AuthUser } from './authService';
+import { AuthService } from './authService';
 
 export interface FirestoreDocument {
   id: string;
@@ -26,15 +24,26 @@ export interface FirestoreDocument {
 }
 
 export class FirestoreService {
+  // Dynamische Firestore-Instanz
+  private static async getFirestoreDB() {
+    if (typeof window === 'undefined') {
+      throw new Error('Firestore ist nur im Browser verfügbar');
+    }
+    
+    const { app } = await import('@/services/firebase/app');
+    return getFirestore(app);
+  }
+
   // Generische CRUD-Operationen
   static async create<T extends Omit<FirestoreDocument, 'id' | 'createdAt' | 'updatedAt'>>(
     collectionName: string,
     data: T
   ): Promise<string> {
     try {
-      const user = AuthService.getCurrentUser();
+      const user = await AuthService.getCurrentUser();
       if (!user) throw new Error('Benutzer nicht angemeldet');
 
+      const db = await this.getFirestoreDB();
       const docData = {
         ...data,
         userId: user.uid,
@@ -54,6 +63,7 @@ export class FirestoreService {
     id: string
   ): Promise<T | null> {
     try {
+      const db = await this.getFirestoreDB();
       const docRef = doc(db, collectionName, id);
       const docSnap = await getDoc(docRef);
 
@@ -72,9 +82,10 @@ export class FirestoreService {
     data: T
   ): Promise<void> {
     try {
-      const user = AuthService.getCurrentUser();
+      const user = await AuthService.getCurrentUser();
       if (!user) throw new Error('Benutzer nicht angemeldet');
 
+      const db = await this.getFirestoreDB();
       const docRef = doc(db, collectionName, id);
       const updateData = {
         ...data,
@@ -89,6 +100,7 @@ export class FirestoreService {
 
   static async delete(collectionName: string, id: string): Promise<void> {
     try {
+      const db = await this.getFirestoreDB();
       const docRef = doc(db, collectionName, id);
       await deleteDoc(docRef);
     } catch (error) {
@@ -106,9 +118,10 @@ export class FirestoreService {
     }
   ): Promise<T[]> {
     try {
-      const user = AuthService.getCurrentUser();
+      const user = await AuthService.getCurrentUser();
       if (!user) throw new Error('Benutzer nicht angemeldet');
 
+      const db = await this.getFirestoreDB();
       let q = query(
         collection(db, collectionName),
         where('userId', '==', user.uid)
@@ -133,7 +146,7 @@ export class FirestoreService {
   }
 
   // Echtzeit-Updates
-  static subscribeToUserDocuments<T extends FirestoreDocument>(
+  static async subscribeToUserDocuments<T extends FirestoreDocument>(
     collectionName: string,
     callback: (documents: T[]) => void,
     options?: {
@@ -141,12 +154,13 @@ export class FirestoreService {
       orderDirection?: 'asc' | 'desc';
       limitCount?: number;
     }
-  ): () => void {
-    const user = AuthService.getCurrentUser();
+  ): Promise<() => void> {
+    const user = await AuthService.getCurrentUser();
     if (!user) {
       throw new Error('Benutzer nicht angemeldet');
     }
 
+    const db = await this.getFirestoreDB();
     let q = query(
       collection(db, collectionName),
       where('userId', '==', user.uid)
@@ -196,9 +210,10 @@ export class FirestoreService {
     dataArray: T[]
   ): Promise<string[]> {
     try {
-      const user = AuthService.getCurrentUser();
+      const user = await AuthService.getCurrentUser();
       if (!user) throw new Error('Benutzer nicht angemeldet');
 
+      const db = await this.getFirestoreDB();
       const ids: string[] = [];
       
       for (const data of dataArray) {

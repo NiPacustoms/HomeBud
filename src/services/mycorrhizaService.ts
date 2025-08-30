@@ -836,14 +836,14 @@ export const mycorrhizaStrains: MycorrhizaStrain[] = [
     },
     dosage: {
       baseRate: 1000,
-      unit: 'spores/L',
+      unit: 'spores/L' as const,
       applicationMethod: 'Beim Pflanzen als Bodeninokulant',
       frequency: 'Beim Einpflanzen, Nachdosierung alle 3 Monate'
     },
     commercial: {
       price: '€20/100g (1Mio Sporen)',
       certification: ['EU-Bio', 'USDA Organic'],
-      availability: 'readily_available',
+      availability: 'readily_available' as const,
       supplier: 'Placeholder Mycorrhizal Solutions',
       rating: 4.0
     },
@@ -936,7 +936,7 @@ export const calculateMycorrhizaDosage = (
     recommendedDosage,
     dosageUnit: 'g',
     cost,
-    applicationInstructions,
+    applicationInstructions: applicationInstructions.filter((instruction): instruction is string => instruction !== undefined),
     adjustments: {
       substrateFactor,
       plantFactor,
@@ -1020,7 +1020,7 @@ export const getMycorrhizaRecommendations = (
         applicationPlan: {
           timing: strain.application.bestTime,
           dosage: dosage.recommendedDosage,
-          method: dosage.applicationInstructions[0],
+          method: dosage.applicationInstructions[0] || 'Standard-Anwendung',
           frequency: strain.dosage.frequency
         }
       })
@@ -1077,7 +1077,7 @@ export const calculateComparisonResults = (
   return {
     ...comparison,
     results: {
-      yieldImprovement,
+      ...(yieldImprovement !== undefined && { yieldImprovement }),
       growthImprovement,
       rootImprovement,
       stressResistanceImprovement,

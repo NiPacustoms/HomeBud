@@ -1,7 +1,7 @@
 'use client'
 
-import React, { forwardRef, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import React, { forwardRef } from 'react'
+
 import { cn } from '@/lib/utils'
 
 interface SelectOption {
@@ -10,7 +10,7 @@ interface SelectOption {
   disabled?: boolean
 }
 
-interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'onChange'> {
+interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'onChange' | 'size'> {
   options: SelectOption[]
   label?: string
   error?: string
@@ -39,9 +39,6 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(({
 }, ref) => {
   const selectId = id || `select-${Math.random().toString(36).substr(2, 9)}`
   const hasError = !!error
-  const [isOpen, setIsOpen] = useState(false)
-
-  const selectedOption = options.find(opt => opt.value === value)
 
   const baseClasses = cn(
     'block w-full border rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-0',
@@ -102,7 +99,6 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(({
             'appearance-none',
             className
           )}
-          aria-invalid={hasError ? 'true' : 'false'}
           aria-describedby={
             hasError ? `${selectId}-error` : helperText ? `${selectId}-helper` : undefined
           }

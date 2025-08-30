@@ -94,7 +94,7 @@ export const SeedDatabase: React.FC<SeedDatabaseProps> = ({
   };
 
   if (loading) {
-    return <LoadingScreen message="Lade Samendatenbank..." />;
+    return <LoadingScreen />;
   }
 
   return (

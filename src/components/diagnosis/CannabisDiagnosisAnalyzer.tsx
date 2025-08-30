@@ -1,13 +1,9 @@
 'use client'
 
 import React, { useState, useRef, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useDispatch, useSelector } from 'react-redux'
 import { 
-  analyzePlantPhoto, 
-  analyzeManualSymptoms, 
-  createTreatmentPlan,
-  submitFeedback,
   setAnalysisProgress 
 } from '@/store/slices/diagnosisSlice'
 import { RootState } from '@/store/store'
@@ -27,7 +23,7 @@ export default function CannabisDiagnosisAnalyzer({
   onDiagnosisComplete 
 }: CannabisDiagnosisAnalyzerProps) {
   
-  const { isAnalyzing, analysisProgress, currentDiagnosis, error } = useSelector(
+  const { isAnalyzing, analysisProgress } = useSelector(
     (state: RootState) => state.diagnosis
   )
   
@@ -42,8 +38,7 @@ export default function CannabisDiagnosisAnalyzer({
     humidity: 'moderate',
     season: 'summer'
   })
-  const [showFeedback, setShowFeedback] = useState(false)
-  const [feedback, setFeedback] = useState({ accuracy: 5, helpfulness: 5, comments: '' })
+
   
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -57,6 +52,7 @@ export default function CannabisDiagnosisAnalyzer({
       }, 300)
       return () => clearInterval(interval)
     }
+    return undefined
   }, [isAnalyzing, analysisProgress, dispatch])
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -149,6 +145,10 @@ export default function CannabisDiagnosisAnalyzer({
     ]
 
     const randomIssue = issues[Math.floor(Math.random() * issues.length)]
+
+    if (!randomIssue) {
+      throw new Error('Keine Diagnose verfügbar')
+    }
 
     return {
       id: Date.now().toString(),
@@ -408,6 +408,7 @@ export default function CannabisDiagnosisAnalyzer({
                 value={potSize}
                 onChange={(e) => setPotSize(e.target.value)}
                 className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+                aria-label="Topfgröße für Bewässerungs-Check auswählen"
               >
                 <option value="small">Klein</option>
                 <option value="medium">Mittel</option>
@@ -427,6 +428,7 @@ export default function CannabisDiagnosisAnalyzer({
                   temperature: e.target.value
                 })}
                 className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+                aria-label="Temperatur für Bewässerungs-Check auswählen"
               >
                 <option value="cold">Kalt (&lt;18°C)</option>
                 <option value="moderate">Moderat (18-24°C)</option>
