@@ -1,0 +1,85 @@
+/* Performance Optimization Styles */
+
+/* Virtual List Styles */
+.virtual-list-container {
+  overflow: auto;
+}
+
+.virtual-list-wrapper {
+  position: relative;
+}
+
+.virtual-list-content {
+  /* transform wird dynamisch gesetzt */
+}
+
+.virtual-list-item {
+  /* height wird dynamisch gesetzt */
+}
+
+/* Virtual List Height Classes */
+.virtual-list-container-height {
+  height: var(--container-height);
+}
+
+.virtual-list-wrapper-height {
+  height: var(--total-height);
+}
+
+.virtual-list-content-transform {
+  transform: translateY(var(--offset-y));
+}
+
+.virtual-list-item-height {
+  height: var(--item-height);
+}
+
+/* Progress Bar Styles */
+.progress-bar {
+  height: 8px;
+  border-radius: 9999px;
+  transition: width 0.3s ease;
+}
+
+/* Dynamic Progress Bar Width */
+.progress-bar[data-progress] {
+  width: var(--progress-width);
+}
+
+/* Animation Styles */
+.slide-up-animation {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Dynamic Color Styles */
+.vpd-zone-color {
+  /* background-color wird dynamisch gesetzt */
+}
+
+.vpd-zone-color[data-color] {
+  background-color: var(--zone-color);
+}
+
+/* Responsive Logo Styles */
+.logo-container {
+  /* width und height werden dynamisch gesetzt */
+}
+
+.logo-container[data-size] {
+  width: var(--logo-size);
+  height: var(--logo-size);
+}
+
+/* Dynamic Width Styles */
+.dynamic-width {
+  /* width wird dynamisch gesetzt */
+}

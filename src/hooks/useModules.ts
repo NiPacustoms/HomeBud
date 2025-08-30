@@ -74,7 +74,7 @@ export const useModules = () => {
 
   // Helper Functions
   const getModuleById = useCallback((moduleId: string) => {
-    return availableModules.find(m => m.id === moduleId)
+    return availableModules.find((m: Module) => m.id === moduleId)
   }, [availableModules])
 
   const isModuleEnabled = useCallback((moduleId: string) => {
@@ -82,35 +82,35 @@ export const useModules = () => {
   }, [enabledModules])
 
   const getModulesByCategory = useCallback((category: string) => {
-    return availableModules.filter(m => m.category === category)
+    return availableModules.filter((m: Module) => m.category === category)
   }, [availableModules])
 
   const getEnabledModulesByCategory = useCallback((category: string) => {
-    return availableModules.filter(m => 
+    return availableModules.filter((m: Module) => 
       m.category === category && enabledModules.includes(m.id)
     )
   }, [availableModules, enabledModules])
 
   const getModuleDependencies = useCallback((moduleId: string) => {
-    const module = availableModules.find(m => m.id === moduleId)
+    const module = availableModules.find((m: Module) => m.id === moduleId)
     if (!module) return []
     
-    return module.dependencies.map(depId => 
-      availableModules.find(m => m.id === depId)
+    return module.dependencies.map((depId: string) => 
+      availableModules.find((m: Module) => m.id === depId)
     ).filter(Boolean) as Module[]
   }, [availableModules])
 
   const getModuleDependents = useCallback((moduleId: string) => {
-    return availableModules.filter(m => m.dependencies.includes(moduleId))
+    return availableModules.filter((m: Module) => m.dependencies.includes(moduleId))
   }, [availableModules])
 
   const getModuleSettings = useCallback((moduleId: string) => {
-    const settings = moduleSettings.find(ms => ms.moduleId === moduleId)
+    const settings = moduleSettings.find((ms: { moduleId: string; settings: Record<string, any> }) => ms.moduleId === moduleId)
     return settings?.settings || {}
   }, [moduleSettings])
 
   const canEnableModule = useCallback((moduleId: string) => {
-    const module = availableModules.find(m => m.id === moduleId)
+    const module = availableModules.find((m: Module) => m.id === moduleId)
     if (!module) return false
     
     // Standard-Module sind immer aktivierbar
@@ -118,17 +118,17 @@ export const useModules = () => {
     
     // Prüfen, ob alle Abhängigkeiten erfüllt sind
     const missingDependencies = module.dependencies.filter(
-      dep => !enabledModules.includes(dep)
+      (dep: string) => !enabledModules.includes(dep)
     )
     
     return missingDependencies.length === 0
   }, [availableModules, enabledModules])
 
   const getMissingDependencies = useCallback((moduleId: string) => {
-    const module = availableModules.find(m => m.id === moduleId)
+    const module = availableModules.find((m: Module) => m.id === moduleId)
     if (!module) return []
     
-    return module.dependencies.filter(dep => !enabledModules.includes(dep))
+    return module.dependencies.filter((dep: string) => !enabledModules.includes(dep))
   }, [availableModules, enabledModules])
 
   const getEnabledModulesCount = useCallback(() => {
@@ -140,11 +140,11 @@ export const useModules = () => {
   }, [availableModules])
 
   const getPremiumModulesCount = useCallback(() => {
-    return availableModules.filter(m => m.isPremium).length
+    return availableModules.filter((m: Module) => m.isPremium).length
   }, [availableModules])
 
   const getEnabledPremiumModulesCount = useCallback(() => {
-    return availableModules.filter(m => 
+    return availableModules.filter((m: Module) => 
       m.isPremium && enabledModules.includes(m.id)
     ).length
   }, [availableModules, enabledModules])

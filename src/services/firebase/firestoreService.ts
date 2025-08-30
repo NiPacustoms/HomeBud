@@ -14,7 +14,6 @@ import {
   Timestamp,
   getFirestore,
 } from 'firebase/firestore';
-import { AuthService } from './authService';
 
 export interface FirestoreDocument {
   id: string;
@@ -37,16 +36,16 @@ export class FirestoreService {
   // Generische CRUD-Operationen
   static async create<T extends Omit<FirestoreDocument, 'id' | 'createdAt' | 'updatedAt'>>(
     collectionName: string,
-    data: T
+    data: T,
+    userId: string
   ): Promise<string> {
     try {
-      const user = await AuthService.getCurrentUser();
-      if (!user) throw new Error('Benutzer nicht angemeldet');
+      if (!userId) throw new Error('Benutzer-ID erforderlich');
 
       const db = await this.getFirestoreDB();
       const docData = {
         ...data,
-        userId: user.uid,
+        userId,
         createdAt: Timestamp.now(),
         updatedAt: Timestamp.now(),
       };
@@ -82,9 +81,6 @@ export class FirestoreService {
     data: T
   ): Promise<void> {
     try {
-      const user = await AuthService.getCurrentUser();
-      if (!user) throw new Error('Benutzer nicht angemeldet');
-
       const db = await this.getFirestoreDB();
       const docRef = doc(db, collectionName, id);
       const updateData = {
@@ -111,6 +107,7 @@ export class FirestoreService {
   // Benutzer-spezifische Abfragen
   static async getUserDocuments<T extends FirestoreDocument>(
     collectionName: string,
+    userId: string,
     options?: {
       orderByField?: string;
       orderDirection?: 'asc' | 'desc';
@@ -118,13 +115,12 @@ export class FirestoreService {
     }
   ): Promise<T[]> {
     try {
-      const user = await AuthService.getCurrentUser();
-      if (!user) throw new Error('Benutzer nicht angemeldet');
+      if (!userId) throw new Error('Benutzer-ID erforderlich');
 
       const db = await this.getFirestoreDB();
       let q = query(
         collection(db, collectionName),
-        where('userId', '==', user.uid)
+        where('userId', '==', userId)
       );
 
       if (options?.orderByField) {
@@ -148,6 +144,7 @@ export class FirestoreService {
   // Echtzeit-Updates
   static async subscribeToUserDocuments<T extends FirestoreDocument>(
     collectionName: string,
+    userId: string,
     callback: (documents: T[]) => void,
     options?: {
       orderByField?: string;
@@ -155,15 +152,14 @@ export class FirestoreService {
       limitCount?: number;
     }
   ): Promise<() => void> {
-    const user = await AuthService.getCurrentUser();
-    if (!user) {
-      throw new Error('Benutzer nicht angemeldet');
+    if (!userId) {
+      throw new Error('Benutzer-ID erforderlich');
     }
 
     const db = await this.getFirestoreDB();
     let q = query(
       collection(db, collectionName),
-      where('userId', '==', user.uid)
+      where('userId', '==', userId)
     );
 
     if (options?.orderByField) {
@@ -184,34 +180,34 @@ export class FirestoreService {
   }
 
   // Spezifische Services für HomeBud-Daten
-  static async getPlants(): Promise<any[]> {
-    return this.getUserDocuments('plants', { orderByField: 'createdAt' });
+  static async getPlants(userId: string): Promise<any[]> {
+    return this.getUserDocuments('plants', userId, { orderByField: 'createdAt' });
   }
 
-  static async getMeasurements(): Promise<any[]> {
-    return this.getUserDocuments('measurements', { 
+  static async getMeasurements(userId: string): Promise<any[]> {
+    return this.getUserDocuments('measurements', userId, { 
       orderByField: 'createdAt', 
       orderDirection: 'desc',
       limitCount: 100 
     });
   }
 
-  static async getNotes(): Promise<any[]> {
-    return this.getUserDocuments('notes', { orderByField: 'createdAt' });
+  static async getNotes(userId: string): Promise<any[]> {
+    return this.getUserDocuments('notes', userId, { orderByField: 'createdAt' });
   }
 
-  static async getDashboardData(): Promise<any[]> {
-    return this.getUserDocuments('dashboard', { orderByField: 'createdAt' });
+  static async getDashboardData(userId: string): Promise<any[]> {
+    return this.getUserDocuments('dashboard', userId, { orderByField: 'createdAt' });
   }
 
   // Batch-Operationen
   static async batchCreate<T extends Omit<FirestoreDocument, 'id' | 'createdAt' | 'updatedAt'>>(
     collectionName: string,
-    dataArray: T[]
+    dataArray: T[],
+    userId: string
   ): Promise<string[]> {
     try {
-      const user = await AuthService.getCurrentUser();
-      if (!user) throw new Error('Benutzer nicht angemeldet');
+      if (!userId) throw new Error('Benutzer-ID erforderlich');
 
       const db = await this.getFirestoreDB();
       const ids: string[] = [];
@@ -219,7 +215,7 @@ export class FirestoreService {
       for (const data of dataArray) {
         const docData = {
           ...data,
-          userId: user.uid,
+          userId,
           createdAt: Timestamp.now(),
           updatedAt: Timestamp.now(),
         };

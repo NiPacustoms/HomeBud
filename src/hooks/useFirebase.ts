@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-import { AuthService, AuthUser } from '@/services/firebase/authService';
+import { useAuth } from '@/components/auth/AuthClient';
 import { FirestoreService, FirestoreDocument } from '@/services/firebase/firestoreService';
+import { User } from 'firebase/auth';
 
 export interface UseFirebaseReturn {
   // Auth State
-  user: AuthUser | null;
+  user: User | null;
   loading: boolean;
   error: string | null;
 
@@ -35,81 +36,71 @@ export interface UseFirebaseReturn {
 }
 
 export const useFirebase = (): UseFirebaseReturn => {
-  const [user, setUser] = useState<AuthUser | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { user, loading: authLoading, signIn, signInWithGoogle, signUp, signOut, resetPassword } = useAuth();
   const [error, setError] = useState<string | null>(null);
-
-  // Auth State Listener
-  useEffect(() => {
-    const unsubscribe = AuthService.onAuthStateChanged((user) => {
-      setUser(user);
-      setLoading(false);
-    });
-
-    return unsubscribe;
-  }, []);
 
   // Auth Methods
   const login = useCallback(async (email: string, password: string) => {
     try {
       setError(null);
-      await AuthService.login(email, password);
+      await signIn(email, password);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login fehlgeschlagen');
       throw err;
     }
-  }, []);
+  }, [signIn]);
 
   const loginWithGoogle = useCallback(async () => {
     try {
       setError(null);
-      await AuthService.loginWithGoogle();
+      await signInWithGoogle();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Google Login fehlgeschlagen');
       throw err;
     }
-  }, []);
+  }, [signInWithGoogle]);
 
   const register = useCallback(async (email: string, password: string, displayName?: string) => {
     try {
       setError(null);
-      await AuthService.register(email, password, displayName);
+      await signUp(email, password, displayName);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Registrierung fehlgeschlagen');
       throw err;
     }
-  }, []);
+  }, [signUp]);
 
   const logout = useCallback(async () => {
     try {
       setError(null);
-      await AuthService.logout();
+      await signOut();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Logout fehlgeschlagen');
       throw err;
     }
-  }, []);
+  }, [signOut]);
 
   const resetPassword = useCallback(async (email: string) => {
     try {
       setError(null);
-      await AuthService.resetPassword(email);
+      await resetPassword(email);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Passwort-Reset fehlgeschlagen');
       throw err;
     }
-  }, []);
+  }, [resetPassword]);
 
   // Firestore Methods
   const createDocument = useCallback(async <T>(collectionName: string, data: T): Promise<string> => {
     try {
       setError(null);
-      return await FirestoreService.create(collectionName, data as any);
+      if (!user?.uid) throw new Error('Benutzer nicht angemeldet');
+      return await FirestoreService.create(collectionName, data as any, user.uid);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Dokument-Erstellung fehlgeschlagen');
       throw err;
     }
-  }, []);
+  }, [user?.uid]);
 
   const getDocument = useCallback(async <T extends FirestoreDocument>(collectionName: string, id: string): Promise<T | null> => {
     try {
@@ -144,12 +135,13 @@ export const useFirebase = (): UseFirebaseReturn => {
   const getUserDocuments = useCallback(async <T extends FirestoreDocument>(collectionName: string, options?: any): Promise<T[]> => {
     try {
       setError(null);
-      return await FirestoreService.getUserDocuments<T>(collectionName, options);
+      if (!user?.uid) throw new Error('Benutzer nicht angemeldet');
+      return await FirestoreService.getUserDocuments<T>(collectionName, user.uid, options);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Dokumente-Abruf fehlgeschlagen');
       throw err;
     }
-  }, []);
+  }, [user?.uid]);
 
   const subscribeToDocuments = useCallback(async <T extends FirestoreDocument>(
     collectionName: string,
@@ -158,12 +150,13 @@ export const useFirebase = (): UseFirebaseReturn => {
   ): Promise<(() => void)> => {
     try {
       setError(null);
-      return await FirestoreService.subscribeToUserDocuments(collectionName, callback, options);
+      if (!user?.uid) throw new Error('Benutzer nicht angemeldet');
+      return await FirestoreService.subscribeToUserDocuments(collectionName, user.uid, callback, options);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Subscription fehlgeschlagen');
       throw err;
     }
-  }, []);
+  }, [user?.uid]);
 
   // Convenience Methods
   const getPlants = useCallback(async (): Promise<any[]> => {
@@ -189,7 +182,7 @@ export const useFirebase = (): UseFirebaseReturn => {
   return {
     // Auth State
     user,
-    loading,
+    loading: authLoading,
     error,
 
     // Auth Methods

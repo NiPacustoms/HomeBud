@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import '../../styles/performance.css'
 
 interface LogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'
@@ -157,7 +158,10 @@ export function LogoNoBackground({ size = 'md', className = '' }: { size?: 'sm' 
   const logoSize = getSize()
   
   return (
-    <div className={`relative ${className}`} style={{ width: logoSize, height: logoSize }}>
+    <div 
+      className={`relative logo-container ${className}`} 
+      data-size={logoSize}
+    >
       <Image
         src="/Design ohne Titel (24).png"
         alt="HomeBud Logo"

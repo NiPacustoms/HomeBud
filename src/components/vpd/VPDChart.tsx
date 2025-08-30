@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useMemo } from 'react'
+import '../../styles/performance.css'
 
 
 interface VPDChartProps {
@@ -305,8 +306,8 @@ export default function VPDChart({ onVPDChange, showCalculator = true }: VPDChar
           <div key={index} className="p-4 bg-white/5 border border-white/10 rounded-lg">
             <div className="flex items-center space-x-3 mb-2">
               <div 
-                className="w-4 h-4 rounded-full" 
-                style={{ backgroundColor: zone.color }}
+                className="w-4 h-4 rounded-full vpd-zone-color" 
+                data-color={zone.color}
               ></div>
               <h5 className="text-white font-medium text-sm">{zone.label}</h5>
             </div>

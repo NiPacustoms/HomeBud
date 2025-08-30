@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useAppDispatch } from '@/store/store'
 import { addPlantLog } from '@/store/slices/plantSlice'
 import { LogAction, LogData, Plant } from '@/types/plant'
+import '../../styles/performance.css'
 
 interface QuickLogComposerProps {
   plant: Plant
@@ -276,8 +277,7 @@ export default function QuickLogComposer({
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-end">
       <div
         ref={sheetRef}
-        className="bg-white dark:bg-neutral-900 rounded-t-2xl w-full max-h-[85vh] overflow-hidden"
-        style={{ animation: 'slideUp 0.3s ease-out' }}
+        className="bg-white dark:bg-neutral-900 rounded-t-2xl w-full max-h-[85vh] overflow-hidden slide-up-animation"
       >
         {/* Handle */}
         <div className="flex justify-center pt-3 pb-2">

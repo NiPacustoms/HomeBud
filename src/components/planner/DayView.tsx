@@ -1,7 +1,8 @@
 'use client'
 
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { motion } from 'framer-motion'
+import '../../styles/performance.css'
 
 interface GrowCycle {
   id: string
@@ -247,10 +248,10 @@ export default function DayView({ growCycles, currentDate, onTaskClick, onCycleC
                     <span className="text-white/80 text-sm">
                       Fortschritt: {event.data.progress}%
                     </span>
-                    <div className="w-24 bg-white/20 rounded-full h-2">
+                    <div className="w-24 bg-white/20 rounded-full h-2 overflow-hidden">
                       <div 
-                        className={`h-2 rounded-full ${event.color}`}
-                        style={{ width: `${event.data.progress}%` }}
+                        className={`progress-bar ${event.color} h-full rounded-full transition-all duration-300`}
+                        data-progress={event.data.progress}
                       ></div>
                     </div>
                   </div>

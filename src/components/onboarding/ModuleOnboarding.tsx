@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useModules } from '../../hooks/useModules'
 import { ModuleCategory } from '../../types/modules'
 import { Card } from '../ui/Card'
+import '../../styles/performance.css'
 
 interface SetupOption {
   id: string
@@ -300,8 +301,8 @@ export const ModuleOnboarding: React.FC<ModuleOnboardingProps> = ({ onComplete }
         </div>
         <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
           <div 
-            className="bg-green-600 h-2 rounded-full transition-all duration-300"
-            style={{ width: `${(currentStep / 3) * 100}%` }}
+            className="bg-green-600 progress-bar"
+            data-progress={Math.round((currentStep / 3) * 100)}
           ></div>
         </div>
       </div>

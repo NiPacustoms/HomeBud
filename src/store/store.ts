@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
-import authReducer from './slices/authSlice'
 import growReducer from './slices/growSlice'
 import monitoringReducer from './slices/monitoringSlice'
 import diaryReducer from './slices/diarySlice'
@@ -14,7 +13,6 @@ import diagnosisReducer from './slices/diagnosisSlice'
 const createStore = () => {
   return configureStore({
     reducer: {
-      auth: authReducer,
       grow: growReducer,
       monitoring: monitoringReducer,
       diary: diaryReducer,
@@ -28,7 +26,6 @@ const createStore = () => {
       getDefaultMiddleware({
         serializableCheck: {
           ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
-          ignoredPaths: ['auth.user'],
         },
       }),
     devTools: process.env.NODE_ENV !== 'production',

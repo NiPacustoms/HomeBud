@@ -236,6 +236,8 @@ export default function AIDiagnosisAnalyzer({
                 accept="image/*"
                 onChange={handleImageUpload}
                 className="hidden"
+                aria-label="Pflanzenfoto hochladen"
+                title="Pflanzenfoto für KI-Analyse hochladen"
               />
 
               {/* Image Preview */}
@@ -269,6 +271,8 @@ export default function AIDiagnosisAnalyzer({
                   value={growthStage}
                   onChange={(e) => setGrowthStage(e.target.value)}
                   className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-300"
+                  aria-label="Wachstumsphase auswählen"
+                  title="Wachstumsphase für die Analyse auswählen"
                 >
                   <option value="">Phase auswählen</option>
                   <option value="seedling">Keimling</option>
@@ -342,6 +346,8 @@ export default function AIDiagnosisAnalyzer({
                   value={growthStage}
                   onChange={(e) => setGrowthStage(e.target.value)}
                   className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-300"
+                  aria-label="Wachstumsphase auswählen"
+                  title="Wachstumsphase für die Analyse auswählen"
                 >
                   <option value="">Phase auswählen</option>
                   <option value="seedling">Keimling</option>
@@ -355,7 +361,11 @@ export default function AIDiagnosisAnalyzer({
                 <label className="block text-white/80 text-sm font-medium mb-2">
                   Betroffene Bereiche
                 </label>
-                <select className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-300">
+                <select 
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-300"
+                  aria-label="Betroffene Bereiche auswählen"
+                  title="Betroffene Bereiche der Pflanze auswählen"
+                >
                   <option value="">Bereiche auswählen</option>
                   <option value="leaves">Blätter</option>
                   <option value="stems">Stängel</option>

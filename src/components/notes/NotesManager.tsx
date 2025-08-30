@@ -350,6 +350,8 @@ export const NotesManager: React.FC = () => {
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                  aria-label="Notiz-Kategorie auswählen"
+                  title="Kategorie für die Notiz-Filterung auswählen"
                 >
                   <option value="alle">Alle Kategorien</option>
                   {categories.map(cat => (
@@ -364,6 +366,8 @@ export const NotesManager: React.FC = () => {
                   value={selectedPlant}
                   onChange={(e) => setSelectedPlant(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                  aria-label="Pflanze für Notiz-Filterung auswählen"
+                  title="Pflanze für die Notiz-Filterung auswählen"
                 >
                   <option value="alle">Alle Pflanzen</option>
                   {plants.map(plant => (
