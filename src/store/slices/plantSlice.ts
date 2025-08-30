@@ -40,7 +40,7 @@ export const createPlant = createAsyncThunk(
       id: Date.now().toString(),
       name: plantData.name || 'Neue Pflanze',
       stage: plantData.stage || 'seedling',
-      startDate: plantData.startDate || new Date(),
+      startDate: plantData.startDate || new Date().toISOString(),
       photos: [],
       logs: [],
       tasks: [],
@@ -63,11 +63,11 @@ export const createPlant = createAsyncThunk(
         ph: 6.2,
         temperature: 24,
         humidity: 65,
-        lastUpdated: new Date(),
+        lastUpdated: new Date().toISOString(),
         status: 'good'
       },
-      createdAt: new Date(),
-      updatedAt: new Date()
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
     }
     return newPlant
   }
@@ -97,9 +97,9 @@ export const addPlantLog = createAsyncThunk(
       id: Date.now().toString(),
       plantId,
       action: logData.action || 'note',
-      date: logData.date || new Date(),
+      date: logData.date || new Date().toISOString(),
       data: logData.data || {},
-      createdAt: new Date()
+      createdAt: new Date().toISOString()
     }
     return { plantId, log: newLog }
   }
@@ -114,9 +114,9 @@ export const addPlantTask = createAsyncThunk(
       plantId,
       title: taskData.title || 'Neue Aufgabe',
       type: taskData.type || 'custom',
-      dueDate: taskData.dueDate || new Date(),
+      dueDate: taskData.dueDate || new Date().toISOString(),
       priority: taskData.priority || 'medium',
-      createdAt: new Date()
+      createdAt: new Date().toISOString()
     }
     return { plantId, task: newTask }
   }
@@ -138,10 +138,10 @@ const plantSlice = createSlice({
     updatePlantHealth: (state, action: PayloadAction<{ plantId: string; health: Partial<Plant['health']> }>) => {
       const plant = state.plants.find(p => p.id === action.payload.plantId)
       if (plant) {
-        plant.health = { ...plant.health, ...action.payload.health, lastUpdated: new Date() }
+        plant.health = { ...plant.health, ...action.payload.health, lastUpdated: new Date().toISOString() }
       }
       if (state.currentPlant?.id === action.payload.plantId) {
-        state.currentPlant.health = { ...state.currentPlant.health, ...action.payload.health, lastUpdated: new Date() }
+        state.currentPlant.health = { ...state.currentPlant.health, ...action.payload.health, lastUpdated: new Date().toISOString() }
       }
     }
   },
@@ -171,10 +171,10 @@ const plantSlice = createSlice({
       .addCase(updatePlant.fulfilled, (state, action) => {
         const index = state.plants.findIndex(p => p.id === action.payload.id)
         if (index !== -1) {
-          state.plants[index] = { ...state.plants[index], ...action.payload.updates, updatedAt: new Date() }
+          state.plants[index] = { ...state.plants[index], ...action.payload.updates, updatedAt: new Date().toISOString() }
         }
         if (state.currentPlant?.id === action.payload.id) {
-          state.currentPlant = { ...state.currentPlant, ...action.payload.updates, updatedAt: new Date() }
+          state.currentPlant = { ...state.currentPlant, ...action.payload.updates, updatedAt: new Date().toISOString() }
         }
       })
       
@@ -191,11 +191,11 @@ const plantSlice = createSlice({
         const plant = state.plants.find(p => p.id === action.payload.plantId)
         if (plant) {
           plant.logs.push(action.payload.log)
-          plant.updatedAt = new Date()
+          plant.updatedAt = new Date().toISOString()
         }
         if (state.currentPlant?.id === action.payload.plantId) {
           state.currentPlant.logs.push(action.payload.log)
-          state.currentPlant.updatedAt = new Date()
+          state.currentPlant.updatedAt = new Date().toISOString()
         }
       })
       
@@ -204,11 +204,11 @@ const plantSlice = createSlice({
         const plant = state.plants.find(p => p.id === action.payload.plantId)
         if (plant) {
           plant.tasks.push(action.payload.task)
-          plant.updatedAt = new Date()
+          plant.updatedAt = new Date().toISOString()
         }
         if (state.currentPlant?.id === action.payload.plantId) {
           state.currentPlant.tasks.push(action.payload.task)
-          state.currentPlant.updatedAt = new Date()
+          state.currentPlant.updatedAt = new Date().toISOString()
         }
       })
   }

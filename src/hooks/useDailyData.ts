@@ -32,13 +32,13 @@ export const useDailyData = () => {
   }
 
   const getEntriesByDateRange = (startDate: Date, endDate: Date) => {
-    return dailyDataEntries.filter(entry => 
+    return dailyDataEntries.filter((entry: DailyDataEntry) => 
       entry.date >= startDate && entry.date <= endDate
     )
   }
 
   const getEntriesByProject = (projectId: string) => {
-    return dailyDataEntries.filter(entry => entry.projectId === projectId)
+    return dailyDataEntries.filter((entry: DailyDataEntry) => entry.projectId === projectId)
   }
 
   const getTodayEntry = () => {
@@ -62,7 +62,17 @@ export const useDailyData = () => {
 
     if (entries.length === 0) return null
 
-    const sum = entries.reduce((acc, entry) => ({
+    const sum = entries.reduce((acc: {
+      temperature: number;
+      humidity: number;
+      lightLevel: number;
+      ph: number;
+      ec: number;
+      co2: number;
+      airFlow: number;
+      soilMoisture: number;
+      nutrientLevel: number;
+    }, entry: DailyDataEntry) => ({
       temperature: acc.temperature + entry.temperature,
       humidity: acc.humidity + entry.humidity,
       lightLevel: acc.lightLevel + entry.lightLevel,

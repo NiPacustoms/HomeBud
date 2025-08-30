@@ -33,7 +33,7 @@ const createStore = () => {
 };
 
 // Store nur im Browser erstellen
-let store: ReturnType<typeof createStore> | undefined;
+let browserStore: ReturnType<typeof createStore> | undefined;
 
 export const getStore = () => {
   if (typeof window === 'undefined') {
@@ -45,11 +45,11 @@ export const getStore = () => {
     } as any;
   }
   
-  if (!store) {
-    store = createStore();
+  if (!browserStore) {
+    browserStore = createStore();
   }
   
-  return store;
+  return browserStore;
 };
 
 export const store = typeof window !== 'undefined' ? getStore() : undefined;

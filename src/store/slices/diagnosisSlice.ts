@@ -218,7 +218,8 @@ export const analyzePlantPhoto = createAsyncThunk(
       shortTermActions: ['Monitor pH levels', 'Adjust watering schedule'],
       longTermActions: ['Implement regular feeding schedule'],
       
-      status: 'completed'
+      status: 'completed',
+      followUpCompleted: false
     }
     
     return mockResult
@@ -270,7 +271,8 @@ export const analyzeManualSymptoms = createAsyncThunk(
       shortTermActions: ['Check soil moisture', 'Improve drainage'],
       longTermActions: ['Establish proper watering schedule'],
       
-      status: 'completed'
+      status: 'completed',
+      followUpCompleted: false
     }
     
     return mockResult

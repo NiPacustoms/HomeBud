@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useAuth } from '@/components/auth/AuthClient';
+import { useAuth } from '@/components/AuthClient';
 import { FirestoreService, FirestoreDocument } from '@/services/firebase/firestoreService';
 import { User } from 'firebase/auth';
 
@@ -36,7 +36,7 @@ export interface UseFirebaseReturn {
 }
 
 export const useFirebase = (): UseFirebaseReturn => {
-  const { user, loading: authLoading, signIn, signInWithGoogle, signUp, signOut, resetPassword } = useAuth();
+  const { user, loading: authLoading, signIn, signInWithGoogle, signUp, signOut, resetPassword: authResetPassword } = useAuth();
   const [error, setError] = useState<string | null>(null);
 
   // Auth Methods
@@ -83,12 +83,12 @@ export const useFirebase = (): UseFirebaseReturn => {
   const resetPassword = useCallback(async (email: string) => {
     try {
       setError(null);
-      await resetPassword(email);
+      await authResetPassword(email);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Passwort-Reset fehlgeschlagen');
       throw err;
     }
-  }, [resetPassword]);
+  }, [authResetPassword]);
 
   // Firestore Methods
   const createDocument = useCallback(async <T>(collectionName: string, data: T): Promise<string> => {

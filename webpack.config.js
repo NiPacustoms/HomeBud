@@ -20,6 +20,27 @@ module.exports = {
         test: /node_modules\/undici/,
         use: 'ignore-loader',
       },
+      {
+        test: /\.js$/,
+        include: /node_modules\/undici/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              ['@babel/preset-env', {
+                targets: {
+                  node: '18'
+                }
+              }]
+            ],
+            plugins: [
+              '@babel/plugin-transform-private-methods',
+              '@babel/plugin-transform-class-properties',
+              '@babel/plugin-transform-private-property-in-object'
+            ]
+          }
+        }
+      }
     ],
   },
   externals: [
@@ -29,4 +50,7 @@ module.exports = {
       'firebase/auth': 'commonjs firebase/auth',
     },
   ],
+  experiments: {
+    topLevelAwait: true
+  }
 };

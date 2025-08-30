@@ -183,7 +183,8 @@ const moduleSlice = createSlice({
       state.availableModules.forEach(module => {
         featureFlags[module.id] = state.enabledModules.includes(module.id)
       })
-      return featureFlags
+      // Redux reducers sollten den State ändern, nicht Werte zurückgeben
+      // Die Feature-Flags werden über einen Selector verfügbar gemacht
     },
 
     // Loading-Status setzen
