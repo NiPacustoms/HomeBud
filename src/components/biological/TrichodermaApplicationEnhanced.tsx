@@ -263,12 +263,14 @@ export default function TrichodermaApplicationEnhanced() {
                   </div>
                   <div className="relative">
                     <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/50 w-4 h-4" />
-                                         <select
-                       value={filterMechanism}
-                       onChange={(e) => setFilterMechanism(e.target.value)}
-                       className="pl-10 pr-8 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-green-400 appearance-none"
-                       aria-label="Wirkmechanismus filtern"
-                     >
+                    <select
+                      id="filterMechanism"
+                      name="filterMechanism"
+                      value={filterMechanism}
+                      onChange={(e) => setFilterMechanism(e.target.value)}
+                      className="pl-10 pr-8 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-green-400 appearance-none"
+                      aria-label="Wirkmechanismus filtern"
+                    >
                       <option value="">Alle Mechanismen</option>
                       <option value="pathogen">Pathogenhemmung</option>
                       <option value="wachstum">Wachstumsförderung</option>
@@ -361,7 +363,11 @@ export default function TrichodermaApplicationEnhanced() {
                         Substratvolumen (Liter)
                       </label>
                       <input
+                        id="substrateVolume"
+                        name="substrateVolume"
                         type="number"
+                        aria-label="Substratvolumen in Litern"
+                        placeholder="Volumen eingeben"
                         value={substrateVolume}
                         onChange={(e) => setSubstrateVolume(Number(e.target.value))}
                         className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-green-400"
@@ -391,6 +397,9 @@ export default function TrichodermaApplicationEnhanced() {
                         Wachstumsphase
                       </label>
                       <select
+                        id="growthPhase"
+                        name="growthPhase"
+                        aria-label="Wachstumsphase auswählen"
                         value={growthPhase}
                         onChange={(e) => setGrowthPhase(e.target.value as any)}
                         className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-green-400"
@@ -407,6 +416,9 @@ export default function TrichodermaApplicationEnhanced() {
                         Trichoderma-Stamm
                       </label>
                       <select
+                        id="selectedStrain"
+                        name="selectedStrain"
+                        aria-label="Trichoderma-Stamm auswählen"
                         value={selectedStrain}
                         onChange={(e) => setSelectedStrain(e.target.value)}
                         className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-green-400"
@@ -423,6 +435,9 @@ export default function TrichodermaApplicationEnhanced() {
                         Oder Kombi-Paket
                       </label>
                       <select
+                        id="selectedCombo"
+                        name="selectedCombo"
+                        aria-label="Kombi-Paket auswählen"
                         value={selectedCombo}
                         onChange={(e) => setSelectedCombo(e.target.value)}
                         className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-green-400"
@@ -599,7 +614,11 @@ export default function TrichodermaApplicationEnhanced() {
                         Pflanzentyp
                       </label>
                       <input
+                        id="plantType"
+                        name="plantType"
                         type="text"
+                        aria-label="Pflanzentyp eingeben"
+                        placeholder="Pflanzentyp eingeben"
                         value={plantType}
                         onChange={(e) => setPlantType(e.target.value)}
                         className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-green-400"
@@ -611,6 +630,9 @@ export default function TrichodermaApplicationEnhanced() {
                         Substrattyp
                       </label>
                       <select
+                        id="substrateType2"
+                        name="substrateType2"
+                        aria-label="Substrattyp auswählen"
                         value={substrateType}
                         onChange={(e) => setSubstrateType(e.target.value as any)}
                         className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-green-400"
@@ -627,7 +649,11 @@ export default function TrichodermaApplicationEnhanced() {
                           pH-Wert
                         </label>
                         <input
+                          id="currentPH"
+                          name="currentPH"
                           type="number"
+                          aria-label="pH-Wert eingeben"
+                          placeholder="pH-Wert"
                           value={currentPH}
                           onChange={(e) => setCurrentPH(Number(e.target.value))}
                           className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-green-400"
@@ -641,7 +667,11 @@ export default function TrichodermaApplicationEnhanced() {
                           Temperatur (°C)
                         </label>
                         <input
+                          id="currentTemperature"
+                          name="currentTemperature"
                           type="number"
+                          aria-label="Temperatur in Celsius eingeben"
+                          placeholder="Temperatur (°C)"
                           value={currentTemperature}
                           onChange={(e) => setCurrentTemperature(Number(e.target.value))}
                           className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-green-400"
@@ -656,6 +686,9 @@ export default function TrichodermaApplicationEnhanced() {
                         Wachstumsphase
                       </label>
                       <select
+                        id="growthPhase2"
+                        name="growthPhase2"
+                        aria-label="Wachstumsphase auswählen"
                         value={growthPhase}
                         onChange={(e) => setGrowthPhase(e.target.value as any)}
                         className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-green-400"
@@ -881,6 +914,9 @@ export default function TrichodermaApplicationEnhanced() {
                   Trichoderma-Stamm
                 </label>
                 <select
+                  id="newApplicationStrain"
+                  name="newApplicationStrain"
+                  aria-label="Trichoderma-Stamm für neue Anwendung auswählen"
                   value={newApplication.strainId}
                   onChange={(e) => {
                     const strain = strains.find(s => s.id === e.target.value)
@@ -904,7 +940,11 @@ export default function TrichodermaApplicationEnhanced() {
                   Dosierung (g)
                 </label>
                 <input
+                  id="newApplicationDosage"
+                  name="newApplicationDosage"
                   type="number"
+                  aria-label="Dosierung in Gramm eingeben"
+                  placeholder="Dosierung (g)"
                   value={newApplication.dosage}
                   onChange={(e) => setNewApplication({...newApplication, dosage: Number(e.target.value)})}
                   className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-green-400"
@@ -918,7 +958,11 @@ export default function TrichodermaApplicationEnhanced() {
                   Substratvolumen (L)
                 </label>
                 <input
+                  id="newApplicationSubstrateVolume"
+                  name="newApplicationSubstrateVolume"
                   type="number"
+                  aria-label="Substratvolumen in Litern eingeben"
+                  placeholder="Substratvolumen (L)"
                   value={newApplication.substrateVolume}
                   onChange={(e) => setNewApplication({...newApplication, substrateVolume: Number(e.target.value)})}
                   className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-green-400"
@@ -931,6 +975,9 @@ export default function TrichodermaApplicationEnhanced() {
                   Wirksamkeit
                 </label>
                 <select
+                  id="newApplicationEffectiveness"
+                  name="newApplicationEffectiveness"
+                  aria-label="Wirksamkeit der Anwendung bewerten"
                   value={newApplication.effectiveness}
                   onChange={(e) => setNewApplication({...newApplication, effectiveness: e.target.value as any})}
                   className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-green-400"

@@ -309,8 +309,13 @@
     /* Fallback für ältere Browser */
     text-align: justify;
     text-justify: inter-word;
-    /* Moderne Browser */
-    text-wrap: balance;
+  }
+  
+  /* Moderne Browser - mit Fallback für Chrome < 114 */
+  @supports (text-wrap: balance) {
+    .text-balance {
+      text-wrap: balance;
+    }
   }
 
   /* Animation utilities */

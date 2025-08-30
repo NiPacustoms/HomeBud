@@ -10,7 +10,7 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
   experimental: {
-    serverComponentsExternalPackages: ['@prisma/client', 'firebase-admin'],
+    serverComponentsExternalPackages: ['@prisma/client', 'undici', '@firebase/auth'],
   },
   optimizeFonts: false,
   poweredByHeader: false,
@@ -57,6 +57,43 @@ const nextConfig = {
         permanent: true,
       },
     ];
+  },
+  webpack: (config, { isServer }) => {
+    // Firebase App Hosting kompatible Webpack-Konfiguration
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+        undici: false,
+      };
+    } else {
+      config.resolve.alias = {
+        ...(config.resolve.alias || {}),
+        'firebase/auth': false,
+        '@firebase/auth': false,
+        undici: false,
+      };
+    }
+   
+    // Externe Pakete für Server Components
+    config.externals = config.externals || [];
+    if (isServer) {
+      config.externals.push({
+        'undici': 'commonjs undici',
+        '@firebase/auth': 'commonjs @firebase/auth',
+        'firebase/auth': 'commonjs firebase/auth'
+      });
+    }
+   
+    // Ignoriere undici-Module komplett
+    config.module.rules.push({
+      test: /node_modules\/undici/,
+      use: 'ignore-loader'
+    });
+   
+    return config;
   },
 };
 
