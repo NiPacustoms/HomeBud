@@ -1,9 +1,13 @@
 {
   "appHosting": {
-    "buildCommand": "npm run build:firebase",
+    "buildCommand": "npm run build",
     "outputDirectory": "out",
     "framework": "nextjs",
     "webpackConfig": "webpack.config.js",
+    "source": {
+      "repository": "https://github.com/NiPacustoms/HomeBud",
+      "branch": "main"
+    },
     "ignore": [
       "firebase.json",
       "**/.*",

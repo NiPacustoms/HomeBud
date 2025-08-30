@@ -43,5 +43,11 @@
     "ui": {
       "enabled": true
     }
+  },
+  "appHosting": {
+    "source": {
+      "repository": "https://github.com/NiPacustoms/HomeBud",
+      "branch": "main"
+    }
   }
 }
