@@ -183,7 +183,7 @@ export default function GrowCalendar({
     const startDate = new Date(firstDay)
     startDate.setDate(startDate.getDate() - firstDay.getDay())
     
-    const days = []
+    const days: Date[] = []
     const currentDay = new Date(startDate)
     
     while (currentDay <= lastDay || days.length < 42) {

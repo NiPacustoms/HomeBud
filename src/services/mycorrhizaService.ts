@@ -1059,7 +1059,7 @@ export const calculateComparisonResults = (
   const significantImprovement = overallImprovement > 15
   const costBenefitRatio = yieldImprovement ? yieldImprovement / 25 : overallImprovement / 10 // 25€ = typische Mykorrhiza-Kosten
 
-  const recommendations = []
+  const recommendations: string[] = []
   if (overallImprovement > 20) {
     recommendations.push('Mykorrhiza-Integration erfolgreich - weiterhin verwenden')
   } else if (overallImprovement > 10) {

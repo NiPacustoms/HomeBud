@@ -1,13 +1,24 @@
 'use client'
 
 import React, { useState } from 'react'
+import dynamic from 'next/dynamic'
 
 import { motion, AnimatePresence } from 'framer-motion'
 
 import Sidebar from '@/components/navigation/Sidebar'
 import BackButton from '@/components/ui/BackButton'
 import AnimatedBackground, { FloatingIcons } from '@/components/landing/AnimatedBackground'
-import CannabisDiagnosisAnalyzer from '@/components/diagnosis/CannabisDiagnosisAnalyzer'
+
+// Dynamischer Import der CannabisDiagnosisAnalyzer um Server-Side Import-Probleme zu vermeiden
+const CannabisDiagnosisAnalyzer = dynamic(() => import('@/components/diagnosis/CannabisDiagnosisAnalyzer'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center p-8">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+      <span className="ml-2">Lade Diagnose-Tool...</span>
+    </div>
+  )
+});
 
 
 

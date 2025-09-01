@@ -422,7 +422,7 @@ const getColdScore = (strain: MycorrhizaStrain): number => {
 
 // Hilfsfunktionen für Beschreibungen
 const getNutrientFocus = (strain: MycorrhizaStrain): string => {
-  const nutrients = []
+  const nutrients: string[] = []
   if (strain.benefits.some(b => b.includes('Phosphor'))) nutrients.push('Phosphor')
   if (strain.benefits.some(b => b.includes('Stickstoff'))) nutrients.push('Stickstoff')
   if (strain.benefits.some(b => b.includes('Kalium'))) nutrients.push('Kalium')
@@ -430,7 +430,7 @@ const getNutrientFocus = (strain: MycorrhizaStrain): string => {
 }
 
 const getStressFocus = (strain: MycorrhizaStrain): string => {
-  const stresses = []
+  const stresses: string[] = []
   if (strain.benefits.some(b => b.includes('Trockenheit') || b.includes('Dürre'))) stresses.push('Trockenheit')
   if (strain.benefits.some(b => b.includes('Hitze'))) stresses.push('Hitze')
   if (strain.benefits.some(b => b.includes('Salz'))) stresses.push('Salz')
@@ -439,7 +439,7 @@ const getStressFocus = (strain: MycorrhizaStrain): string => {
 }
 
 const getCannabisBenefits = (strain: MycorrhizaStrain): string => {
-  const benefits = []
+  const benefits: string[] = []
   if (strain.category === 'cannabis_specific') benefits.push('Cannabis-spezifisch optimiert')
   if (strain.benefits.some(b => b.includes('Ertrag'))) benefits.push('Ertragssteigerung')
   if (strain.benefits.some(b => b.includes('Blütenbildung'))) benefits.push('Verbesserte Blütenbildung')
@@ -448,7 +448,7 @@ const getCannabisBenefits = (strain: MycorrhizaStrain): string => {
 
 // Stärken und Schwächen analysieren
 const getStrainStrengths = (strain: MycorrhizaStrain): string[] => {
-  const strengths = []
+  const strengths: string[] = []
   
   if (strain.category === 'cannabis_specific') strengths.push('Cannabis-spezifisch optimiert')
   if (strain.benefits.some(b => b.includes('sehr hoch'))) strengths.push('Sehr hohe Wurzelkolonisierung')
@@ -463,7 +463,7 @@ const getStrainStrengths = (strain: MycorrhizaStrain): string[] => {
 }
 
 const getStrainWeaknesses = (strain: MycorrhizaStrain): string[] => {
-  const weaknesses = []
+  const weaknesses: string[] = []
   
   if (strain.category === 'general') weaknesses.push('Nicht cannabis-spezifisch')
   if (strain.benefits.some(b => b.includes('mittel'))) weaknesses.push('Mittlere Wurzelkolonisierung')
@@ -474,7 +474,7 @@ const getStrainWeaknesses = (strain: MycorrhizaStrain): string[] => {
 }
 
 const getIdealConditions = (strain: MycorrhizaStrain): string[] => {
-  const conditions = []
+  const conditions: string[] = []
   
   conditions.push(`Temperatur: ${strain.idealConditions.temperatureRange.min}-${strain.idealConditions.temperatureRange.max}°C`)
   conditions.push(`pH: ${strain.idealConditions.phRange.min}-${strain.idealConditions.phRange.max}`)

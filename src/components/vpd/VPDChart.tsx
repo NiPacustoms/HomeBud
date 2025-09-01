@@ -109,7 +109,7 @@ export default function VPDChart({ onVPDChange, showCalculator = true }: VPDChar
 
   // Memoized chart data für bessere Performance
   const chartData = useMemo(() => {
-    const data = []
+    const data: Array<{temp: number, hum: number, vpd: number, color: string, zone: string}> = []
     for (let temp = 15; temp <= 35; temp += 0.5) {
       for (let hum = 30; hum <= 95; hum += 1) {
         const vpdValue = calculateVPD(temp, hum)

@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/components/AuthClient';
 import { FirestoreService, FirestoreDocument } from '@/services/firebase/firestoreService';
-import { User } from 'firebase/auth';
+import { FirebaseUser } from '@/types/firebase';
 
 export interface UseFirebaseReturn {
   // Auth State
-  user: User | null;
+  user: FirebaseUser | null;
   loading: boolean;
   error: string | null;
 

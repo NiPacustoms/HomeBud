@@ -10,7 +10,8 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
   experimental: {
-    serverComponentsExternalPackages: ['@prisma/client', 'undici', '@firebase/auth'],
+    // Du hast das schon an – stelle sicher, dass 'undici' dabei ist
+    serverComponentsExternalPackages: ['undici', '@firebase/auth'],
   },
   optimizeFonts: false,
   poweredByHeader: false,
@@ -58,41 +59,18 @@ const nextConfig = {
       },
     ];
   },
+  // wir wollen NICHT 'undici' transpilen; eher extern halten
   webpack: (config, { isServer }) => {
-    // Firebase App Hosting kompatible Webpack-Konfiguration
-    if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-        net: false,
-        tls: false,
-        undici: false,
-      };
-    } else {
-      config.resolve.alias = {
-        ...(config.resolve.alias || {}),
-        'firebase/auth': false,
-        '@firebase/auth': false,
-        undici: false,
-      };
-    }
-   
-    // Externe Pakete für Server Components
-    config.externals = config.externals || [];
     if (isServer) {
-      config.externals.push({
-        'undici': 'commonjs undici',
-        '@firebase/auth': 'commonjs @firebase/auth',
-        'firebase/auth': 'commonjs firebase/auth'
-      });
+      // verhindert, dass Webpack 'undici' überhaupt parst
+      config.externals = Array.isArray(config.externals)
+        ? [...config.externals, 'undici']
+        : config.externals;
+    } else {
+      // im Client darf 'undici' gar nicht auftauchen
+      config.resolve = config.resolve || {};
+      config.resolve.alias = { ...(config.resolve.alias || {}), undici: false };
     }
-   
-    // Ignoriere undici-Module komplett
-    config.module.rules.push({
-      test: /node_modules\/undici/,
-      use: 'ignore-loader'
-    });
-   
     return config;
   },
 };

@@ -71,7 +71,7 @@ export default function WeekView({ growCycles, currentDate, onTaskClick }: WeekV
     const day = startOfWeek.getDay()
     startOfWeek.setDate(startOfWeek.getDate() - day)
     
-    const days = []
+    const days: Date[] = []
     for (let i = 0; i < 7; i++) {
       const date = new Date(startOfWeek)
       date.setDate(date.getDate() + i)

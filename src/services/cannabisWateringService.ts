@@ -191,7 +191,7 @@ export class CannabisWateringService {
     environmentalFactors: EnvironmentalFactors,
     startDate: Date = new Date()
   ): Array<{ date: Date; waterAmount: number; notes: string[] }> {
-    const schedule = []
+    const schedule: Array<{ date: Date; waterAmount: number; notes: string[] }> = []
     const calculation = this.calculateWatering(stage, potSize, environmentalFactors)
     
     let currentDate = new Date(startDate)

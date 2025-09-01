@@ -1,10 +1,10 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState } from 'react'
-import { User } from 'firebase/auth'
+import { FirebaseUser } from '@/types/firebase'
 
 interface AuthContextType {
-  user: User | null
+  user: FirebaseUser | null
   loading: boolean
   signIn: (email: string, password: string) => Promise<any>
   signInWithGoogle: () => Promise<any>
@@ -24,7 +24,7 @@ const AuthContext = createContext<AuthContextType>({
 })
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<FirebaseUser | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
