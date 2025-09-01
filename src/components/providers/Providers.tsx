@@ -18,6 +18,17 @@ const AuthProvider = dynamic(() => import('@/components/AuthClient').then(mod =>
   )
 })
 
+// Dynamischer Import des StoreProvider um Server-Side Store-Imports zu vermeiden
+const StoreProvider = dynamic(() => import('./StoreProvider').then(mod => ({ default: mod.StoreProvider })), {
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center p-4">
+      <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"></div>
+      <span className="ml-2 text-gray-600">Lade Store...</span>
+    </div>
+  )
+})
+
 interface ProvidersProps {
   children: ReactNode
 }
@@ -42,9 +53,11 @@ export function Providers({ children }: ProvidersProps) {
         enableSystem
         disableTransitionOnChange
       >
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        <StoreProvider>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+        </StoreProvider>
       </ThemeProvider>
     </QueryClientProvider>
   )
